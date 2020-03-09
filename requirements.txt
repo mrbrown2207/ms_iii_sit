@@ -67,7 +67,7 @@ service-identity==18.1.0
 six==1.14.0
 stevedore==1.32.0
 stripe==2.42.0
-Twisted==18.9.0
+Twisted==19.7.0
 typed-ast==1.4.1
 urllib3==1.25.8
 virtualenv-clone==0.5.3
