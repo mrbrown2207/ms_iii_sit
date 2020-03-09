@@ -1,5 +1,6 @@
-{% extends 'base.html'%} {% block content %}
+{% extends "base.html"%}
 
+{% block content %}
 <h3>Edit Issue</h3>
 <div class="row">
     <form action="{{ url_for('update_issue', issue_id=issue['issueId']) }}" method="POST" class="col s12">

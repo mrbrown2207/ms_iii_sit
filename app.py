@@ -3,7 +3,7 @@ from flask import Flask, render_template, redirect, request, url_for
 import pymysql
 import pymysql.cursors
 import datetime
-import constant
+import constants
 
 app = Flask(__name__)
 app.config.from_envvar('APP_CONFIG')
@@ -25,11 +25,11 @@ def get_all_recs(tbl):
     try:
         if tbl == 'tblCat':
             if qry_testing:
-                sql = constant.SQL_DICT['sel_recs']
+                sql = constants.SQL_DICT['sel_recs']
             else:
-                sql = constant.SQL_DICT['sel_all_cats']
+                sql = constants.SQL_DICT['sel_all_cats']
         else:
-            sql = constant.SQL_DICT['sel_all_isss']
+            sql = constants.SQL_DICT['sel_all_isss']
             
         with conn.cursor() as cur:
             if qry_testing:
@@ -47,9 +47,9 @@ def get_all_recs(tbl):
 def del_rec(tbl, rec_id):
     try:
         if tbl == 'tblCat':
-            sql = constant.SQL_DICT['del_cat_rec']
+            sql = constants.SQL_DICT['del_cat_rec']
         else:
-            sql = constant.SQL_DICT['del_iss_rec']
+            sql = constants.SQL_DICT['del_iss_rec']
             
         with conn.cursor() as cur:
             cur.execute(sql, (rec_id))
@@ -90,7 +90,7 @@ def insert_issue():
             else:
                 issue_urgent = 0
 
-            cur.execute(constant.SQL_DICT['add_iss'],
+            cur.execute(constants.SQL_DICT['add_iss'],
                             (request.form.get('issue_subj'),
                             request.form.get('issue_desc'),
                             request.form.get('cat_id'),
@@ -121,7 +121,7 @@ def update_issue(issue_id):
         issue_resolved = request.form.get('resolved', False)
         if issue_resolved != False:
             issue_resolved = 1
-            resolved_dt = datetime.datetime.now().strftime(constant.SQL_DT_FMT)
+            resolved_dt = datetime.datetime.now().strftime(constants.SQL_DT_FMT)
             resolved_by = 1 #Temporary
             resolution_desc = request.form.get('resolution_desc')
         else:
@@ -129,7 +129,7 @@ def update_issue(issue_id):
             resolved_dt = resolution_desc = ''
 
         with conn.cursor() as cur:
-            cur.execute(constant.SQL_DICT['upd_iss'],
+            cur.execute(constants.SQL_DICT['upd_iss'],
                             request.form.get('issue_subj'),
                             request.form.get('issue_desc'),
                             request.form.get('cat_id'),
@@ -152,7 +152,7 @@ def update_issue(issue_id):
 def edit_issue(issue_id):
     try:
         with conn.cursor() as cur:
-            ret_val = cur.execute(constant.SQL_DICT['sel_iss_rec'], (issue_id))
+            ret_val = cur.execute(constants.SQL_DICT['sel_iss_rec'], (issue_id))
             row = cur.fetchone()
             print(row)
             
@@ -161,13 +161,13 @@ def edit_issue(issue_id):
             all_cats = get_all_recs('tblCat')
             
             # Format our dates
-            row['dateAdded'] = row['dateAdded'].strftime(constant.DDMMYYYY_FMT)
+            row['dateAdded'] = row['dateAdded'].strftime(constants.DDMMYYYY_FMT)
             if row['viewed']:
-                row['dateViewed'] = row['dateViewed'].strftime(constant.DDMMYYYY_FMT)
+                row['dateViewed'] = row['dateViewed'].strftime(constants.DDMMYYYY_FMT)
             else:
                 row['dateViewed'] = ''
             if row['resolved']:
-                row['dateResolved'] = row['dateResolved'].strftime(constant.DDMMYYYY_FMT)
+                row['dateResolved'] = row['dateResolved'].strftime(constants.DDMMYYYY_FMT)
             else:
                 row['dateResolved'] = ''
             
@@ -201,7 +201,7 @@ def get_cats():
 def update_cat(cat_id):
     try:
         with conn.cursor() as cur:
-            cur.execute(constant.SQL_DICT['upd_cat'], (request.form.get('cat_name'), request.form.get('cat_desc'), cat_id))
+            cur.execute(constants.SQL_DICT['upd_cat'], (request.form.get('cat_name'), request.form.get('cat_desc'), cat_id))
     except Exception as e:
         print(e)
     finally:
@@ -214,7 +214,7 @@ def update_cat(cat_id):
 def insert_cat():
     try:
         with conn.cursor() as cur:
-            cur.execute(constant.SQL_DICT['add_cat'], (request.form.get('cat_name'), request.form.get('cat_desc')))
+            cur.execute(constants.SQL_DICT['add_cat'], (request.form.get('cat_name'), request.form.get('cat_desc')))
             
             conn.commit()
     except Exception as e:
@@ -229,7 +229,7 @@ def insert_cat():
 def edit_cat(cat_id):
     try:
         with conn.cursor() as cur:
-            ret_val = cur.execute(constant.SQL_DICT['sel_cat_rec'], (cat_id))
+            ret_val = cur.execute(constants.SQL_DICT['sel_cat_rec'], (cat_id))
             row = cur.fetchone()
             print(row)
     except Exception as e:
@@ -262,7 +262,7 @@ def get_accts():
 def update_acct(acct_id):
     try:
         with conn.cursor() as cur:
-            cur.execute(constant.SQL_DICT['upd_acct'], (request.form.get('acct_name'), request.form.get('cat_desc'), acct_id))
+            cur.execute(constants.SQL_DICT['upd_acct'], (request.form.get('acct_name'), request.form.get('cat_desc'), acct_id))
     except Exception as e:
         print(e)
     finally:
@@ -275,7 +275,7 @@ def update_acct(acct_id):
 def insert_acct():
     try:
         with conn.cursor() as cur:
-            cur.execute(constant.SQL_DICT['add_cat'], (request.form.get('cat_name'), request.form.get('cat_desc')))
+            cur.execute(constants.SQL_DICT['add_cat'], (request.form.get('cat_name'), request.form.get('cat_desc')))
             
             conn.commit()
     except Exception as e:
@@ -290,7 +290,7 @@ def insert_acct():
 def edit_acct(acct_id):
     try:
         with conn.cursor() as cur:
-            ret_val = cur.execute(constant.SQL_DICT['sel_int_rec'], (acct_id))
+            ret_val = cur.execute(constants.SQL_DICT['sel_int_rec'], (acct_id))
             row = cur.fetchone()
             print(row)
     except Exception as e:

@@ -2,29 +2,50 @@
 <html>
 
 <head>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <!--<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" >-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/fontawesome.min.css" />
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">-->
     <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" type="text/css" />
 </head>
 
 <body>
-    <header>
-        <nav>
-            <div class="nav-wrapper">
-                <a href="{{url_for('get_issues')}}" class="brand-logo">Service Issue Tracker</a>
-                <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-                <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li><a href="{{url_for('get_issues')}}">Home</a></li>
-                    <li><a href="{{url_for('add_issue')}}">New Issue</a></li>
-                    <li><a href="{{url_for('get_cats')}}">Manage Categories</a></li>
-                </ul>
-                <ul class="side-nav" id="mobile-demo">
-                    <li><a href="{{url_for('get_issues')}}">Home</a></li>
-                    <li><a href="{{url_for('add_issue')}}">New Issue</a></li>
-                    <li><a href="{{url_for('get_cats')}}">Manage Categories</a></li>
-                </ul>
+    <header class ="page-header px-0 py-0">
+        <div class="container">
+            <div class="row">
+                <div class="col px-0">
+                    <nav class="navbar navbar-expand-lg shift navbar-light navbar-ua px-0 py-0">
+                        <a class="navbar-brand py-3 pl-3 py-md-4 pl-md-4" href="#">
+                            <img src="{{url_for('static', filename='/images/sit-logo-sm.jpg')}}" />
+                        </a>
+                        <button class="navbar-toggler custom-toggler navbar-toggler-right mr-3 mr-md-4" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapsed-menu collapse navbar-collapse px-3 py-3 px-md-4 py-md-4 flex-row-reverse collapse" id="navbarNav">
+                            <ul class="navbar-nav text-center">
+                                <li class="nav-item px-2 px-xl-3">
+                                    <a class="nav-link" href="{{url_for('howitworks')}}">How it Works</a>
+                                </li>
+                                <li class="nav-item px-2 px-xl-3">
+                                    <a class="nav-link" href="{{url_for('get_issues')}}">Issues</a>
+                                </li>
+                                <li class="nav-item px-2 px-xl-3">
+                                    <a class="nav-link" href="{{url_for('get_cats')}}">Categories</a>
+                                </li>
+                                <!--
+                                <li class="nav-item px-2 px-xl-3">
+                                    <a class="nav-link" href="{% url 'about' %}">About Us</a>
+                                </li>
+                                -->
+                                <li class="nav-item px-2 px-xl-3">
+                                    <a class="nav-link" href="{{url_for('contact'}}">Contact Us</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
             </div>
-        </nav>
+        </div>
     </header>
 
     <div class="container">
@@ -32,8 +53,11 @@
             {% block content %} {% endblock %}
         </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/js/fontawesome.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <script type="text/javascript">
         $(function() {
             $('.collapsible').collapsible();
