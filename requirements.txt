@@ -57,7 +57,7 @@ PyMySQL==0.9.3
 pyOpenSSL==19.0.0
 python-dateutil==2.6.1
 pytz==2019.1
-PyYAML==3.12
+PyYAML==5.1
 queuelib==1.5.0
 requests==2.22.0
 rsa==3.4.2
