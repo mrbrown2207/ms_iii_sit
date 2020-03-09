@@ -1,0 +1,28 @@
+.urgent{
+    color: #FF0000;
+}
+
+.not-urgent{
+    color: #93C0F1;
+}
+
+hr{
+    margin: 30px 0px 30px 0px;
+}
+
+.btn-small-custom{
+    height: 24px;
+    width: 60px;
+    line-height: 24px;
+    margin: 5px 5px;
+    padding: 0 0.5em;
+}
+
+.rec-header{ /* forces it to centre vertically with buttons */
+    margin-top: 10px;
+    padding: 0 0.5em;
+}
+
+.icon-col{
+    margin-right: -15px;
+}
