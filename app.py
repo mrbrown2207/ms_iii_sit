@@ -20,7 +20,6 @@ qry_testing = 0
 issue_testing = 1
 acctId = 2
 
-
 def get_all_recs(tbl):
     try:
         if tbl == 'tblCat':
@@ -61,7 +60,12 @@ def del_rec(tbl, rec_id):
         print('Success')
 
 
-"""<<<<<<<<<<<<<<<<<<<<--------------------Issue Routines-------------------->>>>>>>>>>>>>>>>>>>>"""
+# main page
+@app.route('/')
+def main():
+    return render_template('index.html')
+
+# <<<<<<<<<<<<<<<<<<<<-------------------- Issue Routines -------------------->>>>>>>>>>>>>>>>>>>>
 #@app.route('/')
 @app.route('/get_issues')
 def get_issues():
@@ -183,15 +187,14 @@ def edit_issue(issue_id):
 def delete_issue(issue_id):
     del_rec('tblIssue', issue_id)
     return redirect(url_for('get_issues'))
-""" <<<<<<<<<<<<<<<<<<<<----------------End of Issue Routines---------------->>>>>>>>>>>>>>>>>>>>"""
+# <<<<<<<<<<<<<<<<<<<<---------------- End of Issue Routines ---------------->>>>>>>>>>>>>>>>>>>>
 
 
-""" <<<<<<<<<<<<<<<<<<<<--------------------Category Routines-------------------->>>>>>>>>>>>>>>>>>>>"""
+# <<<<<<<<<<<<<<<<<<<<-------------------- Category Routines -------------------->>>>>>>>>>>>>>>>>>>>
 @app.route('/add_cat')
 def add_cat():
     return render_template('addcat.html')
 
-@app.route('/')
 @app.route('/get_cats')
 def get_cats():
     return render_template('categories.html', cats=get_all_recs('tblCat'))
@@ -244,10 +247,10 @@ def edit_cat(cat_id):
 def delete_cat(cat_id):
     del_rec('tblCat', cat_id)
     return redirect(url_for('get_cats'))
-""" <<<<<<<<<<<<<<<<<<<<----------------End of Category Routines---------------->>>>>>>>>>>>>>>>>>>>"""
+# <<<<<<<<<<<<<<<<<<<<---------------- End of Category Routines ---------------->>>>>>>>>>>>>>>>>>>>
 
 
-""" <<<<<<<<<<<<<<<<<<<<--------------------User/Profile Routines-------------------->>>>>>>>>>>>>>>>>>>>"""
+# <<<<<<<<<<<<<<<<<<<<-------------------- User/Profile Routines -------------------->>>>>>>>>>>>>>>>>>>>
 @app.route('/add_acct')
 def add_acct():
     return render_template('addacct.html')
@@ -305,7 +308,15 @@ def edit_acct(acct_id):
 def delete_int(acct_id):
     del_rec('tblAccounts', acct_id)
     return redirect(url_for('get_accts'))
-""" <<<<<<<<<<<<<<<<<<<<----------------End of User/Profile Routines---------------->>>>>>>>>>>>>>>>>>>>"""
+# <<<<<<<<<<<<<<<<<<<<---------------- End of User/Profile Routines ---------------->>>>>>>>>>>>>>>>>>>>
+
+@app.route('/howitworks')
+def howitworks():
+    return render_template('howitworks.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
 
 
 if __name__ == '__main__':

@@ -58,4 +58,13 @@ DEL = 1
 SEL = 2
 SEL_ALL = 3
 
+CATS = {
+    'repair':1,
+    'complaint':2,
+    'suggestion':3,
+    'question':4,
+    'comment':5
+}
+
+
 """""<<<---->>>"""""

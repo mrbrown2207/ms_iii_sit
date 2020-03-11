@@ -3,48 +3,38 @@
 
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
-    <!--<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" >-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/fontawesome.min.css" />
-    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">-->
     <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" type="text/css" />
 </head>
 
 <body>
+    <div class="wrapper">
     <header class ="page-header px-0 py-0">
         <div class="container">
-            <div class="row">
-                <div class="col px-0">
-                    <nav class="navbar navbar-expand-lg shift navbar-light navbar-ua px-0 py-0">
-                        <a class="navbar-brand py-3 pl-3 py-md-4 pl-md-4" href="#">
-                            <img src="{{url_for('static', filename='/images/sit-logo-sm.jpg')}}" />
-                        </a>
-                        <button class="navbar-toggler custom-toggler navbar-toggler-right mr-3 mr-md-4" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapsed-menu collapse navbar-collapse px-3 py-3 px-md-4 py-md-4 flex-row-reverse collapse" id="navbarNav">
-                            <ul class="navbar-nav text-center">
-                                <li class="nav-item px-2 px-xl-3">
-                                    <a class="nav-link" href="{{url_for('howitworks')}}">How it Works</a>
-                                </li>
-                                <li class="nav-item px-2 px-xl-3">
-                                    <a class="nav-link" href="{{url_for('get_issues')}}">Issues</a>
-                                </li>
-                                <li class="nav-item px-2 px-xl-3">
-                                    <a class="nav-link" href="{{url_for('get_cats')}}">Categories</a>
-                                </li>
-                                <!--
-                                <li class="nav-item px-2 px-xl-3">
-                                    <a class="nav-link" href="{% url 'about' %}">About Us</a>
-                                </li>
-                                -->
-                                <li class="nav-item px-2 px-xl-3">
-                                    <a class="nav-link" href="{{url_for('contact'}}">Contact Us</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </nav>
+            <nav class="navbar navbar-expand-lg shift navbar-light navbar-ua px-0 py-0">
+                <a class="navbar-brand py-3 pl-3 py-md-4 pl-md-4" href="#">
+                    <img src="{{url_for('static', filename='images/sit-logo-sm-100x102.png')}}" />
+                </a>
+                <button class="navbar-toggler custom-toggler navbar-toggler-right mr-3 mr-md-4" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapsed-menu collapse navbar-collapse px-3 py-3 px-md-4 py-md-4 flex-row-reverse collapse" id="navbarNav">
+                    <ul class="navbar-nav text-center">
+                        <li class="nav-item px-2 px-xl-3">
+                            <a class="nav-link" href="{{url_for('howitworks')}}">How it Works</a>
+                        </li>
+                        <li class="nav-item px-2 px-xl-3">
+                            <a class="nav-link" href="{{url_for('get_issues')}}">Issues</a>
+                        </li>
+                        <li class="nav-item px-2 px-xl-3">
+                            <a class="nav-link" href="{{url_for('get_cats')}}">Categories</a>
+                        </li>
+                        <li class="nav-item px-2 px-xl-3">
+                            <a class="nav-link" href="{{url_for('contact')}}">Contact Us</a>
+                        </li>
+                    </ul>
                 </div>
-            </div>
+            </nav>
         </div>
     </header>
 
@@ -53,42 +43,74 @@
             {% block content %} {% endblock %}
         </div>
     </div>
+    </div>
+
+    <footer class="footer page-footer mt-3">
+
+        <section class="footer-links container py-1 py-lg-3 mb-4">
+            <div class="row">
+
+                <div class="col-12">
+                    <h5 class="text-center mb-1">Let's Stay Close</h5>
+                    <!-- Shown only on mobile -->
+                    <div class="row d-sm-block d-md-none">
+                        <div class="col mb-1">
+                            <div class="d-flex flex-row justify-content-center">
+                                <div class="px-1"><a href="https://www.facebook.com" target="_blank"><img src="{{url_for('static', filename='images/icon_FB.png')}}" width="30" alt="Facebook"></a></div>
+                                <div class="px-1"><a href="https://www.instagram.com" target="_blank"><img src="{{url_for('static', filename='images/icon_Instagram.png')}}" width="30" alt="Instagram"></a></div>
+                                <div class="px-1"><a href="https://www.twitter.com" target="_blank"><img src="{{url_for('static', filename='images/icon_Twitter.png')}}" width="30" alt="Twitter"></a></div>
+                                <div class="px-1"><a href="https://www.linkedin.com" target="_blank"><img src="{{url_for('static', filename='images/icon_LinkedIn.png')}}" width="30" alt="LinkedIn"></a></div>
+                                <div class="px-1"><a href="https://www.pinterest.com" target="_blank"><img src="{{url_for('static', filename='images/icon_Pinterest.png')}}" width="30" alt="Pinterest"></a></div>
+                            </div>        
+                        </div>
+                    </div>
+                    <!-------------------------->
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <!-- Shown only on desktop and larger -->
+                <div class="col-12 d-md-block">
+                    <div class="col-12 text-center">
+                        <div class="d-flex flex-row justify-content-center">
+                            <div class="px-1"><a href="https://www.facebook.com" target="_blank"><img src="{{url_for('static', filename='images/icon_FB.png')}}" width="30" alt="Facebook"></a></div>
+                            <div class="px-1"><a href="https://www.instagram.com" target="_blank"><img src="{{url_for('static', filename='images/icon_Instagram.png')}}" width="30" alt="Instagram"></a></div>
+                            <div class="px-1"><a href="https://www.twitter.com" target="_blank"><img src="{{url_for('static', filename='images/icon_Twitter.png')}}" width="30" alt="Twitter"></a></div>
+                            <div class="px-1"><a href="https://www.linkedin.com" target="_blank"><img src="{{url_for('static', filename='images/icon_LinkedIn.png')}}" width="30" alt="LinkedIn"></a></div>
+                            <div class="px-1"><a href="https://www.pinterest.com" target="_blank"><img src="{{url_for('static', filename='images/icon_Pinterest.png')}}" width="30" alt="Pinterest"></a></div>
+                        </div>        
+                    </div>
+                </div>
+                <!-------------------------->
+
+            </div>
+        </section>
+
+        <section class="copyright">
+            <div class="container">
+                <p>
+                    Copyright &#169; 2020 MB Service Issue Tracker<sup>&#174;</sup>
+                    <span>|</span><a href="#">Terms of Use</a>
+                    <span>|</span><a href="#">Privacy Policy</a>
+                    <span>|</span><a href="#">Unsubscribe</a>
+                </p>
+                <p class="rights-reserved">
+                    MBPM SIT<sup>&#174;</sup> is a fictitious product and is not really a registered trademark of the fictitious company MB Property Management. All rights are not really reserved.
+                </p>
+            </div>
+        </section>
+
+    </footer>
+
+
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/js/fontawesome.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <script type="text/javascript">
-        $(function() {
-            $('.collapsible').collapsible();
-            $('select').material_select();
-            
-            $('.button-collapse').sideNav();
-            
-            $(".cat-sel").change(function() {
-                $(".cat-icon").text($(".cat-sel option:selected").val().split("|")[1]);
-            });
-        });
-        
-        $('.datepicker').pickadate({
-            selectMonths: true, // Creates a dropdown to control month
-            selectYears: 15, // Creates a dropdown of 15 years to control year,
-            today: 'Today',
-            clear: 'Clear',
-            close: 'Ok',
-            closeOnSelect: false // Close upon selecting a date,
-        });
-        
-        $('.datepicker').on('mousedown',function(evt){
-            evt.preventDefault();
-        });
-        
-        $(".collapsible-header").click(function() {
-            var elem = $(this);
-            elem.find("i").first().text((elem.find("i").first().text() == "expand_less" ? "expand_more" : "expand_less"));
-        });
-
-    </script>
+    <script src="{{url_for('static', filename='js/scripts.js')}}"></script>
 </body>
 
 </html>
