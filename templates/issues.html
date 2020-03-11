@@ -5,120 +5,51 @@
     word would have to be the same in the {%block%} in base.html
 #}
 {% block content %}
-<div class="row">
-    <h3>Issues</h3>
-    <ul class="collapsible" data-collapsible="accordion">
-        {% for issue in issues %}
-            <li>
-                <div class="collapsible-header">
-                    <div class="col s3">
-                        <i class="material-icons">expand_more</i>
-                        <a href="{{url_for('delete_issue', issue_id=issue['issueId'])}}" class="waves-effect waves-light btn btn-small-custom">Done</a>
-                        <a href="{{url_for('edit_issue', issue_id=issue['issueId'])}}" class="waves-effect waves-light btn btn-small-custom blue">Edit</a>
-                    </div>
-                    <div class="col s1 rec-header right-align icon-col">
-                        <i class="material-icons prefix">{{issue['catIcon']}}</i>
-                    </div>
-                    <div class="col s2 rec-header left-align">
-                        <strong>{{issue['catName']}}</strong>
-                    </div>
-                    <div class="col s6 rec-header">
-                        <strong>{{issue['issueSubj']}}</strong>&nbsp;- {{issue['dateAdded']}}
-                    </div>
-                </div>
-                <div class="collapsible-body">
-                    <div class="row">
-                        <div class="col s3">
-                            <span>Date Added:</span>
-                        </div>
-                        <div class="col s3">
-                            <span>{{issue['dateAdded']}}</span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col s3">
-                            <span>Added By:</span>
-                        </div>
-                        <div class="col s3">
-                            <span>{{issue['addedByName']}}</span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col s3">
-                            <span>Description:</span>
-                        </div>
-                        <div class="col s6">
-                            <span>{{issue['issueDesc']}}</span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col s3">
-                            <span>Viewed/Seen By:</span>
-                        </div>
-                        <div class="col s3">
-                            <span>
-                                {% if issue['viewedByName'] == None %}
-                                    Not Viewed
-                                {% else %}
-                                    {{issue['viewedByName']}}
-                                {% endif %}
-                            </span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col s3">
-                            <span>Viewed Date:</span>
-                        </div>
-                        <div class="col s3">
-                            <span>
-                                {% if issue['dateViewed'] == None %}
-                                    &nbsp;
-                                {% else %}
-                                    {{issue['dateViewed']}}
-                                {% endif %}
-                            </span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col s3">
-                            <span>Resolved/Acknowledged By:</span>
-                        </div>
-                        <div class="col s3">
-                            <span>
-                                {% if issue['resolvedByName'] == None %}
-                                    Not Resolved/Acknowledged
-                                {% else %}
-                                    {{issue['resolvedByName']}}
-                                {% endif %}
-                            </span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col s3">
-                            <span>Resolved/Acknowledged Date:</span>
-                        </div>
-                        <div class="col s3">
-                            <span>
-                                {% if issue['dateResolved'] == None %}
-                                    &nbsp;
-                                {% else %}
-                                    {{issue['dateResolved']}}
-                                {% endif %}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </li>
-        {% else %}
-            <li><em>No issues found</em></li>
-        {% endfor %}
-    </ul>
-</div>
 
-<div class="row">
-    <a href="{{url_for('add_issue')}}" class="waves-effect waves-light btn">
-        <i class="material-icons right">playlist_add</i>Add Issue
-    </a>
+<div class="section">
+    <div class="container">
+        <h3>Issues</h3>
+        <div class="row panel my-3">
+            <div class="col-12">
+                <!-- Hidden on mobile -->
+                <div class="row heading d-none d-md-flex">
+                    <div class="col-md-2"><h5>Category</h5></div>
+                    <div class="col-md-2"><h5>Issue Id</h5></div>
+                    <div class="col-md-3"><h5>Issue</h5></div>
+                    <div class="col-md-3"><h5>Date Added</h5></div>
+                    <div class="col-md-2"><h5>Status</h5></div>
+                </div>
+                <!---------------------->
+            </div>
+            <div class="col-12">
+                <hr>
+            </div>
+
+            {% for issue in issues %}
+            <div class="col-12">
+                <!-- Hidden on mobile -->
+                <div class="row d-none d-md-flex">
+                    <div class="col-md-2"><p>{{issue['catName']}}</p></div>
+                    <div class="col-md-2"><a href="/">{{issue['issueId']}}</a></div>
+                    <div class="col-md-3"><p>{{issue['issueSubj']}}</p></div>
+                    <div class="col-m3-2"><p>{{issue['dateAdded']}}</p></div>
+                    <div class="col-md-2"><p>{{issue['issueStatus']}}</p></div>
+                </div>
+            </div>
+            <div class="col-12">
+                <hr class="item-deliniation">
+            </div>
+            {% else %}
+            <p>No issues found</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="row pt-3 text-right">
+        <div class="col-xs-12 offset-md-9 col-md-3">
+            <a href="{{url_for('add_issue')}}" class="btn btn-sit btn-sit-cta-add">Add Issue</a>
+        </div>
+    </div>
 </div>
 
 {% endblock %}

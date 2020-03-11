@@ -32,6 +32,8 @@ def get_all_recs(tbl):
             
         with conn.cursor() as cur:
             if qry_testing:
+                print("I am query testing")
+                print("sql = " + sql)
                 ret_values = cur.execute(sql, tbl)
             else:
                 ret_values = cur.execute(sql)
@@ -66,13 +68,13 @@ def main():
     return render_template('index.html')
 
 # <<<<<<<<<<<<<<<<<<<<-------------------- Issue Routines -------------------->>>>>>>>>>>>>>>>>>>>
-#@app.route('/')
 @app.route('/get_issues')
 def get_issues():
     issues = get_all_recs('tblIssue')
     
-    for row in issues:
-        print(row)
+    if issues:
+        for row in issues:
+            print(row)
 
     return render_template('issues.html', issues=get_all_recs('tblIssue'))
 

@@ -22,7 +22,10 @@
     --main-colour: #203B4E;
     --secondary-colour: #009AD1;
     --cta-btn-colour: #007BFF; /* btn-primary */
+    --add-btn-colour: #009AD1;
     --cancel-btn-colour: #C4343B;
+    --del-btn-colour: #C4343B;
+    --box-shadow-offset: 0 6px 8px 0;
 }
 
 /*--------------------------------------------------------------
@@ -78,6 +81,7 @@ h4 {
 }
 
 h5 {
+    color: var(--main-colour);
 	font-size: 12pt;
 	font-weight: 700;
 	line-height: 20pt;
@@ -166,17 +170,37 @@ figcaption {
 	color: #FFFFFF;
 	font-family: 'Archivo', sans-serif;
 	font-weight: 500;
-	border-color: var(--cta-btn-colour);
-	background: var(--cta-btn-colour);
 	border-radius: 28px;
 	min-width: 135px;
 	text-transform: uppercase;
 	padding: 10px 25px;
 }
 
-.btn-sit:hover {
+.btn-sit-cta {
+	border-color: var(--cta-btn-colour);
+	background: var(--cta-btn-colour);
+}
+
+.btn-sit-cta:hover {
     color: #FFFFFF;
-    box-shadow: 0 6px 8px 0 #B6CFDB;
+    box-shadow: var(--box-shadow-offset) #B6CFDB;
+}
+
+.btn-sit-cta-add {
+    border-color: var(--add-btn-colour);
+    background: var(--add-btn-colour);
+}
+
+.btn-sit-cta-add::before {
+    font-family: "FontAwesome";
+    font-weight: 500;
+    margin-right: 5px;
+    content: "\f067" !important;
+}
+
+.btn-sit-cta-add:hover {
+    color: #FFFFFF;
+    box-shadow: var(--box-shadow-offset) #62C1E4;
 }
 
 .btn-join-sit {
@@ -312,6 +336,13 @@ input[type=text] {
     text-transform: none;
 }
 
+.form-container, .panel {
+    background: #F6F8FA;
+    border: 1px solid var(--main-colour);
+    border-radius: 10px;
+    padding: 15px;
+}
+
 /*--------------------------------------------------------------
 # Featured
 --------------------------------------------------------------*/
@@ -352,8 +383,18 @@ input[type=text] {
 /*--------------------------------------------------------------
 # Others
 --------------------------------------------------------------*/
+.heading {
+    margin-bottom: -15px;
+}
+
 /* https://css-tricks.com/examples/hrs/ */
 hr {
+    height: 1px;
+    background-color: var(--main-colour);
+    border: none;
+}
+
+hr.fancy {
     border: 0;
     height: 1px;
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
