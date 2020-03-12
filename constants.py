@@ -8,7 +8,12 @@ SQL_DICT =  {
             "del_iss_rec": "delete from tblIssue where issueId=%s",
             "sel_cat_rec": "select * from tblCat where catId=%s",
             "sel_iss_rec": ("select i.issueSubj as issueSubj, i.issueDesc as issueDesc, i.catId as catId, i.urgent as urgent, " +
-                            "i.issueStatus as status, i.dateViewed as dateViewed, " +
+                            "case " + 
+                                "when i.issueStatus = 0 then 'New' " +
+                                "when i.issueStatus = 1 then 'Viewed' " +
+                                "when i.issueStatus = 2 then 'Resolved' " +
+                                "else 'Unknown' " +
+                            "end as issueStatus, i.dateViewed as dateViewed, " +
                             "i.markedResolvedBy as markedResolvedBy, i.dateResolved as dateResolved, i.resolutionDesc as resolutionDesc, " +
                             "i.dateAdded as dateAdded, " +
                             "concat(t.firstName, ' ', t.surname) as 'addedBy', " + 
@@ -17,7 +22,12 @@ SQL_DICT =  {
                                 "left join tblAccounts t on t.acctId = i.acctId " +
                                 "left join tblAccounts t2 on t2.acctId = i.markedResolvedBy where i.issueId=%s"),
             "sel_all_isss": ("select i.issueId as issueId, i.issueSubj as issueSubj, i.issueDesc as issueDesc, i.catId as catId, i.urgent as urgent, " +
-                            "i.issueStatus as status, i.dateViewed as dateViewed, " +
+                            "case " + 
+                                "when i.issueStatus = 0 then 'New' " +
+                                "when i.issueStatus = 1 then 'Viewed' " +
+                                "when i.issueStatus = 2 then 'Resolved' " +
+                                "else 'Unknown' " +
+                            "end as issueStatus, i.dateViewed as dateViewed, " +
                             "i.markedResolvedBy as markedResolvedBy, i.dateResolved as dateResolved, i.resolutionDesc as resolutionDesc, " +
                             "i.dateAdded as dateAdded, c.catName as catName, " +
                             "concat(t.firstName, ' ', t.surname) as 'addedByName', " + 

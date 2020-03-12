@@ -259,6 +259,25 @@ figcaption {
 }
 
 /*--------------------------------------------------------------
+# Dashboard
+--------------------------------------------------------------*/
+.last-col::after {
+    font-family: "FontAwesome";
+    font-weight: 500;
+    margin-left: 5px;
+    content: "\f040" !important;
+    cursor: pointer;
+}
+/*
+.first-col::before {
+    font-family: "FontAwesome";
+    font-weight: 500;
+    content: "\f0d8" !important;
+    cursor: pointer;
+    overflow: hidden;
+}
+*/
+/*--------------------------------------------------------------
 # Forms
 --------------------------------------------------------------*/
 .form-container {

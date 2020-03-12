@@ -17,7 +17,6 @@
                     <div class="col-md-2"><h5>Issue Id</h5></div>
                     <div class="col-md-3"><h5>Issue</h5></div>
                     <div class="col-md-3"><h5>Date Added</h5></div>
-                    <div class="col-md-2"><h5>Status</h5></div>
                 </div>
                 <!---------------------->
             </div>
@@ -29,11 +28,10 @@
             <div class="col-12">
                 <!-- Hidden on mobile -->
                 <div class="row d-none d-md-flex">
-                    <div class="col-md-2"><p>{{issue['catName']}}</p></div>
+                    <div class="col-md-2 first-col"><i class="fa fa-caret-right"></i><p>{{issue['catName']}}</p></div>
                     <div class="col-md-2"><a href="/">{{issue['issueId']}}</a></div>
                     <div class="col-md-3"><p>{{issue['issueSubj']}}</p></div>
                     <div class="col-m3-2"><p>{{issue['dateAdded']}}</p></div>
-                    <div class="col-md-2"><p>{{issue['issueStatus']}}</p></div>
                 </div>
             </div>
             <div class="col-12">
