@@ -7,11 +7,13 @@
 # Typography
 # Navigation
 # Links, Buttons
+# Dashboard
 # Forms
 # Featured
 # Others
 # Footer
 # Media Queries for different screen sizes
+# Tooltip
 --------------------------------------------------------------*/
 
 /*--------------------------------------------------------------
@@ -146,12 +148,19 @@ figcaption {
     padding: 15px 0;
 }
 
+.nav-link {
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    transition: all .5s ease;
+}
+
 .navbar-light .navbar-toggler {
   	border: none;
 }
 
-.navbar-sit .navbar-nav .nav-link:hover {
-	color: var(--main-colour);
+.navbar-sit .navbar-nav, .nav-link:hover {
+	color: var(--secondary-colour) !important;
 }
 
 .header-logo {
@@ -174,6 +183,10 @@ figcaption {
 	min-width: 135px;
 	text-transform: uppercase;
 	padding: 10px 25px;
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    transition: all .5s ease;
 }
 
 .btn-sit-cta {
@@ -261,22 +274,38 @@ figcaption {
 /*--------------------------------------------------------------
 # Dashboard
 --------------------------------------------------------------*/
-.last-col::after {
-    font-family: "FontAwesome";
+.cta-icon {
+    color: var(--main-colour);
     font-weight: 500;
-    margin-left: 5px;
-    content: "\f040" !important;
     cursor: pointer;
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    transition: all .5s ease;
 }
-/*
-.first-col::before {
-    font-family: "FontAwesome";
-    font-weight: 500;
-    content: "\f0d8" !important;
-    cursor: pointer;
-    overflow: hidden;
+
+.last-col {
+    margin-left: 25px;
 }
-*/
+
+.view-details, .hide-details {
+    margin-right: 10px;
+}
+
+.cta-icon:hover {
+    color: var(--secondary-colour) !important;
+}
+
+.toggle-caret, .cta-edit {
+    text-decoration: none !important;
+}
+
+.details-label {
+    color: var(--main-colour);
+    font-weight: 700;
+    text-align: right;
+}
+
 /*--------------------------------------------------------------
 # Forms
 --------------------------------------------------------------*/
@@ -427,6 +456,10 @@ hr.fancy {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='#4D7488' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
 }
 
+.details-panel {
+    background-color: #FFFFFF !important;
+}
+
 /*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/
@@ -525,4 +558,36 @@ hr.fancy {
 	.navbar-sit .navbar-nav .nav-link {
 		font-size: 11pt;
 	}
+}
+
+
+/*--------------------------------------------------------------
+# Tooltip
+--------------------------------------------------------------*/
+/*
+There were many solutions out there for getting the arrow the same
+colour as the main background of the tooltip; this was the only
+one that worked for me. I found it here:
+https://stackoverflow.com/questions/44955201/bootstrap-4-change-tooltip-arrow-color
+*/
+.tooltip-inner {
+    background-color: var(--secondary-colour);
+    color: #FFFFFF;
+    width: auto;
+    max-width: 400px;
+    font-size: 100%;
+    white-space: nowrap;
+}
+
+.bs-tooltip-auto[x-placement^=top] .arrow::before, .bs-tooltip-top .arrow::before {
+    border-top-color: var(--secondary-colour);
+}
+.bs-tooltip-auto[x-placement^=right] .arrow::before, .bs-tooltip-right .arrow::before {
+    border-right-color: var(--secondary-colour);
+}
+.bs-tooltip-auto[x-placement^=bottom] .arrow::before, .bs-tooltip-bottom .arrow::before {
+    border-bottom-color: var(--secondary-colour);
+}
+.bs-tooltip-auto[x-placement^=left] .arrow::before, .bs-tooltip-left .arrow::before {
+    border-left-color: var(--secondary-colour);
 }

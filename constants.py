@@ -9,7 +9,7 @@ SQL_DICT =  {
             "sel_cat_rec": "select * from tblCat where catId=%s",
             "sel_iss_rec": ("select i.issueSubj as issueSubj, i.issueDesc as issueDesc, i.catId as catId, i.urgent as urgent, " +
                             "case " + 
-                                "when i.issueStatus = 0 then 'New' " +
+                                "when i.issueStatus = 0 then 'Not Viewed' " +
                                 "when i.issueStatus = 1 then 'Viewed' " +
                                 "when i.issueStatus = 2 then 'Resolved' " +
                                 "else 'Unknown' " +
@@ -23,7 +23,7 @@ SQL_DICT =  {
                                 "left join tblAccounts t2 on t2.acctId = i.markedResolvedBy where i.issueId=%s"),
             "sel_all_isss": ("select i.issueId as issueId, i.issueSubj as issueSubj, i.issueDesc as issueDesc, i.catId as catId, i.urgent as urgent, " +
                             "case " + 
-                                "when i.issueStatus = 0 then 'New' " +
+                                "when i.issueStatus = 0 then 'Not Viewed' " +
                                 "when i.issueStatus = 1 then 'Viewed' " +
                                 "when i.issueStatus = 2 then 'Resolved' " +
                                 "else 'Unknown' " +

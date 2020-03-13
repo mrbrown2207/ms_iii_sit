@@ -16,7 +16,8 @@
                     <div class="col-md-2"><h5>Category</h5></div>
                     <div class="col-md-2"><h5>Issue Id</h5></div>
                     <div class="col-md-3"><h5>Issue</h5></div>
-                    <div class="col-md-3"><h5>Date Added</h5></div>
+                    <div class="col-md-2"><h5>Date Added</h5></div>
+                    <div class="col-md-2"><h5>Status</h5></div>
                 </div>
                 <!---------------------->
             </div>
@@ -28,10 +29,75 @@
             <div class="col-12">
                 <!-- Hidden on mobile -->
                 <div class="row d-none d-md-flex">
-                    <div class="col-md-2 first-col"><i class="fa fa-caret-right"></i><p>{{issue['catName']}}</p></div>
+                    <div class="col-md-2"><p><a class="toggle-caret" href="#details-{{issue['issueId']}}" data-toggle="collapse" data-toggle-1="tooltip" data-placement="top" data-title-alt="Click to hide details" data-id="{{issue['issueId']}}" title="Click to view details"><i id="caret-widget-{{issue['issueId']}}" class="cta-icon view-details fa fa-caret-right"></i></a>{{issue['catName']}}</p></div>
                     <div class="col-md-2"><a href="/">{{issue['issueId']}}</a></div>
                     <div class="col-md-3"><p>{{issue['issueSubj']}}</p></div>
                     <div class="col-m3-2"><p>{{issue['dateAdded']}}</p></div>
+                    <div class="col-md-2 text-center"><p>{{issue['issueStatus']}}<a class="cta-edit" href="/" data-toggle-1="tooltip" data-placement="top" title="Click to edit record"><i class="cta-icon last-col fa fa-pencil"></i></a></p></div>
+                </div>
+                <!-- Issue details -->
+                <div class="container">
+
+                    <!-- Having the panel inside the div.collapse results in a smoother collapse. -->
+                    <div id="details-{{issue['issueId']}}" class="collapse">
+                        <div class="row panel details-panel">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-xs-6 col-md-2">
+                                        <p class="details-label">Id:</p>
+                                    </div>
+                                    <div class="col-xs-6 col-md-8">
+                                        <p class="detail-data">{{issue['issueId']}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6 col-md-2">
+                                        <p class="details-label">Status:</p>
+                                    </div>
+                                    <div class="col-xs-2 col-md-2">
+                                        <p class="detail-data">{{issue['issueStatus']}}</p>
+                                    </div>
+                                    <div class="col-xs-2 col-md-2">
+                                        <a href="/" data-toggle-1="tooltip" data-placement="top" title="Click to change status to 'Viewed'"><i class="cta-icon fa fa-eye"></i></a>
+                                            <span class="mx-3"></span>
+                                        <a href="/" data-toggle-1="tooltip" data-placement="top" title="Click to change status to 'Resolved'"><i class="cta-icon fa fa-check"></i></a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6 col-md-2">
+                                        <p class="details-label">Added By:</p>
+                                    </div>
+                                    <div class="col-xs-6 col-md-8">
+                                        <p class="detail-data">{{issue['addedByName']}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6 col-md-2">
+                                        <p class="details-label">Date Added:</p>
+                                    </div>
+                                    <div class="col-xs-6 col-md-8">
+                                        <p class="detail-data">{{issue['dateAdded']}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6 col-md-2">
+                                        <p class="details-label">Issue:</p>
+                                    </div>
+                                    <div class="col-xs-6 col-md-8">
+                                        <p class="detail-data">{{issue['issueSubj']}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6 col-md-2">
+                                        <p class="details-label">Description:</p>
+                                    </div>
+                                    <div class="col-xs-6 col-md-8">
+                                        <p class="detail-data">{{issue['issueDesc']}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-12">
