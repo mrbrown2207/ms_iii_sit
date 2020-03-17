@@ -36,7 +36,7 @@ SQL_DICT =  {
                                 "left join tblAccounts t on t.acctId = i.acctId " +
                                 "left join tblAccounts t2 on t2.acctId = i.markedResolvedBy"),
             "sel_all_cats": "select * from tblCat",
-            "sel_int_rec": "select * from tblAccounts where acctId=%s",
+            "sel_acct_rec": "select * from tblAccounts where email=%s",
             "upd_iss": ("update tblIssue set " +
                             "issueSubj=%s, " +
                             "issueDesc=%s, " +
