@@ -8,9 +8,7 @@ issue_testing = 1
 acctId = 2
 
 def get_db():
-    print("In get_db()")
     if 'db' not in g:
-        print("do not have a db")
         # Connect to the database
         g.db = pymysql.connect(host=current_app.config.get('HOST'),
                                 user=current_app.config.get('DB_USER'),
@@ -18,9 +16,7 @@ def get_db():
                                 db=current_app.config.get('DB'),
                                 charset=current_app.config.get('CHARSET'),
                                 cursorclass=pymysql.cursors.DictCursor)
-
-        print("connected to database")
-
+                                
     return g.db
 
 def get_all_recs(tbl):
@@ -38,14 +34,14 @@ def get_all_recs(tbl):
         with db.cursor() as cur:
             if qry_testing:
                 print("I am query testing")
-                print("sql = " + sql)
+                print("SQL: {}".format(sql))
                 cur.execute(sql, tbl)
             else:
                 cur.execute(sql)
 
             return cur.fetchall()
     except Exception as e:
-        print('query string: {}'.format(str(e)))
+        print('Error: {}'.format(str(e)))
     finally:
         print('Success')
 
@@ -64,6 +60,6 @@ def del_rec(tbl, rec_id):
             db.commit()
             
     except Exception as e:
-        print(e)
+        print('Error: {}'.format(str(e)))
     finally:
         print('Success')

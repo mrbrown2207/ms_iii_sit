@@ -58,9 +58,17 @@
                                         <p class="detail-data">{{issue['issueStatus']}}</p>
                                     </div>
                                     <div class="col-xs-2 col-md-2">
-                                        <a href="/" data-toggle-1="tooltip" data-placement="top" title="Click to change status to 'Viewed'"><i class="cta-icon fa fa-eye"></i></a>
+                                        {% if issue['issueStatusVal'] < viewed() %}
+                                        <a href="{{url_for('main.upd_issue_status', issue_id=issue['issueId'], issue_status=viewed())}}" data-toggle-1="tooltip" data-placement="top" title="Click to change status to 'Viewed'"><i class="cta-icon fa fa-eye"></i></a>
+                                        {% endif %}
+                                        {% if issue['issueStatusVal'] < resolved() %}
                                             <span class="mx-3"></span>
-                                        <a href="/" data-toggle-1="tooltip" data-placement="top" title="Click to change status to 'Resolved'"><i class="cta-icon fa fa-check"></i></a>
+                                        <a href="{{url_for('main.upd_issue_status', issue_id=issue['issueId'], issue_status=resolved())}}" data-toggle-1="tooltip" data-placement="top" title="Click to change status to 'Resolved'"><i class="cta-icon fa fa-check"></i></a>
+                                        {% endif %}
+                                        {% if issue['issueStatusVal'] != notviewed() and testing() %}
+                                            <span class="mx-3"></span>
+                                        <a href="{{url_for('main.upd_issue_status', issue_id=issue['issueId'], issue_status=notviewed())}}" data-toggle-1="tooltip" data-placement="top" title="Click to change status to 'Not Viewed'"><i class="cta-icon fa fa-eye-slash"></i></a>
+                                        {% endif %}
                                     </div>
                                 </div>
                                 <div class="row">

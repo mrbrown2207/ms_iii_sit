@@ -13,7 +13,7 @@ SQL_DICT =  {
                                 "when i.issueStatus = 1 then 'Viewed' " +
                                 "when i.issueStatus = 2 then 'Resolved' " +
                                 "else 'Unknown' " +
-                            "end as issueStatus, i.dateViewed as dateViewed, " +
+                            "end as issueStatus, i.issueStatus as issueStatusVal, i.dateViewed as dateViewed, " +
                             "i.markedResolvedBy as markedResolvedBy, i.dateResolved as dateResolved, i.resolutionDesc as resolutionDesc, " +
                             "i.dateAdded as dateAdded, " +
                             "concat(t.firstName, ' ', t.surname) as 'addedBy', " + 
@@ -27,7 +27,7 @@ SQL_DICT =  {
                                 "when i.issueStatus = 1 then 'Viewed' " +
                                 "when i.issueStatus = 2 then 'Resolved' " +
                                 "else 'Unknown' " +
-                            "end as issueStatus, i.dateViewed as dateViewed, " +
+                            "end as issueStatus, i.issueStatus as issueStatusVal, i.dateViewed as dateViewed, " +
                             "i.markedResolvedBy as markedResolvedBy, i.dateResolved as dateResolved, i.resolutionDesc as resolutionDesc, " +
                             "i.dateAdded as dateAdded, c.catName as catName, " +
                             "concat(t.firstName, ' ', t.surname) as 'addedByName', " + 
@@ -48,6 +48,7 @@ SQL_DICT =  {
                             "resolutionDesc=%s, " +
                             "dateModified=NOW() " +
                         "where issueId=%s"),
+            "upd_iss_status": ("update tblIssue set issueStatus=%s where issueId=%s"),
             "add_iss": ("insert into tblIssue (issueSubj, issueDesc, catId, urgent, acctId, dateAdded, dateModified) " +
                             "values " +
                         "(%s, %s, %s, %s, %s, NOW(), NOW())"),
@@ -64,12 +65,18 @@ DEL = 1
 SEL = 2
 SEL_ALL = 3
 
+ISSUE_STATUS = {
+    'notviewed':0,
+    'viewed':1,
+    'resolved':2,
+}
+
 CATS = {
     'repair':1,
     'complaint':2,
     'suggestion':3,
     'question':4,
-    'comment':5
+    'comment':5,
 }
 
 

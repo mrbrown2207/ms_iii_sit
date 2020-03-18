@@ -18,9 +18,11 @@ def index():
 def get_issues():
     issues = get_all_recs('tblIssue')
     
+    """
     if issues:
         for row in issues:
             print(row)
+    """
 
     return render_template('issues.html', issues=get_all_recs('tblIssue'))
 
@@ -54,7 +56,7 @@ def insert_issue():
                         )
             db.commit()
     except Exception as e:
-        print(e)
+        print("Error: {}".format(str(e)))
     finally:
         print('Success')
 
@@ -97,12 +99,26 @@ def update_issue(issue_id):
                             issue_id
                         )
     except Exception as e:
-        print(e)
+        print("Error: {}".format(str(e)))
     finally:
         print('Success')
     
     return redirect(url_for('main.get_issues'))
 
+@main.route('/upd_issue_status/<issue_id>/<issue_status>')
+def upd_issue_status(issue_id, issue_status):
+    try:
+        db = get_db()
+
+        with db.cursor() as cur:
+            cur.execute(SQL_DICT['upd_iss_status'], (issue_status, issue_id))
+            db.commit()
+    except Exception as e:
+        print("Error: {}".format(str(e)))
+    finally:
+        print("Status update successful")
+
+    return redirect(url_for('main.get_issues'))
 
 @main.route('/edit_issue/<issue_id>')
 def edit_issue(issue_id):
@@ -130,7 +146,7 @@ def edit_issue(issue_id):
                 row['dateResolved'] = ''
             
     except Exception as e:
-        print(e)
+        print("Error: {}".format(str(e)))
     finally:
         print('Success')
         
@@ -162,7 +178,7 @@ def update_cat(cat_id):
         with db.cursor() as cur:
             cur.execute(SQL_DICT['upd_cat'], (request.form.get('cat_name'), request.form.get('cat_desc'), cat_id))
     except Exception as e:
-        print(e)
+        print("Error: {}".format(str(e)))
     finally:
         print('Success')
     
@@ -179,7 +195,7 @@ def insert_cat():
             
             db.commit()
     except Exception as e:
-        print(e)
+        print("Error: {}".format(str(e)))
     finally:
         print('Success')
 
@@ -196,7 +212,7 @@ def edit_cat(cat_id):
             row = cur.fetchone()
             print(row)
     except Exception as e:
-        print(e)
+        print("Error: {}".format(str(e)))
     finally:
         print('Success')
 
@@ -229,7 +245,7 @@ def update_acct(acct_id):
         with db.cursor() as cur:
             cur.execute(SQL_DICT['upd_acct'], (request.form.get('acct_name'), request.form.get('cat_desc'), acct_id))
     except Exception as e:
-        print(e)
+        print("Error: {}".format(str(e)))
     finally:
         print('Success')
     
@@ -246,7 +262,7 @@ def insert_acct():
             
             db.commit()
     except Exception as e:
-        print(e)
+        print("Error: {}".format(str(e)))
     finally:
         print('Success')
 
@@ -263,7 +279,7 @@ def edit_acct(acct_id):
             row = cur.fetchone()
             print(row)
     except Exception as e:
-        print(e)
+        print("Error: {}".format(str(e)))
     finally:
         print('Success')
 
