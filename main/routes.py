@@ -1,18 +1,19 @@
 import pymysql
 import pymysql.cursors
 import datetime
-from flask import Flask, Blueprint, render_template, redirect, request, url_for, current_app
+from flask import (Flask, Blueprint, render_template, redirect, request, 
+                    url_for, current_app)
 from ms_iii_sit.constants import SQL_DICT, SQL_DT_FMT, DDMMYYYY_FMT
 from . utils import *
 
-main = Blueprint('auth', __name__)
+main = Blueprint('main', __name__)
 
 # main page
 @main.route('/')
 def index():
     return render_template('index.html')
 
-# <<<<<<<<<<<<<<<<<<<<-------------------- Issue Routines -------------------->>>>>>>>>>>>>>>>>>>>
+# <<<<<<<<<<<<<<<<<<<<-------------------- Issue Routes -------------------->>>>>>>>>>>>>>>>>>>>
 @main.route('/get_issues')
 def get_issues():
     issues = get_all_recs('tblIssue')
@@ -32,7 +33,9 @@ def add_issue():
 @main.route('/insert_issue', methods=['POST'])
 def insert_issue():
     try:
-        with conn.cursor() as cur:
+        db = get_db()
+
+        with db.cursor() as cur:
             # If the switch isn't on, then .get() will not find it. In that case set value to false.
             # The component returns 'on' or 'off'. We store as a boolean in the database.
             issue_urgent = request.form.get('is_urgent', False)
@@ -49,18 +52,20 @@ def insert_issue():
                             acctId)
                             #request.form.get('acct_id', 'Michael')
                         )
-            conn.commit()
+            db.commit()
     except Exception as e:
         print(e)
     finally:
         print('Success')
 
-    return redirect(url_for('get_issues'))
+    return redirect(url_for('main.get_issues'))
 
 
 @main.route('/update_issue/<issue_id>', methods=['POST'])
 def update_issue(issue_id):
     try:
+        db = get_db()
+
         # If the switch isn't on, then .get() will not find it. In that case set value to false.
         # The component returns 'on' or 'off'. We store as a boolean in the database.
         issue_urgent = request.form.get('urgent', False)
@@ -79,7 +84,7 @@ def update_issue(issue_id):
             issue_resolved = resolved_by = 0
             resolved_dt = resolution_desc = ''
 
-        with conn.cursor() as cur:
+        with db.cursor() as cur:
             cur.execute(SQL_DICT['upd_iss'],
                             request.form.get('issue_subj'),
                             request.form.get('issue_desc'),
@@ -96,14 +101,16 @@ def update_issue(issue_id):
     finally:
         print('Success')
     
-    return redirect(url_for('get_issues'))
+    return redirect(url_for('main.get_issues'))
 
 
 @main.route('/edit_issue/<issue_id>')
 def edit_issue(issue_id):
     try:
-        with conn.cursor() as cur:
-            ret_val = cur.execute(SQL_DICT['sel_iss_rec'], (issue_id))
+        db = get_db()
+
+        with db.cursor() as cur:
+            cur.execute(SQL_DICT['sel_iss_rec'], (issue_id))
             row = cur.fetchone()
             print(row)
             
@@ -133,11 +140,11 @@ def edit_issue(issue_id):
 @main.route('/delete_issue/<issue_id>')
 def delete_issue(issue_id):
     del_rec('tblIssue', issue_id)
-    return redirect(url_for('get_issues'))
-# <<<<<<<<<<<<<<<<<<<<---------------- End of Issue Routines ---------------->>>>>>>>>>>>>>>>>>>>
+    return redirect(url_for('main.get_issues'))
+# <<<<<<<<<<<<<<<<<<<<---------------- End of Issue Routes ---------------->>>>>>>>>>>>>>>>>>>>
 
 
-# <<<<<<<<<<<<<<<<<<<<-------------------- Category Routines -------------------->>>>>>>>>>>>>>>>>>>>
+# <<<<<<<<<<<<<<<<<<<<-------------------- Category Routes -------------------->>>>>>>>>>>>>>>>>>>>
 @main.route('/add_cat')
 def add_cat():
     return render_template('addcat.html')
@@ -150,36 +157,42 @@ def get_cats():
 @main.route('/update_cat/<cat_id>', methods=['POST'])
 def update_cat(cat_id):
     try:
-        with conn.cursor() as cur:
+        db = get_db()
+
+        with db.cursor() as cur:
             cur.execute(SQL_DICT['upd_cat'], (request.form.get('cat_name'), request.form.get('cat_desc'), cat_id))
     except Exception as e:
         print(e)
     finally:
         print('Success')
     
-    return redirect(url_for('get_cats'))
+    return redirect(url_for('main.get_cats'))
 
 
 @main.route('/insert_cat', methods=['POST'])
 def insert_cat():
     try:
-        with conn.cursor() as cur:
+        db = get_db()
+
+        with db.cursor() as cur:
             cur.execute(SQL_DICT['add_cat'], (request.form.get('cat_name'), request.form.get('cat_desc')))
             
-            conn.commit()
+            db.commit()
     except Exception as e:
         print(e)
     finally:
         print('Success')
 
-    return redirect(url_for('get_cats'))
+    return redirect(url_for('main.get_cats'))
 
 
 @main.route('/edit_cat/<cat_id>')
 def edit_cat(cat_id):
     try:
-        with conn.cursor() as cur:
-            ret_val = cur.execute(SQL_DICT['sel_cat_rec'], (cat_id))
+        db = get_db()
+
+        with db.cursor() as cur:
+            cur.execute(SQL_DICT['sel_cat_rec'], (cat_id))
             row = cur.fetchone()
             print(row)
     except Exception as e:
@@ -193,11 +206,11 @@ def edit_cat(cat_id):
 @main.route('/delete_cat/<cat_id>')
 def delete_cat(cat_id):
     del_rec('tblCat', cat_id)
-    return redirect(url_for('get_cats'))
-# <<<<<<<<<<<<<<<<<<<<---------------- End of Category Routines ---------------->>>>>>>>>>>>>>>>>>>>
+    return redirect(url_for('main.get_cats'))
+# <<<<<<<<<<<<<<<<<<<<---------------- End of Category Routes ---------------->>>>>>>>>>>>>>>>>>>>
 
 
-# <<<<<<<<<<<<<<<<<<<<-------------------- User/Profile Routines -------------------->>>>>>>>>>>>>>>>>>>>
+# <<<<<<<<<<<<<<<<<<<<-------------------- User/Profile Routes -------------------->>>>>>>>>>>>>>>>>>>>
 @main.route('/add_acct')
 def add_acct():
     return render_template('addacct.html')
@@ -211,36 +224,42 @@ def get_accts():
 @main.route('/update_acct/<acct_id>', methods=['POST'])
 def update_acct(acct_id):
     try:
-        with conn.cursor() as cur:
+        db = get_db()
+
+        with db.cursor() as cur:
             cur.execute(SQL_DICT['upd_acct'], (request.form.get('acct_name'), request.form.get('cat_desc'), acct_id))
     except Exception as e:
         print(e)
     finally:
         print('Success')
     
-    return redirect(url_for('get_accts'))
+    return redirect(url_for('main.get_accts'))
 
 
 @main.route('/insert_cat', methods=['POST'])
 def insert_acct():
     try:
-        with conn.cursor() as cur:
+        db = get_db()
+
+        with db.cursor() as cur:
             cur.execute(SQL_DICT['add_cat'], (request.form.get('cat_name'), request.form.get('cat_desc')))
             
-            conn.commit()
+            db.commit()
     except Exception as e:
         print(e)
     finally:
         print('Success')
 
-    return redirect(url_for('get_accts'))
+    return redirect(url_for('main.get_accts'))
 
 
 @main.route('/edit_acct/<acct_id>')
 def edit_acct(acct_id):
     try:
-        with conn.cursor() as cur:
-            ret_val = cur.execute(SQL_DICT['sel_int_rec'], (acct_id))
+        db = get_db()
+
+        with db.cursor() as cur:
+            cur.execute(SQL_DICT['sel_int_rec'], (acct_id))
             row = cur.fetchone()
             print(row)
     except Exception as e:
@@ -254,8 +273,8 @@ def edit_acct(acct_id):
 @main.route('/delete_acct/<acct_id>')
 def delete_int(acct_id):
     del_rec('tblAccounts', acct_id)
-    return redirect(url_for('get_accts'))
-# <<<<<<<<<<<<<<<<<<<<---------------- End of User/Profile Routines ---------------->>>>>>>>>>>>>>>>>>>>
+    return redirect(url_for('main.get_accts'))
+# <<<<<<<<<<<<<<<<<<<<---------------- End of User/Profile Routes ---------------->>>>>>>>>>>>>>>>>>>>
 
 @main.route('/howitworks')
 def howitworks():

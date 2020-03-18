@@ -1,21 +1,32 @@
 import pymysql
-from flask import current_app
+import pymysql.cursors
+from flask import current_app, g
 from ms_iii_sit.constants import SQL_DICT
 
 qry_testing = 0
 issue_testing = 1
 acctId = 2
 
-# Connect to the database
-conn = pymysql.connect(host=current_app.config('HOST'),
-                        user=current_app.config('DB_USER'),
-                        password=current_app.config('DB_ABTRUSUS'),
-                        db=current_app.config('DB'),
-                        charset=current_app.config('CHARSET'),
-                        cursorclass=pymysql.cursors.DictCursor)
+def get_db():
+    print("In get_db()")
+    if 'db' not in g:
+        print("do not have a db")
+        # Connect to the database
+        g.db = pymysql.connect(host=current_app.config.get('HOST'),
+                                user=current_app.config.get('DB_USER'),
+                                password=current_app.config.get('DB_ABTRUSUS'),
+                                db=current_app.config.get('DB'),
+                                charset=current_app.config.get('CHARSET'),
+                                cursorclass=pymysql.cursors.DictCursor)
+
+        print("connected to database")
+
+    return g.db
 
 def get_all_recs(tbl):
     try:
+        db = get_db()
+
         if tbl == 'tblCat':
             if qry_testing:
                 sql = SQL_DICT['sel_recs']
@@ -24,13 +35,13 @@ def get_all_recs(tbl):
         else:
             sql = SQL_DICT['sel_all_isss']
             
-        with conn.cursor() as cur:
+        with db.cursor() as cur:
             if qry_testing:
                 print("I am query testing")
                 print("sql = " + sql)
-                ret_values = cur.execute(sql, tbl)
+                cur.execute(sql, tbl)
             else:
-                ret_values = cur.execute(sql)
+                cur.execute(sql)
 
             return cur.fetchall()
     except Exception as e:
@@ -41,14 +52,16 @@ def get_all_recs(tbl):
 
 def del_rec(tbl, rec_id):
     try:
+        db = get_db()
+
         if tbl == 'tblCat':
             sql = SQL_DICT['del_cat_rec']
         else:
             sql = SQL_DICT['del_iss_rec']
             
-        with conn.cursor() as cur:
+        with db.cursor() as cur:
             cur.execute(sql, (rec_id))
-            conn.commit()
+            db.commit()
             
     except Exception as e:
         print(e)

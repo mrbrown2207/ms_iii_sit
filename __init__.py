@@ -1,7 +1,7 @@
 
 from flask import Flask
 from flask_login import LoginManager
-from config import Config
+from . config import Config
 
 
 login_manager = LoginManager()
@@ -15,7 +15,7 @@ def create_app(config_class=Config):
 
     login_manager.init_app(app)
 
-    from ms_iii_sit_main.routes import main 
+    from ms_iii_sit.main.routes import main 
     from ms_iii_sit.auth.routes import auth
     app.register_blueprint(main)
     app.register_blueprint(auth)
