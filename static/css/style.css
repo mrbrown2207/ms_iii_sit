@@ -27,7 +27,7 @@
     --add-btn-colour: #009AD1;
     --cancel-btn-colour: #C4343B;
     --del-btn-colour: #C4343B;
-    --box-shadow-offset: 0 6px 8px 0;
+    --box-shadow-offset: 0 2px 5px 0;
 }
 
 /*--------------------------------------------------------------
@@ -113,18 +113,8 @@ p > span.sit-text {
 	color: var(--main-colour)
 }
 
-/* Bring it closer to icon image that has transparent space below figure */
-figcaption {
-    margin-top: -15px;
-}
-
 .article-label {
     margin-bottom: 5px !important;
-}
-
-/* Bring first row of icons closer to h1 as there is transparent space above figure */
-.icons-row-1 {
-    margin-top: -15px;
 }
 
 /* For sticky footer and being able to push it */
@@ -175,6 +165,12 @@ figcaption {
 /*--------------------------------------------------------------
 # Links, Buttons
 --------------------------------------------------------------*/
+a.sit-disabled, button.sit-disabled { /* This is because you cannot disable a link like you can a button */
+	opacity: 0.25;
+	pointer-events: none;
+	cursor: default;
+}
+
 .btn-sit {
 	color: #FFFFFF;
 	font-family: 'Archivo', sans-serif;
@@ -199,7 +195,7 @@ figcaption {
     box-shadow: var(--box-shadow-offset) #B6CFDB;
 }
 
-.btn-sit-cta-add {
+.btn-sit-cta-add, .btn-sit-submit {
     border-color: var(--add-btn-colour);
     background: var(--add-btn-colour);
 }
@@ -211,9 +207,22 @@ figcaption {
     content: "\f067" !important;
 }
 
-.btn-sit-cta-add:hover {
+.btn-sit-cta-add:hover, .btn-sit-submit:hover {
     color: #FFFFFF;
     box-shadow: var(--box-shadow-offset) #62C1E4;
+}
+
+.destructive {
+    background: #C4343B;
+    border: 2px solid #C4343B;
+    color: #FFFFFF;
+}
+
+.destructive:hover {
+    background: #D7353D;
+    border: 2px solid #D7353D;
+    color: #FFFFFF;
+    box-shadow: var(--box-shadow-offset) #C6262D;
 }
 
 .btn-join-sit {
@@ -385,10 +394,19 @@ input[type=text] {
 }
 
 .form-container, .panel {
-    background: #F6F8FA;
+    background: #FFFFFF;
     border: 1px solid var(--main-colour);
     border-radius: 10px;
     padding: 15px;
+}
+
+.form-static-panel {
+    background: #F6F8FA;
+}
+
+/* Pull characters remaing text closer to textarea */
+#char-count {
+    margin-top: -15px;
 }
 
 /*--------------------------------------------------------------
@@ -435,17 +453,19 @@ input[type=text] {
     margin-bottom: -15px;
 }
 
-/* https://css-tricks.com/examples/hrs/ */
+/*
 hr {
     height: 1px;
     background-color: var(--main-colour);
     border: none;
 }
+*/
 
+/* https://css-tricks.com/examples/hrs/ */
 hr.fancy {
     border: 0;
     height: 1px;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+    background-image: linear-gradient(to right, rgba(32, 59, 78, 0), rgba(32, 59, 78, 0.75), rgba(32, 59, 78, 0));
 }
 
 .container {
@@ -591,3 +611,5 @@ https://stackoverflow.com/questions/44955201/bootstrap-4-change-tooltip-arrow-co
 .bs-tooltip-auto[x-placement^=left] .arrow::before, .bs-tooltip-left .arrow::before {
     border-left-color: var(--secondary-colour);
 }
+
+

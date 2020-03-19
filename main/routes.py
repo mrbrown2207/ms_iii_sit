@@ -32,24 +32,28 @@ def add_issue():
     return render_template('addissue.html', cats=get_all_recs('tblCat'))
 
         
-@main.route('/insert_issue', methods=['POST'])
-def insert_issue():
+@main.route('/add_issue_todb', methods=['POST'])
+def add_issue_todb():
     try:
         db = get_db()
+
+        if current_app.config.get("NOLOGIN"):
+            acctId = current_app.config.get("TESTACCTID")
+        else:
+            acctId = 99 # ˘L˘
 
         with db.cursor() as cur:
             # If the switch isn't on, then .get() will not find it. In that case set value to false.
             # The component returns 'on' or 'off'. We store as a boolean in the database.
-            issue_urgent = request.form.get('is_urgent', False)
+            issue_urgent = request.form.get('is-urgent', False)
             if issue_urgent != False:
                 issue_urgent = 1
             else:
                 issue_urgent = 0
-
             cur.execute(SQL_DICT['add_iss'],
-                            (request.form.get('issue_subj'),
-                            request.form.get('issue_desc'),
-                            request.form.get('cat_id'),
+                            (request.form.get('iss-subj'),
+                            request.form.get('iss-desc'),
+                            int(request.form.get('cat-id')),
                             issue_urgent,
                             acctId)
                             #request.form.get('acct_id', 'Michael')

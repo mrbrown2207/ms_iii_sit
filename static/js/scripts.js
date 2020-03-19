@@ -1,5 +1,7 @@
 "use strict";
 
+var g_mySwitch;
+
 $(function() {
     // Define our required handler function. It checks for all required fields on a form.
     // If they are all filled in enable the submit button.
@@ -74,4 +76,9 @@ $(function() {
             return $('#filter-popover-menu-features').html();
         }
     });
+
+    // ------------------------------- Switchery -------------------------------
+    var elem = document.querySelector(".js-switch");
+    g_mySwitch = new Switchery(elem, $(elem).data());
+    // -------------------------------------------------------------------------
 });

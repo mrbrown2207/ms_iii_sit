@@ -71,13 +71,5 @@ ISSUE_STATUS = {
     'resolved':2,
 }
 
-CATS = {
-    'repair':1,
-    'complaint':2,
-    'suggestion':3,
-    'question':4,
-    'comment':5,
-}
-
 
 """""<<<---->>>"""""

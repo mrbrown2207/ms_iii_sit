@@ -3,6 +3,8 @@ import os
 class ConfigTestEnv:
     DEV = True
     TESTING = True
+    NOLOGIN = True
+    TESTACCTID = 1
     HOST = os.getenv('DB_HOST')
     DB = "sitDb"
     DB_USER = os.getenv('DB_USER')
