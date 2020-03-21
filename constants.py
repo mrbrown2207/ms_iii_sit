@@ -7,13 +7,18 @@ SQL_DICT =  {
             "del_cat_rec": "delete from tblCat where catId=%s",
             "del_iss_rec": "delete from tblIssue where issueId=%s",
             "sel_cat_rec": "select * from tblCat where catId=%s",
-            "sel_iss_rec": ("select i.issueSubj as issueSubj, i.issueDesc as issueDesc, i.catId as catId, i.urgent as urgent, " +
+            "sel_iss_rec": ("select i.issueSubj as issueSubj, i.issueDesc as issueDesc, i.catId as catId, " + 
+                            "case " +
+                                "when i.urgent = 0 then 'No' " +
+                                "when i.urgent = 1 then 'Yes' " + 
+                            "end as urgent, " +
                             "case " + 
                                 "when i.issueStatus = 0 then 'Not Viewed' " +
                                 "when i.issueStatus = 1 then 'Viewed' " +
                                 "when i.issueStatus = 2 then 'Resolved' " +
                                 "else 'Unknown' " +
-                            "end as issueStatus, i.issueStatus as issueStatusVal, i.dateViewed as dateViewed, " +
+                            "end as issueStatus, " + 
+                            "i.issueStatus as issueStatusVal, i.dateViewed as dateViewed, " +
                             "i.markedResolvedBy as markedResolvedBy, i.dateResolved as dateResolved, i.resolutionDesc as resolutionDesc, " +
                             "i.dateAdded as dateAdded, " +
                             "concat(t.firstName, ' ', t.surname) as 'addedBy', " + 
@@ -21,7 +26,11 @@ SQL_DICT =  {
                                 "left join tblCat c on c.catId = i.catId " +
                                 "left join tblAccounts t on t.acctId = i.acctId " +
                                 "left join tblAccounts t2 on t2.acctId = i.markedResolvedBy where i.issueId=%s"),
-            "sel_all_isss": ("select i.issueId as issueId, i.issueSubj as issueSubj, i.issueDesc as issueDesc, i.catId as catId, i.urgent as urgent, " +
+            "sel_all_isss": ("select i.issueId as issueId, i.issueSubj as issueSubj, i.issueDesc as issueDesc, i.catId as catId, " +
+                            "case " +
+                                "when i.urgent = 0 then 'No' " +
+                                "when i.urgent = 1 then 'Yes' " + 
+                            "end as urgent, " +
                             "case " + 
                                 "when i.issueStatus = 0 then 'Not Viewed' " +
                                 "when i.issueStatus = 1 then 'Viewed' " +
@@ -34,7 +43,8 @@ SQL_DICT =  {
                             "concat(t2.firstName, ' ', t2.surname) as 'resolvedByName' from tblIssue i " +
                                 "left join tblCat c on c.catId = i.catId " +
                                 "left join tblAccounts t on t.acctId = i.acctId " +
-                                "left join tblAccounts t2 on t2.acctId = i.markedResolvedBy"),
+                                "left join tblAccounts t2 on t2.acctId = i.markedResolvedBy " + 
+                                "order by i.dateAdded desc"),
             "sel_all_cats": "select * from tblCat",
             "sel_acct_rec": "select * from tblAccounts where email=%s",
             "upd_iss": ("update tblIssue set " +
@@ -49,6 +59,8 @@ SQL_DICT =  {
                             "dateModified=NOW() " +
                         "where issueId=%s"),
             "upd_iss_status": ("update tblIssue set issueStatus=%s where issueId=%s"),
+            "upd_iss_reset": ("update tblIssue set issueStatus=0, dateResolved=NULL, resolutionDesc=NULL, markedResolvedBy=NULL where issueId=%s"),
+            "upd_resolve_iss": ("update tblIssue set markedResolvedBy=%s, dateResolved=NOW(), resolutionDesc=%s, issueStatus=%s where issueId=%s"),
             "add_iss": ("insert into tblIssue (issueSubj, issueDesc, catId, urgent, acctId, dateAdded, dateModified) " +
                             "values " +
                         "(%s, %s, %s, %s, %s, NOW(), NOW())"),

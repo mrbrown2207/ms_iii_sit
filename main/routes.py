@@ -1,10 +1,13 @@
+import datetime
+
 import pymysql
 import pymysql.cursors
-import datetime
-from flask import (Flask, Blueprint, render_template, redirect, request, 
-                    url_for, current_app)
-from ms_iii_sit.constants import SQL_DICT, SQL_DT_FMT, DDMMYYYY_FMT
-from . utils import *
+from flask import (Blueprint, Flask, current_app, redirect, render_template,
+                   request, url_for)
+
+from ms_iii_sit.constants import DDMMYYYY_FMT, SQL_DICT, SQL_DT_FMT, ISSUE_STATUS
+
+from .utils import *
 
 main = Blueprint('main', __name__)
 
@@ -56,8 +59,39 @@ def add_issue_todb():
                             int(request.form.get('cat-id')),
                             issue_urgent,
                             acctId)
-                            #request.form.get('acct_id', 'Michael')
                         )
+            db.commit()
+    except Exception as e:
+        print("Error: {}".format(str(e)))
+    finally:
+        print('Success')
+
+    return redirect(url_for('main.get_issues'))
+
+@main.route('/resolve_issue', methods=['POST'])
+def resolve_issue():
+    """
+    Mark issue resolved. I tried to roll this all into upd_issue_status
+    however my use of a modal for entering resolution details and the
+    actual marking it as resolved, made is challenging. Thus, this. How funny! ˚L˘
+    """
+    try:
+        db = get_db()
+
+        if current_app.config.get("NOLOGIN"):
+            acctId = current_app.config.get("TESTACCTID")
+        else:
+            acctId = 99 # ˘L˘
+
+        with db.cursor() as cur:
+            cur.execute(SQL_DICT['upd_resolve_iss'],
+                        (
+                            acctId,
+                            request.form.get('iss-res-desc'),
+                            ISSUE_STATUS['resolved'],
+                            request.form.get('curr-iss-id')
+                        )
+                    )
             db.commit()
     except Exception as e:
         print("Error: {}".format(str(e)))
@@ -115,7 +149,10 @@ def upd_issue_status(issue_id, issue_status):
         db = get_db()
 
         with db.cursor() as cur:
-            cur.execute(SQL_DICT['upd_iss_status'], (issue_status, issue_id))
+            if int(issue_status) == ISSUE_STATUS['notviewed']:
+                cur.execute(SQL_DICT['upd_iss_reset'], (issue_id))
+            else:
+                cur.execute(SQL_DICT['upd_iss_status'], (issue_status, issue_id))
             db.commit()
     except Exception as e:
         print("Error: {}".format(str(e)))
@@ -303,4 +340,3 @@ def howitworks():
 @main.route('/contact')
 def contact():
     return render_template('contact.html')
-    

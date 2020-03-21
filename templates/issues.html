@@ -6,10 +6,13 @@
 #}
 {% block content %}
 
-<div class="section">
+<section>
     <div class="container">
-        <h3>Issues</h3>
-        <div class="row panel my-3">
+        <h2 class="form-heading">Issues</h2>
+        <div class="row panel mt-1 mb-3">
+            <div class="col-12 text-right">
+                <a href="/" data-toggle="modal" data-target="#filter-modal" data-toggle-1="tooltip" data-placement="right" title="Click to filter issues"><i class="cta-icon fa fa-filter fa-2x"></i></a>                
+            </div>
             <div class="col-12">
                 <!-- Hidden on mobile -->
                 <div class="row heading d-none d-md-flex">
@@ -52,27 +55,6 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-6 col-md-2">
-                                        <p class="details-label">Status:</p>
-                                    </div>
-                                    <div class="col-xs-2 col-md-2">
-                                        <p class="detail-data">{{issue['issueStatus']}}</p>
-                                    </div>
-                                    <div class="col-xs-2 col-md-2">
-                                        {% if issue['issueStatusVal'] < viewed() %}
-                                        <a href="{{url_for('main.upd_issue_status', issue_id=issue['issueId'], issue_status=viewed())}}" data-toggle-1="tooltip" data-placement="top" title="Click to change status to 'Viewed'"><i class="cta-icon fa fa-eye"></i></a>
-                                        {% endif %}
-                                        {% if issue['issueStatusVal'] < resolved() %}
-                                            <span class="mx-3"></span>
-                                        <a href="{{url_for('main.upd_issue_status', issue_id=issue['issueId'], issue_status=resolved())}}" data-toggle-1="tooltip" data-placement="top" title="Click to change status to 'Resolved'"><i class="cta-icon fa fa-check"></i></a>
-                                        {% endif %}
-                                        {% if issue['issueStatusVal'] != notviewed() and testing() %}
-                                            <span class="mx-3"></span>
-                                        <a href="{{url_for('main.upd_issue_status', issue_id=issue['issueId'], issue_status=notviewed())}}" data-toggle-1="tooltip" data-placement="top" title="Click to change status to 'Not Viewed'"><i class="cta-icon fa fa-eye-slash"></i></a>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-6 col-md-2">
                                         <p class="details-label">Added By:</p>
                                     </div>
                                     <div class="col-xs-6 col-md-8">
@@ -103,13 +85,64 @@
                                         <p class="detail-data">{{issue['issueDesc']}}</p>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-xs-6 col-md-2">
+                                        <p class="details-label">Urgent:</p>
+                                    </div>
+                                    <div class="col-xs-6 col-md-8">
+                                        {% if issue['urgent'] == 'Yes' %}
+                                        <p class="detail-data emphasis-colour">{{issue['urgent']}}</p>
+                                        {% else %}
+                                        <p class="detail-data">{{issue['urgent']}}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6 col-md-2">
+                                        <p class="details-label">Status:</p>
+                                    </div>
+                                    <div class="col-xs-2 col-md-2">
+                                        <p class="detail-data">{{issue['issueStatus']}}</p>
+                                    </div>
+                                    <div class="col-xs-2 col-md-2">
+                                        {% if issue['issueStatusVal'] < viewed() %}
+                                        <a href="{{url_for('main.upd_issue_status', issue_id=issue['issueId'], issue_status=viewed())}}" data-toggle-1="tooltip" data-placement="top" title="Click to change status to 'Viewed'"><i class="cta-icon fa fa-eye"></i></a>
+                                        {% endif %}
+                                        {% if issue['issueStatusVal'] < resolved() %}
+                                            <span class="mx-3"></span>
+                                        <a class="resolve-iss" href="/" data-toggle="modal" data-target="#resolve-modal" data-toggle-1="tooltip" data-placement="top" data-iss-id="{{issue['issueId']}}" data-iss-subj="{{issue['issueSubj']}}" title="Click to change status to 'Resolved'"><i class="cta-icon fa fa-check"></i></a>
+                                        {% endif %}
+                                        {% if issue['issueStatusVal'] != notviewed() and testing() %}
+                                            <span class="mx-3"></span>
+                                        <a href="{{url_for('main.upd_issue_status', issue_id=issue['issueId'], issue_status=notviewed())}}" data-toggle-1="tooltip" data-placement="top" title="Click to change status to 'Not Viewed'"><i class="cta-icon fa fa-eye-slash"></i></a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% if issue['issueStatusVal'] == resolved() %}
+                                <div class="row">
+                                    <div class="col-xs-6 col-md-2">
+                                        <p class="details-label">Date Resolved:</p>
+                                    </div>
+                                    <div class="col-xs-6 col-md-8">
+                                        <p class="detail-data">{{issue['dateResolved']}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6 col-md-2">
+                                        <p class="details-label">Resolved By:</p>
+                                    </div>
+                                    <div class="col-xs-6 col-md-8">
+                                        <p class="detail-data">{{issue['resolvedByName']}}</p>
+                                    </div>
+                                </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-12">
-                <hr class="item-deliniation">
+                <hr>
             </div>
             {% else %}
             <p>No issues found</p>
@@ -120,6 +153,130 @@
     <div class="row pt-3 text-right">
         <div class="col-xs-12 offset-md-9 col-md-3">
             <a href="{{url_for('main.add_issue')}}" class="btn btn-sit btn-sit-cta-add">Add Issue</a>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="resolve-modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Issue Resolved</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-md-10 center-block">
+                            <form class="form-container" action="{{url_for('main.resolve_issue')}}" method="POST">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label for="curr-iss-id" class="control-label">Issue Id: </label>
+                                                <input type="text" id="curr-iss-id" name="curr-iss-id" aria-readonly="readonly" value="" readonly />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="curr-iss-subj" class="control-label">Issue Subject: </label>
+                                                <input type="text" id="curr-iss-subj" name="curr-iss-subj" aria-readonly="readonly" value="" readonly />
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label for="iss-res-desc" class="control-label required-field ">
+                                                    Resolution Detail *
+                                                </label>
+                                                <div class="">
+                                                    <textarea name="iss-res-desc" cols="100" rows="10" class="form-control sit-required char-countdown form-control" aria-describedby="issue resolution description" placeholder="Enter detailed resolution description" minlength="1" maxlength="1000" required></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" id="char-count">
+                                        <div class="col-12 text-right">
+                                            <small class="form-text">Characters remaining: <span class="char-count">1000</span></small>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="offset-md-1 col-5">
+                                            <p class="text-center">
+                                                <a href="{{url_for('main.get_issues')}}" role="button" id="cancel-btn" name="cancel-btn" class="btn btn-sit destructive w-100">Cancel</a>
+                                            </p>
+                                        </div>
+                                        <div class="col-5">
+                                            <p class="text-center">
+                                                <button id="submit-btn" type="submit-btn" name="submit-btn" class="btn btn-sit btn-sit-submit w-100 sit-disabled">Resolved</button>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="filter-modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Filter Issues</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-md-10 center-block">
+                            <form class="form-container" action="{{url_for('main.resolve_issue')}}" method="POST">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label for="curr-iss-id" class="control-label">Issue Id: </label>
+                                                <input type="text" id="curr-iss-id" name="curr-iss-id" aria-readonly="readonly" value="" readonly />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="curr-iss-subj" class="control-label">Issue Subject: </label>
+                                                <input type="text" id="curr-iss-subj" name="curr-iss-subj" aria-readonly="readonly" value="" readonly />
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label for="iss-res-desc" class="control-label required-field ">
+                                                    Resolution Detail *
+                                                </label>
+                                                <div class="">
+                                                    <textarea name="iss-res-desc" cols="100" rows="10" class="form-control sit-required char-countdown form-control" aria-describedby="issue resolution description" placeholder="Enter detailed resolution description" minlength="1" maxlength="1000" required></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" id="char-count">
+                                        <div class="col-12 text-right">
+                                            <small class="form-text">Characters remaining: <span class="char-count">1000</span></small>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="offset-md-1 col-5">
+                                            <p class="text-center">
+                                                <a href="{{url_for('main.get_issues')}}" role="button" id="cancel-btn" name="cancel-btn" class="btn btn-sit destructive w-100">Cancel</a>
+                                            </p>
+                                        </div>
+                                        <div class="col-5">
+                                            <p class="text-center">
+                                                <button id="submit-btn" type="submit-btn" name="submit-btn" class="btn btn-sit btn-sit-submit w-100 sit-disabled">Resolved</button>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

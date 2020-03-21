@@ -6,7 +6,7 @@ app = create_app()
 # Set up some utility contexts
 #ctx = utility_contexts()
 
-#@current_app.context_processor
+#@current_app.context_processor  <- Couldn't get that to work and got impatient. And yes, I imported current_app ˘L˘
 @app.context_processor
 def utility_contexts():
     def issue_not_viewed(status):

@@ -38,6 +38,7 @@ $(function() {
     });
 
     // Change the caret widget and popup text dynamically
+    // .data() method does not work consistently here -- need to use .attr() 
     $('.toggle-caret').click(function() {
         var title = $(this).attr("data-original-title");
         var altTitle = $(this).attr("data-title-alt");
@@ -50,6 +51,12 @@ $(function() {
         $(`#caret-widget-${$(this).attr("data-id")}`).toggleClass("cta-icon hide-details fa fa-caret-down");
 
         $(this).tooltip("show")
+    });
+
+    // Set current id and subject for display in modal when resolving issue
+    $(".resolve-iss").click(function() {
+        $("#curr-iss-id").val($(this).data("iss-id"))
+        $("#curr-iss-subj").val($(this).data("iss-subj"))
     });
 
     // Bootstrap tooltip
@@ -76,9 +83,4 @@ $(function() {
             return $('#filter-popover-menu-features').html();
         }
     });
-
-    // ------------------------------- Switchery -------------------------------
-    var elem = document.querySelector(".js-switch");
-    g_mySwitch = new Switchery(elem, $(elem).data());
-    // -------------------------------------------------------------------------
 });

@@ -28,6 +28,7 @@
     --cancel-btn-colour: #C4343B;
     --del-btn-colour: #C4343B;
     --box-shadow-offset: 0 2px 5px 0;
+    --form-radius: 10px;
 }
 
 /*--------------------------------------------------------------
@@ -46,10 +47,18 @@ body {
     /***********************************************/
 }
 
-body, p, small, input, ul>li {
+body, p, small, input, select, textarea, ul>li {
     font-family: 'Open Sans', sans-serif;
-    font-weight: 500;
+    font-weight: 400;
   	color: #000000;
+}
+
+/*
+    I think some of the form control stuff later on was scuppering this.
+    Everytime I set focus the text would lighten. So, I am forcing the issue.
+*/
+textarea:focus {
+    color: #000000 !important;
 }
 
 h1 {
@@ -58,7 +67,7 @@ h1 {
 
 h1, h2, h3, h4, h5 {
     font-family: 'Archivo', sans-serif;
-    color: #000000;
+    color: var(--main-colour);
 }
 
 h2 {
@@ -107,6 +116,13 @@ p {
 
 p > span.sit-text {
     font-weight: 400;
+}
+
+select {
+    background-color: #FFFFFF;
+    border-color: var(--secondary-colour);
+    border-radius: var(--form-radius);
+    font-size: 11pt;
 }
 
 .sit-text {
@@ -280,6 +296,19 @@ a.sit-disabled, button.sit-disabled { /* This is because you cannot disable a li
     height: 35px;
 }
 
+/* Toggle switch */
+.slow .toggle-group {
+    -webkit-transition: left 0.7s;
+    -moz-transition: left 0.7s;
+    -o-transition: left 0.7s;
+    transition: left 0.7s;
+}
+
+.toggle.ios, .toggle-on.ios, .toggle-off.ios {
+    border-radius: var(--form-radius);
+}
+/*****************/
+
 /*--------------------------------------------------------------
 # Dashboard
 --------------------------------------------------------------*/
@@ -321,7 +350,7 @@ a.sit-disabled, button.sit-disabled { /* This is because you cannot disable a li
 .form-container {
     background: #FFFFFF;
     border: 1px solid var(--secondary-colour);
-    border-radius: 10px;
+    border-radius: var(--form-radius);
     padding: 15px;
 }
 
@@ -348,7 +377,7 @@ input[type=text] {
 }
 
 .form-control {
-    border-radius: 10px;
+    border-radius: var(--form-radius);
     border-width: 1px;
     border-color: var(--secondary-colour);
     color: #000000;
@@ -357,7 +386,7 @@ input[type=text] {
 }
 
 .form-control-lg {
-    border-radius: 10px;
+    border-radius: var(--form-radius);
     border-width: 1px;
     border-color: var(--secondary-colour);
     width: 100%;
@@ -396,7 +425,7 @@ input[type=text] {
 .form-container, .panel {
     background: #FFFFFF;
     border: 1px solid var(--main-colour);
-    border-radius: 10px;
+    border-radius: var(--form-radius);
     padding: 15px;
 }
 
@@ -404,9 +433,29 @@ input[type=text] {
     background: #F6F8FA;
 }
 
+/* Override some bootstrap defaults */
+.form-static-panel > .col-12 > .row {
+    margin-bottom: -15px !important;
+}
+
+.form-static-panel-row > .col-6 {
+    padding-right: 5px;
+    padding-left: 5px; 
+}
+
 /* Pull characters remaing text closer to textarea */
 #char-count {
     margin-top: -15px;
+}
+
+.emphasis-colour {
+    color: red;
+    font-weight: 400;
+}
+
+.form-heading {
+    margin-left: -15px !important; /* Pull left to align with form panel border */
+    margin-bottom: 0 !important;
 }
 
 /*--------------------------------------------------------------

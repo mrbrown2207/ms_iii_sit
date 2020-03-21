@@ -26,7 +26,7 @@ create table if not exists tblAccounts
 						addrCounty 				varchar(40),
                         postCode     			varchar(12) not null,
 						addrCountryISO			char(2) not null default 'GB',
-						phone					varchar(20), /*Either phone or mobile phone will have to exist*/
+						phone					varchar(20),
 						mobilePhone				varchar(20), 
 						abtrusus				varchar(40) not null,
 						acctDisabled			tinyint unsigned not null default '0',
@@ -54,21 +54,23 @@ create table if not exists tblCat
 /*
 	Issues table. Table for capturing issues. At time of project start, the types of issues that
 	could be logged by customers/clients were: Something needs fixing, complaint, suggestion, question or comment.
+    Note: setting the description fields to varchars as opposed to text fields because of potentially fulltext
+    indexing those fields -- for an innoDb, fulltexted index varchar fields are much faster than text fields
 */
 select 'Creating tblIssue table...' as 'Action';
 create table if not exists tblIssue
 						(
 						issueId 				int(6) zerofill not null auto_increment primary key,
 						issueSubj				varchar(30),
-						issueDesc				varchar(512),
+						issueDesc				varchar(1000), /* Setting this as a varchar because may want to full text index. This would be faster than setting to a text field */
 						catId					tinyint(3) zerofill not null,
 						urgent					tinyint(1) unsigned not null default '0',
 						acctId				    int(5) zerofill not null, /* Person who submitted issue */
-						issueStatus				tinyint(1) unsigned not null default '0' comment '0=entered, 1=viewed, 2=resolved',
+						issueStatus				tinyint(1) unsigned not null default '0' comment '0=not viewed, 1=viewed, 2=resolved', /* Not viewed means it hasn't been viewed by property management */
 						dateViewed			    datetime,
 						dateResolved			datetime,
 						markedResolvedBy		int(5) zerofill,
-						resolutionDesc			varchar(512),
+						resolutionDesc			varchar(1000), /* See above comment */
 						dateAdded				datetime not null,
 						dateModified			datetime not null,
 						index (acctId),
@@ -89,7 +91,7 @@ create table if not exists tblComments
 						(
 						commId 					int(6) zerofill not null auto_increment primary key,
 						comment					varchar(512),
-						issueId					int(6) zerofill not null,
+						issueId					int(6) zerofill not null, /* This acts as a thread id */
 						acctId				    int(5) zerofill not null, /* Person who posted comment */
 						dateAdded				datetime not null,
 						dateModified			datetime not null,
