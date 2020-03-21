@@ -63,3 +63,16 @@ def del_rec(tbl, rec_id):
         print('Error: {}'.format(str(e)))
     finally:
         print('Success')
+
+def load_cats():
+    try:
+        with get_db().cursor() as cur:
+            cur.execute(SQL_DICT['get_cats'])
+            current_app.config['CATS'] = cur.fetchall()
+
+        print(current_app.config['CATS'])
+
+    except Exception as e:
+        print('Error: {}'.format(str(e)))
+    finally:
+        print('Success')

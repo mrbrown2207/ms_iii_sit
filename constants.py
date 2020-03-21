@@ -69,6 +69,7 @@ SQL_DICT =  {
                             "catDesc=%s, " +
                             "dateModified=NOW() " +
                         "where catId=%s"),
+            "get_cats": ("select catId, catName from tblCat order by catName"),
             "add_cat": ("insert into tblCat (catName, catDesc, dateAdded, dateModified) " +
                             "values " +
                         "(%s, %s, NOW(), NOW())")

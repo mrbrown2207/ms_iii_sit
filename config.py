@@ -12,6 +12,9 @@ class ConfigTestEnv:
     CHARSET = 'utf8'  
     SECRET_KEY = 'mysecretthatisnotsecret'
 
+    def __init__(self):
+        print("Init is called")
+
 class Config:
     TESTING = False
     HOST = os.getenv('DB_HOST')

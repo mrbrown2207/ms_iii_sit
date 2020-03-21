@@ -1,12 +1,9 @@
 import datetime
-
 import pymysql
 import pymysql.cursors
 from flask import (Blueprint, Flask, current_app, redirect, render_template,
                    request, url_for)
-
 from ms_iii_sit.constants import DDMMYYYY_FMT, SQL_DICT, SQL_DT_FMT, ISSUE_STATUS
-
 from .utils import *
 
 main = Blueprint('main', __name__)
@@ -14,14 +11,22 @@ main = Blueprint('main', __name__)
 # main page
 @main.route('/')
 def index():
+    """
+    The number of categories can change. Therefore, what gets displayed in
+    the filter modal should be dynamic. To that end, I am loading this into the app
+    config if it doesn't already exist. Seems like there should be a better way,
+    but this is going to have to do ˘L˘
+    """
+    if current_app.config.get("CATS") == None:            
+        load_cats()
+
     return render_template('index.html')
 
 # <<<<<<<<<<<<<<<<<<<<-------------------- Issue Routes -------------------->>>>>>>>>>>>>>>>>>>>
 @main.route('/get_issues')
 def get_issues():
-    issues = get_all_recs('tblIssue')
-    
     """
+    issues = get_all_recs('tblIssue')
     if issues:
         for row in issues:
             print(row)
