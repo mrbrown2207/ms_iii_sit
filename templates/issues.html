@@ -230,33 +230,50 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12 col-md-10 center-block">
-                            <form class="form-container" action="{{url_for('main.resolve_issue')}}" method="POST">
+                            <form class="form-container" action="{{url_for('main.get_filtered_issues')}}" method="POST">
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-12">
-                                            <div class="form-group">
-                                                <label for="curr-iss-id" class="control-label">Issue Id: </label>
-                                                <input type="text" id="curr-iss-id" name="curr-iss-id" aria-readonly="readonly" value="" readonly />
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="curr-iss-subj" class="control-label">Issue Subject: </label>
-                                                <input type="text" id="curr-iss-subj" name="curr-iss-subj" aria-readonly="readonly" value="" readonly />
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="form-group">
-                                                <label for="iss-res-desc" class="control-label required-field ">
-                                                    Resolution Detail *
-                                                </label>
-                                                <div class="">
-                                                    <textarea name="iss-res-desc" cols="100" rows="10" class="form-control sit-required char-countdown form-control" aria-describedby="issue resolution description" placeholder="Enter detailed resolution description" minlength="1" maxlength="1000" required></textarea>
+                                        <div class="col-6">
+                                            <div class="row mb-1">
+                                                <div class="col-6 text-right">
+                                                    <label>All Categories</label>
+                                                </div>
+                                                <div class="col-6">
+                                                    <button id="all-cats-toggle" class="btn btn-sit-modal btn-sit-switch-control filter-selected"></button>
+                                                </div>
+                                            </div>    
+                                            {% for cat in config.CATS %}
+                                            <div class="row mb-1">
+                                                <div class="col-6 text-right">
+                                                    <label>{{cat['catName']}}s</label>
+                                                </div>
+                                                <div class="col-6">
+                                                    <button name="{{cat['catName']}}-{{cat['catId']}}" class="cat-filter-toggle btn btn-sit-modal btn-sit-switch-control filter-selected" value="1"></button>
+                                                    <input class="hide cat-filter-toggle" name="cat-{{cat['catId']}}" value="1" />
                                                 </div>
                                             </div>
+                                            {% endfor %}
                                         </div>
-                                    </div>
-                                    <div class="row" id="char-count">
-                                        <div class="col-12 text-right">
-                                            <small class="form-text">Characters remaining: <span class="char-count">1000</span></small>
+                                        <div class="col-6">
+                                            <div class="row mb-1">
+                                                <div class="col-6 text-right">
+                                                    <label>All Statuses</label>
+                                                </div>
+                                                <div class="col-6">
+                                                    <button id="all-iss-status-toggle" class="btn btn-sit-modal btn-sit-switch-control filter-selected"></button>
+                                                </div>
+                                            </div>
+                                            {% for key, val in config.ISS_STATUS.items() %}    
+                                            <div class="row mb-1">
+                                                <div class="col-6 text-right">
+                                                    <label>{{val['display']}}</label>
+                                                </div>
+                                                <div class="col-6">
+                                                    <button name="{{key}}-{{val['id']}}" class="iss-status-filter-toggle btn btn-sit-modal btn-sit-switch-control filter-selected" value="1"></button>
+                                                    <input class="hide iss-status-filter-toggle" name="status-{{val['id']}}" value="1" />
+                                                </div>
+                                            </div>
+                                            {% endfor %}
                                         </div>
                                     </div>
                                     <div class="row mt-3">
@@ -267,7 +284,7 @@
                                         </div>
                                         <div class="col-5">
                                             <p class="text-center">
-                                                <button id="submit-btn" type="submit-btn" name="submit-btn" class="btn btn-sit btn-sit-submit w-100 sit-disabled">Resolved</button>
+                                                <button id="submit-btn" type="submit-btn" name="submit-btn" class="btn btn-sit btn-sit-submit w-100">Filter</button>
                                             </p>
                                         </div>
                                     </div>

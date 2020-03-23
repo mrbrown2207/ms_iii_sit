@@ -10,22 +10,22 @@ app = create_app()
 @app.context_processor
 def utility_contexts():
     def issue_not_viewed(status):
-        return (status == ISSUE_STATUS.get('notviewed'))
+        return (status == ISSUE_STATUS['notviewed']['id'])
 
     def issue_viewed(status):
-        return (status == ISSUE_STATUS.get('viewed'))
+        return (status == ISSUE_STATUS['viewed']['id'])
 
     def issue_resolved(status):
-        return (status == ISSUE_STATUS.get('resolved'))
+        return (status == ISSUE_STATUS['resolved']['id'])
 
     def notviewed():
-        return ISSUE_STATUS.get('notviewed')
+        return ISSUE_STATUS['notviewed']['id']
 
     def viewed():
-        return ISSUE_STATUS.get('viewed')
+        return ISSUE_STATUS['viewed']['id']
 
     def resolved():
-        return ISSUE_STATUS.get('resolved')
+        return ISSUE_STATUS['resolved']['id']
 
     def testing():
         return app.config.get('TESTING')

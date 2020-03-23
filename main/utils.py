@@ -70,9 +70,38 @@ def load_cats():
             cur.execute(SQL_DICT['get_cats'])
             current_app.config['CATS'] = cur.fetchall()
 
-        print(current_app.config['CATS'])
-
     except Exception as e:
         print('Error: {}'.format(str(e)))
     finally:
         print('Success')
+
+def build_filter_sql(form_dict):
+    cat_filter_dict = dict((k, v) for k, v in form_dict.items() if "cat" in k and v == "1")
+    status_filter_dict = dict((k, v) for k, v in form_dict.items() if "status" in k and v == "1")
+
+    x = 0
+    sql_qry = "("
+    for k in cat_filter_dict:
+        cat = "i.catId=%s" % (k.split("-")[1])
+        if x > 0 :
+            sql_qry += " or i.catId=%s" % (k.split("-")[1])
+        else:
+            sql_qry += cat
+
+        x += 1
+
+    sql_qry += ") and ("
+
+    x = 0
+    for k in status_filter_dict:
+        status = "i.issueStatus=%s" % (k.split("-")[1])
+        if x > 0 :
+            sql_qry += " or i.issueStatus=%s" % (k.split("-")[1])
+        else:
+            sql_qry += status
+
+        x += 1
+
+    sql_qry += ")"
+
+    return sql_qry

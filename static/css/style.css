@@ -287,13 +287,37 @@ a.sit-disabled, button.sit-disabled { /* This is because you cannot disable a li
     font-family: 'Archivo', sans-serif;
     font-weight: 500;
     background: #f2fbff;
-    border: 2px solid #CEE2EC;
+    /*border: 2px solid #CEE2EC;*/
     border-radius: 100px;
     text-transform: uppercase;
     padding: auto 10px;
     font-size: 12px;
     margin: 0;
     height: 35px;
+}
+
+.btn-sit-switch-control {
+    display: block !important;
+    height: 25px !important;
+    width: 25px !important;
+    color: #FFFFFF !important;
+    font-family: 'Open Sans', sans-serif !important;
+    border-radius: 50% !important;
+    border: none !important;
+    text-transform: none !important;
+    cursor: pointer;
+}
+
+.btn-sit-switch-control:focus {
+    border: none !important;
+}
+
+.filter-selected {
+    background: #28a745 !important; /* bootstrap success */
+}
+
+.filter-not-selected {
+    background: #C4343B !important;
 }
 
 /* Toggle switch */
@@ -527,6 +551,10 @@ hr.fancy {
 
 .details-panel {
     background-color: #FFFFFF !important;
+}
+
+.hide {
+    display: none;
 }
 
 /*--------------------------------------------------------------

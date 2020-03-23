@@ -15,24 +15,40 @@ def index():
     The number of categories can change. Therefore, what gets displayed in
     the filter modal should be dynamic. To that end, I am loading this into the app
     config if it doesn't already exist. Seems like there should be a better way,
-    but this is going to have to do ˘L˘
+    but this is going to have to do. I tried to put an __init__ method in the config
+    class that gets loaded when creating the app (see __init__.py). However, it didn't 
+    work; I am assuming it is because of the way the class is being instantiated.
     """
     if current_app.config.get("CATS") == None:            
         load_cats()
+
+    """
+    Issue statuses are not quite as dynamic as categories. However, let's
+    still remain flexible and do the right thing so we don't have to  
+    hard code stuff on the client side.
+    """
+    if current_app.config.get("ISS_STATUS") == None:
+        current_app.config['ISS_STATUS'] = ISSUE_STATUS
 
     return render_template('index.html')
 
 # <<<<<<<<<<<<<<<<<<<<-------------------- Issue Routes -------------------->>>>>>>>>>>>>>>>>>>>
 @main.route('/get_issues')
 def get_issues():
-    """
-    issues = get_all_recs('tblIssue')
-    if issues:
-        for row in issues:
-            print(row)
-    """
+    return render_template('issues.html', issues=get_all_recs('tblIssue'), filter_applied=False)
 
-    return render_template('issues.html', issues=get_all_recs('tblIssue'))
+
+@main.route('/get_filtered_issues', methods=['POST'])
+def get_filtered_issues():
+    form_dict = request.form
+
+    # Build our query based on the filters selected.
+    qry = SQL_DICT['sel_filtered_isss'] % (build_filter_sql(form_dict))
+
+    with get_db().cursor() as cur:
+        cur.execute(qry)
+
+    return render_template('issues.html', issues=cur.fetchall(), filter_applied=True)
 
 
 @main.route('/add_issue')
@@ -154,7 +170,7 @@ def upd_issue_status(issue_id, issue_status):
         db = get_db()
 
         with db.cursor() as cur:
-            if int(issue_status) == ISSUE_STATUS['notviewed']:
+            if int(issue_status) == ISSUE_STATUS['notviewed']['id']:
                 cur.execute(SQL_DICT['upd_iss_reset'], (issue_id))
             else:
                 cur.execute(SQL_DICT['upd_iss_status'], (issue_status, issue_id))
