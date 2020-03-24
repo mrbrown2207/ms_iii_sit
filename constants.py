@@ -65,8 +65,15 @@ SQL_DICT =  {
                                 "left join tblAccounts t2 on t2.acctId = i.markedResolvedBy " + 
                                 "where %s " + 
                                 "order by i.dateAdded desc"),
-            "sel_all_cats": "select * from tblCat",
+            "sel_all_cats": "select *,  "
+                            "(case " +
+                                "when catActive = 1 then 'Active' " +
+                                "when catActive = 0 then 'Inactive' " +
+                                "else 'Unknown' " +
+                            "end) as catStatus from tblCat",
             "sel_all_cats_1": ("select concat('cat-', catId) as cat from tblCat order by catName"),
+            "sel_active_cats": "select * from tblCat where catActive = 1",
+            "sel_active_cats_1": ("select concat('cat-', catId) as cat from tblCat where catActive = 1 order by catName"),
             "sel_acct_rec": "select * from tblAccounts where email=%s",
             "upd_iss": ("update tblIssue set " +
                             "issueSubj=%s, " +

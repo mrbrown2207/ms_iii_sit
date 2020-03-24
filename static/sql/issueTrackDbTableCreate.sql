@@ -39,13 +39,16 @@ create table if not exists tblAccounts
 /*
 	Categories table. Every issue that is created is assigned a category. Upon initiation of development,
 	the categories were as such: Something needs fixing, Complaint, Suggestion, Question, Comment.
+    Because of the relationship between tblCat and tblIssue, we do not allow a deletion of categories
+    through the UI. They however, can make it inactive.
 */
 select 'Creating tblCat table...' as 'Action';
 create table if not exists tblCat
 						(
 						catId 					tinyint(3) zerofill not null auto_increment primary key,
-						catName					varchar(30),
+						catName					varchar(30) not null,
 						catDesc					varchar(60),
+                        catActive               tinyint(1) unsigned not null default '1', /* Is this category selectable */
 						dateAdded				datetime not null,
 						dateModified			datetime not null
 						) engine=InnoDB default charset=utf8;

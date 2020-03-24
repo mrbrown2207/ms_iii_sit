@@ -230,7 +230,7 @@ a.sit-disabled, button.sit-disabled { /* This is because you cannot disable a li
 
 .destructive {
     background: #C4343B;
-    border: 2px solid #C4343B;
+    /*border: 2px solid #C4343B;*/
     color: #FFFFFF;
 }
 
@@ -694,3 +694,11 @@ https://stackoverflow.com/questions/44955201/bootstrap-4-change-tooltip-arrow-co
 }
 
 
+/*--------------------------------------------------------------
+# Modals
+--------------------------------------------------------------*/
+
+.modal-body h4 {
+    text-align: center;
+    text-decoration: underline;
+}

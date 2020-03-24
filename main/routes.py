@@ -59,30 +59,18 @@ def get_issues():
     return render_template('issues.html', issues=cur.fetchall(), omitted_status=filter_info['omitted_status'], omitted_cats=filter_info['omitted_cats'])
 
 
-@main.route('/get_filtered_issues', methods=["POST"])
-def get_filtered_issues():
-
-    db = get_db()
-
-    # Need this to be mutable...
-    form_dict = request.form.to_dict()
-    #... so we can do this...
-    del form_dict['submit-btn']
-
-    filter_dict = build_filter_sql(form_dict)
-
-    # Build our query based on the filters selected.
-    qry = SQL_DICT['sel_filtered_isss'] % (filter_dict['qry_str'])
-
-    with db.cursor() as cur:
-        cur.execute(qry)
-
-    return render_template('issues.html', issues=cur.fetchall(), filter_applied=True)
-
-
 @main.route('/add_issue')
 def add_issue():
-    return render_template('addissue.html', cats=get_all_recs('tblCat'))
+    try:
+        with get_db().cursor() as cur:
+            cur.execute(SQL_DICT['sel_active_cats'])
+    except Exception as e:
+        print("Error: {}".format(str(e)))
+    finally:
+        print('Success')
+
+
+    return render_template('addissue.html', cats=cur.fetchall())
 
         
 @main.route('/add_issue_todb', methods=['POST'])
@@ -256,6 +244,7 @@ def delete_issue(issue_id):
 def add_cat():
     return render_template('addcat.html')
 
+
 @main.route('/get_cats')
 def get_cats():
     return render_template('categories.html', cats=get_all_recs('tblCat'))
@@ -276,8 +265,8 @@ def update_cat(cat_id):
     return redirect(url_for('main.get_cats'))
 
 
-@main.route('/insert_cat', methods=['POST'])
-def insert_cat():
+@main.route('/add_cat_todb', methods=['POST'])
+def add_cat_todb():
     try:
         db = get_db()
 
