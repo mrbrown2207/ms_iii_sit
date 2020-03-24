@@ -19,8 +19,9 @@ def index():
     class that gets loaded when creating the app (see __init__.py). However, it didn't 
     work; I am assuming it is because of the way the class is being instantiated.
     """
-    if current_app.config.get("CATS") == None:            
-        load_cats()
+    if current_app.config.get("FILTER_STATE_DICT") == None:
+        load_cats()            
+        init_filter_state()
 
     """
     Issue statuses are not quite as dynamic as categories. However, let's
@@ -33,19 +34,47 @@ def index():
     return render_template('index.html')
 
 # <<<<<<<<<<<<<<<<<<<<-------------------- Issue Routes -------------------->>>>>>>>>>>>>>>>>>>>
-@main.route('/get_issues')
+@main.route('/get_issues', methods=["GET", "POST"])
 def get_issues():
-    return render_template('issues.html', issues=get_all_recs('tblIssue'), filter_applied=False)
 
+    if request.method == "POST":
+        # Need this to be mutable...
+        current_app.config['FILTER_STATE_DICT'] = request.form.to_dict()
+        #... so we can do this...
+        del current_app.config['FILTER_STATE_DICT']['submit-btn']
 
-@main.route('/get_filtered_issues', methods=['POST'])
-def get_filtered_issues():
-    form_dict = request.form
+    filter_info = build_filter_sql(current_app.config['FILTER_STATE_DICT'])
 
     # Build our query based on the filters selected.
-    qry = SQL_DICT['sel_filtered_isss'] % (build_filter_sql(form_dict))
+    qry = SQL_DICT['sel_filtered_isss'] % (filter_info['qry_str'])
 
-    with get_db().cursor() as cur:
+    try:
+        with get_db().cursor() as cur:
+            cur.execute(qry)
+    except Exception as e:
+        print("Error: {}".format(str(e)))
+    finally:
+        print('Success')
+
+    return render_template('issues.html', issues=cur.fetchall(), omitted_status=filter_info['omitted_status'], omitted_cats=filter_info['omitted_cats'])
+
+
+@main.route('/get_filtered_issues', methods=["POST"])
+def get_filtered_issues():
+
+    db = get_db()
+
+    # Need this to be mutable...
+    form_dict = request.form.to_dict()
+    #... so we can do this...
+    del form_dict['submit-btn']
+
+    filter_dict = build_filter_sql(form_dict)
+
+    # Build our query based on the filters selected.
+    qry = SQL_DICT['sel_filtered_isss'] % (filter_dict['qry_str'])
+
+    with db.cursor() as cur:
         cur.execute(qry)
 
     return render_template('issues.html', issues=cur.fetchall(), filter_applied=True)

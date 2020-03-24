@@ -2,8 +2,6 @@
 SQL_DT_FMT = '%Y-%m-%d %H:%M:%S'
 DDMMYYYY_FMT = '%d/%m/%Y %H:%M:%S'
 
-#(i.catId=11 or i.catId=12) and (i.issueStatus=0 or issueStatus=1)
-
 SQL_DICT =  {
             "sel_recs": "select * from %s",
             "del_cat_rec": "delete from tblCat where catId=%s",
@@ -68,6 +66,7 @@ SQL_DICT =  {
                                 "where %s " + 
                                 "order by i.dateAdded desc"),
             "sel_all_cats": "select * from tblCat",
+            "sel_all_cats_1": ("select concat('cat-', catId) as cat from tblCat order by catName"),
             "sel_acct_rec": "select * from tblAccounts where email=%s",
             "upd_iss": ("update tblIssue set " +
                             "issueSubj=%s, " +
@@ -91,7 +90,7 @@ SQL_DICT =  {
                             "catDesc=%s, " +
                             "dateModified=NOW() " +
                         "where catId=%s"),
-            "get_cats": ("select catId, catName from tblCat order by catName"),
+            "get_cats": ("select catId, catName, '1' as filter_status from tblCat order by catName"),
             "add_cat": ("insert into tblCat (catName, catDesc, dateAdded, dateModified) " +
                             "values " +
                         "(%s, %s, NOW(), NOW())")
@@ -104,17 +103,20 @@ ISSUE_STATUS =  {
                     'notviewed':
                         {
                             "id":0,
-                            "display":"Not Viewed"
+                            "display":"Not Viewed",
+                            "filter_status":"1"
                         },
                     'viewed':
                         {
                             "id":1,
-                            "display":"Viewed"
+                            "display":"Viewed",
+                            "filter_status":"1"
                         },
                     'resolved':
                         {
                             "id":2,
-                            "display":"Resolved"
+                            "display":"Resolved",
+                            "filter_status":"1"
                         }
 }
 

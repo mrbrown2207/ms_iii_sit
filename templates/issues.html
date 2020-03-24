@@ -10,8 +10,13 @@
     <div class="container">
         <h2 class="form-heading">Issues</h2>
         <div class="row panel mt-1 mb-3">
-            <div class="col-12 text-right">
-                <a href="/" data-toggle="modal" data-target="#filter-modal" data-toggle-1="tooltip" data-placement="right" title="Click to filter issues"><i class="cta-icon fa fa-filter fa-2x"></i></a>                
+            <div class="col-12 text-right align-self-center">
+                {% if omitted_cats == False and omitted_status == False %}
+                <a href="/" data-toggle="modal" data-target="#filter-modal" data-toggle-1="tooltip" data-placement="right" title="Click to filter issues"><i class="cta-icon fa fa-filter fa-2x"></i></a>
+                {% else %}
+                <span class="cta-icon-on">Filter Applied</span>
+                <a href="/" data-toggle="modal" data-target="#filter-modal" data-toggle-1="tooltip" data-placement="right" title="Click to filter issues"><i class="cta-icon cta-icon-on fa fa-filter fa-2x"></i></a>
+                {% endif %}
             </div>
             <div class="col-12">
                 <!-- Hidden on mobile -->
@@ -230,7 +235,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12 col-md-10 center-block">
-                            <form class="form-container" action="{{url_for('main.get_filtered_issues')}}" method="POST">
+                            <form class="form-container" action="{{url_for('main.get_issues')}}" method="POST">
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-6">
@@ -239,7 +244,11 @@
                                                     <label>All Categories</label>
                                                 </div>
                                                 <div class="col-6">
+                                                    {% if omitted_cats %}
+                                                    <button id="all-cats-toggle" class="btn btn-sit-modal btn-sit-switch-control filter-not-selected"></button>
+                                                    {% else %}
                                                     <button id="all-cats-toggle" class="btn btn-sit-modal btn-sit-switch-control filter-selected"></button>
+                                                    {% endif %}
                                                 </div>
                                             </div>    
                                             {% for cat in config.CATS %}
@@ -248,8 +257,13 @@
                                                     <label>{{cat['catName']}}s</label>
                                                 </div>
                                                 <div class="col-6">
+                                                    {%if cat['filter_status'] == "0" %}
+                                                    <button name="{{cat['catName']}}-{{cat['catId']}}" class="cat-filter-toggle btn btn-sit-modal btn-sit-switch-control filter-not-selected" value="0"></button>
+                                                    <input class="hide cat-filter-toggle" name="cat-{{cat['catId']}}" value="0" />
+                                                    {% else %}
                                                     <button name="{{cat['catName']}}-{{cat['catId']}}" class="cat-filter-toggle btn btn-sit-modal btn-sit-switch-control filter-selected" value="1"></button>
                                                     <input class="hide cat-filter-toggle" name="cat-{{cat['catId']}}" value="1" />
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                             {% endfor %}
@@ -260,17 +274,26 @@
                                                     <label>All Statuses</label>
                                                 </div>
                                                 <div class="col-6">
+                                                    {% if omitted_status %}
+                                                    <button id="all-iss-status-toggle" class="btn btn-sit-modal btn-sit-switch-control filter-not-selected"></button>
+                                                    {% else %}
                                                     <button id="all-iss-status-toggle" class="btn btn-sit-modal btn-sit-switch-control filter-selected"></button>
+                                                    {% endif %}
                                                 </div>
                                             </div>
-                                            {% for key, val in config.ISS_STATUS.items() %}    
+                                            {% for k, v in config.ISS_STATUS.items() %}    
                                             <div class="row mb-1">
                                                 <div class="col-6 text-right">
-                                                    <label>{{val['display']}}</label>
+                                                    <label>{{v['display']}}</label>
                                                 </div>
                                                 <div class="col-6">
-                                                    <button name="{{key}}-{{val['id']}}" class="iss-status-filter-toggle btn btn-sit-modal btn-sit-switch-control filter-selected" value="1"></button>
-                                                    <input class="hide iss-status-filter-toggle" name="status-{{val['id']}}" value="1" />
+                                                    {% if v['filter_status'] == "0" %}
+                                                    <button name="{{key}}-{{v['id']}}" class="iss-status-filter-toggle btn btn-sit-modal btn-sit-switch-control filter-not-selected" value="0"></button>
+                                                    <input class="hide iss-status-filter-toggle" name="status-{{v['id']}}" value="0" />
+                                                    {% else %}
+                                                    <button name="{{key}}-{{v['id']}}" class="iss-status-filter-toggle btn btn-sit-modal btn-sit-switch-control filter-selected" value="1"></button>
+                                                    <input class="hide iss-status-filter-toggle" name="status-{{v['id']}}" value="1" />
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                             {% endfor %}

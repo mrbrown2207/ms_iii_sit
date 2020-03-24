@@ -346,6 +346,10 @@ a.sit-disabled, button.sit-disabled { /* This is because you cannot disable a li
     transition: all .5s ease;
 }
 
+.cta-icon-on {
+    color: var(--secondary-colour);
+}
+
 .last-col {
     margin-left: 25px;
 }
