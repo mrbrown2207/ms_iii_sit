@@ -241,45 +241,31 @@ a.sit-disabled, button.sit-disabled { /* This is because you cannot disable a li
     box-shadow: var(--box-shadow-offset) #C6262D;
 }
 
-.btn-join-sit {
-    color: var(--main-colour);
+.btn-link-sit {
+    color: var(--secondary-colour);
     font-family: 'Open Sans', sans-serif;
-    font-weight: 700;
+    font-weight: 400;
     border-color: #FFFFFF;
     background: #FFFFFF;
     border-radius: 28px;
-    min-width: 135px;
+    margin-left: -20px;
+    min-width: 100px;
+    max-width: 100px;
     -webkit-transition: all 1s ease;
     -moz-transition: all 1s ease;
     -o-transition: all 1s ease;
     transition: all 1s ease;
 }
 
-.btn-join-sit:hover {
+.btn-link-sit:hover {
     color: #FFFFFF;
-    border-color: var(--main-colour);
-    background: var(--main-colour);
+    border-color: var(--secondary-colour);
+    background: var(--secondary-colour);
     text-decoration: none;
 }
 
-.btn-join-sit-caption {
-    color: var(--main-colour);
-    font-family: 'Archivo', sans-serif;
-    border-color: transparent;
-    background: transparent;
-    min-width: 100px;
-    border-radius: 28px;
-    -webkit-transition: all 1s ease;
-    -moz-transition: all 1s ease;
-    -o-transition: all 1s ease;
-    transition: all 1s ease;
-}
-
-.btn-join-sit-caption:hover {
-    color: #FFFFFF;
-    border-color: var(--main-colour);
-    background: var(--main-colour);
-    cursor: pointer;
+.btn-link-sit-nm {
+    margin-left: 0 !important;
 }
 
 .btn-sit-modal {

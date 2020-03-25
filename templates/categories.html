@@ -8,107 +8,41 @@
 
 <section>
     <div class="container">
-        <h2 class="form-heading">Categories</h2>
-        <div class="row panel mt-1 mb-3">
-            <div class="col-12">
-                <!-- Hidden on mobile -->
-                <div class="row heading d-none d-md-flex">
-                    <div class="col-md-2"><h5>Category Id</h5></div>
-                    <div class="col-md-2"><h5>Category</h5></div>
-                    <div class="col-md-2"><h5>Status</h5></div>
+        <div class="row">
+            <div class="col-12 col-md-10 offset-md-1">
+                <h2 class="form-heading">Categories</h2>
+            </div>
+        </div>
+        <div class="row mt-1 mb-3">
+            <div class="col-12 col-md-10 offset-md-1 panel">
+                <div class="row">
+                    <div class="col-md-3"><h5>Id</h5></div>
+                    <div class="col-md-3"><h5>Category</h5></div>
+                    <div class="col-md-3"><h5>Description</h5></div>
+                    <div class="col-md-3 pl-4"><h5>Status</h5></div>
                 </div>
-                <!---------------------->
-            </div>
-            <div class="col-12">
                 <hr>
-            </div>
 
-            {% for cat in cats %}
-            <div class="col-12">
-                <!-- Hidden on mobile -->
-                <div class="row d-none d-md-flex">
-                    <div class="col-md-2"><a href="/">{{cat['catId']}}</a></div>
+                {% for cat in cats %}
+                <div class="row">
+                    <div class="col-md-3"><a class="btn btn-link-sit btn-link-sit-nm" href="{{url_for('main.edit_cat', cat_id=cat['catId'])}}">{{cat['catId']}}</a></div>
                     <div class="col-md-3"><p>{{cat['catName']}}</p></div>
-                    <div class="col-m3-2"><p>{{cat['catDesc']}}</p></div>
-                    <div class="col-md-2 text-center"><p>{{cat['catStatus']}}<a class="cta-edit" href="/" data-toggle-1="tooltip" data-placement="top" title="Click to edit category"><i class="cta-icon last-col fa fa-pencil"></i></a></p></div>
+                    <div class="col-md-3"><p>{{cat['catDesc']}}</p></div>
+                    <div class="col-md-3 pl-4"><p>{{cat['catStatus']}}<a class="cta-edit" href="{{url_for('main.edit_cat', cat_id=cat['catId'])}}" data-toggle-1="tooltip" data-placement="top" title="Click to edit category"><i class="cta-icon last-col fa fa-pencil"></i></a></p></div>
                 </div>
-            </div>
-            <div class="col-12">
                 <hr>
+                {% else %}
+                <p>No categories found</p>
+                {% endfor %}
             </div>
-            {% else %}
-            <p>No categories found</p>
-            {% endfor %}
+        </div>
+        <div class="row pt-3 text-right">
+            <div class="col-12 col-md-10 offset-md-1">
+                <a href="{{url_for('main.add_cat')}}" class="btn btn-sit btn-sit-cta-add">Add Category</a>
+            </div>
         </div>
     </div>
 
-    <div class="row pt-3 text-right">
-        <div class="col-xs-12 offset-md-9 col-md-3">
-            <a href="{{url_for('main.add_cat_todb')}}" class="btn btn-sit btn-sit-cta-add">Add Category</a>
-        </div>
-    </div>
 </section>
-
-<div class="modal fade" tabindex="-1" role="dialog" id="add-cat-modal">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Edit Category</h3>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12 col-md-10 center-block">
-                            <form class="form-container" action="{{url_for('main.add_cat_todb')}}" method="POST">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="form-group">
-                                                <label for="curr-iss-id" class="control-label">Issue Id: </label>
-                                                <input type="text" id="curr-iss-id" name="curr-iss-id" aria-readonly="readonly" value="" readonly />
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="curr-iss-subj" class="control-label">Issue Subject: </label>
-                                                <input type="text" id="curr-iss-subj" name="curr-iss-subj" aria-readonly="readonly" value="" readonly />
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="form-group">
-                                                <label for="iss-res-desc" class="control-label required-field ">
-                                                    Resolution Detail *
-                                                </label>
-                                                <div class="">
-                                                    <textarea name="iss-res-desc" cols="100" rows="10" class="form-control sit-required char-countdown form-control" aria-describedby="issue resolution description" placeholder="Enter detailed resolution description" minlength="1" maxlength="1000" required></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row" id="char-count">
-                                        <div class="col-12 text-right">
-                                            <small class="form-text">Characters remaining: <span class="char-count">1000</span></small>
-                                        </div>
-                                    </div>
-                                    <div class="row mt-3">
-                                        <div class="offset-md-1 col-5">
-                                            <p class="text-center">
-                                                <a href="{{url_for('main.get_issues')}}" role="button" id="cancel-btn" name="cancel-btn" class="btn btn-sit destructive w-100">Cancel</a>
-                                            </p>
-                                        </div>
-                                        <div class="col-5">
-                                            <p class="text-center">
-                                                <button id="submit-btn" type="submit-btn" name="submit-btn" class="btn btn-sit btn-sit-submit w-100 sit-disabled">Resolved</button>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 {% endblock %}

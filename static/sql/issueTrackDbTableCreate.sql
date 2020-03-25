@@ -46,7 +46,7 @@ select 'Creating tblCat table...' as 'Action';
 create table if not exists tblCat
 						(
 						catId 					tinyint(3) zerofill not null auto_increment primary key,
-						catName					varchar(30) not null,
+						catName					varchar(30) not null unique,
 						catDesc					varchar(60),
                         catActive               tinyint(1) unsigned not null default '1', /* Is this category selectable */
 						dateAdded				datetime not null,
@@ -64,7 +64,7 @@ select 'Creating tblIssue table...' as 'Action';
 create table if not exists tblIssue
 						(
 						issueId 				int(6) zerofill not null auto_increment primary key,
-						issueSubj				varchar(30),
+						issueSubj				varchar(30) not null,
 						issueDesc				varchar(1000), /* Setting this as a varchar because may want to full text index. This would be faster than setting to a text field */
 						catId					tinyint(3) zerofill not null,
 						urgent					tinyint(1) unsigned not null default '0',

@@ -2,7 +2,7 @@ import datetime
 import pymysql
 import pymysql.cursors
 from flask import (Blueprint, Flask, current_app, redirect, render_template,
-                   request, url_for)
+                   request, url_for, flash)
 from ms_iii_sit.constants import DDMMYYYY_FMT, SQL_DICT, SQL_DT_FMT, ISSUE_STATUS
 from .utils import *
 
@@ -54,7 +54,7 @@ def get_issues():
     except Exception as e:
         print("Error: {}".format(str(e)))
     finally:
-        print('Success')
+        pass
 
     return render_template('issues.html', issues=cur.fetchall(), omitted_status=filter_info['omitted_status'], omitted_cats=filter_info['omitted_cats'])
 
@@ -67,7 +67,7 @@ def add_issue():
     except Exception as e:
         print("Error: {}".format(str(e)))
     finally:
-        print('Success')
+        pass
 
 
     return render_template('addissue.html', cats=cur.fetchall())
@@ -100,9 +100,12 @@ def add_issue_todb():
                         )
             db.commit()
     except Exception as e:
+        flash(u"Unable to add issue.", "danger")
         print("Error: {}".format(str(e)))
     finally:
-        print('Success')
+        pass
+
+    flash(u"Issue successfully added. A MBPM representative will be in contact via email shortly", "success")
 
     return redirect(url_for('main.get_issues'))
 
@@ -134,50 +137,40 @@ def resolve_issue():
     except Exception as e:
         print("Error: {}".format(str(e)))
     finally:
-        print('Success')
+        pass
 
     return redirect(url_for('main.get_issues'))
 
 
-@main.route('/update_issue/<issue_id>', methods=['POST'])
-def update_issue(issue_id):
+@main.route('/upd_issue/<issue_id>', methods=['POST'])
+def upd_issue(issue_id):
     try:
         db = get_db()
 
         # If the switch isn't on, then .get() will not find it. In that case set value to false.
         # The component returns 'on' or 'off'. We store as a boolean in the database.
-        issue_urgent = request.form.get('urgent', False)
+        issue_urgent = request.form.get('is-urgent', False)
         if issue_urgent != False:
             issue_urgent = 1
         else:
             issue_urgent = 0
             
-        issue_resolved = request.form.get('resolved', False)
-        if issue_resolved != False:
-            issue_resolved = 1
-            resolved_dt = datetime.datetime.now().strftime(SQL_DT_FMT)
-            resolved_by = 1 #Temporary
-            resolution_desc = request.form.get('resolution_desc')
-        else:
-            issue_resolved = resolved_by = 0
-            resolved_dt = resolution_desc = ''
-
         with db.cursor() as cur:
             cur.execute(SQL_DICT['upd_iss'],
-                            request.form.get('issue_subj'),
-                            request.form.get('issue_desc'),
-                            request.form.get('cat_id'),
+                            (
+                            request.form.get('iss-subj'),
+                            request.form.get('iss-desc'),
+                            request.form.get('cat-id'),
                             issue_urgent,
-                            issue_resolved,
-                            resolved_by,
-                            resolved_dt,
-                            resolution_desc,
                             issue_id
+                            )
                         )
+        
+        db.commit()
     except Exception as e:
         print("Error: {}".format(str(e)))
     finally:
-        print('Success')
+        pass
     
     return redirect(url_for('main.get_issues'))
 
@@ -207,29 +200,24 @@ def edit_issue(issue_id):
         with db.cursor() as cur:
             cur.execute(SQL_DICT['sel_iss_rec'], (issue_id))
             row = cur.fetchone()
-            print(row)
             
             # Get the categories so we can default to the correct one
             # as well as make available for change
-            all_cats = get_all_recs('tblCat')
+            cats = get_all_recs('tblCat')
             
             # Format our dates
             row['dateAdded'] = row['dateAdded'].strftime(DDMMYYYY_FMT)
-            if row['viewed']:
+            if row['issueStatus'] == ISSUE_STATUS['viewed']['id']:
                 row['dateViewed'] = row['dateViewed'].strftime(DDMMYYYY_FMT)
             else:
                 row['dateViewed'] = ''
-            if row['resolved']:
-                row['dateResolved'] = row['dateResolved'].strftime(DDMMYYYY_FMT)
-            else:
-                row['dateResolved'] = ''
             
     except Exception as e:
         print("Error: {}".format(str(e)))
     finally:
-        print('Success')
+        pass
         
-    return render_template('editissue.html', issue=row, cats=all_cats)
+    return render_template('editissue.html', issue=row, cats=cats, chars_remaining=(1000-len(row['issueDesc'])))
 
 
 @main.route('/delete_issue/<issue_id>')
@@ -250,18 +238,28 @@ def get_cats():
     return render_template('categories.html', cats=get_all_recs('tblCat'))
 
 
-@main.route('/update_cat/<cat_id>', methods=['POST'])
-def update_cat(cat_id):
+@main.route('/upd_cat/<cat_id>', methods=['POST'])
+def upd_cat(cat_id):
     try:
         db = get_db()
 
+        cat_active = request.form.get('is-active', False)
+        if cat_active != False:
+            cat_active = 1
+        else:
+            cat_active = 0
+
         with db.cursor() as cur:
-            cur.execute(SQL_DICT['upd_cat'], (request.form.get('cat_name'), request.form.get('cat_desc'), cat_id))
+            cur.execute(SQL_DICT['upd_cat'], (request.form.get('cat-desc'), cat_active, cat_id))
+
+        db.commit()
     except Exception as e:
+        flash(u"Unable to update category.", "danger")
         print("Error: {}".format(str(e)))
     finally:
-        print('Success')
+        pass
     
+    flash(u"Category successfully updated.", "success")
     return redirect(url_for('main.get_cats'))
 
 
@@ -270,15 +268,36 @@ def add_cat_todb():
     try:
         db = get_db()
 
+        cat_active = request.form.get('is-active', False)
+        if cat_active != False:
+            cat_active = 1
+        else:
+            cat_active = 0
+
+        # Capitalize the category name
+        cat_name = request.form.get('cat-name').capitalize()
+
         with db.cursor() as cur:
-            cur.execute(SQL_DICT['add_cat'], (request.form.get('cat_name'), request.form.get('cat_desc')))
+            cur.execute(SQL_DICT['add_cat'], (cat_name, request.form.get('cat-desc'), cat_active))
             
             db.commit()
+    except (db.Error) as e:
+        # Duplicate entry
+        if e.args[0] == 1062:
+            flash(u"Unable to add category. Category '{}' already exists.".format(cat_name), "danger")
+        else:
+            flash(u"Database error. Unable to add category.", "danger")
+            print("Error: {}".format(str(e)))
+
+        return redirect(url_for('main.add_cat'))
     except Exception as e:
+        flash(u"Unable to add category.", "danger")
         print("Error: {}".format(str(e)))
     finally:
-        print('Success')
+        pass
 
+    flash(u"Category '{}' successfully added.".format(cat_name), "success")
+    
     return redirect(url_for('main.get_cats'))
 
 
@@ -290,11 +309,11 @@ def edit_cat(cat_id):
         with db.cursor() as cur:
             cur.execute(SQL_DICT['sel_cat_rec'], (cat_id))
             row = cur.fetchone()
-            print(row)
     except Exception as e:
+        flash(u"Unable to retrieve category from database.", "danger")
         print("Error: {}".format(str(e)))
     finally:
-        print('Success')
+        pass
 
     return render_template('editcat.html', cat=row)
 
@@ -327,25 +346,8 @@ def update_acct(acct_id):
     except Exception as e:
         print("Error: {}".format(str(e)))
     finally:
-        print('Success')
+        pass
     
-    return redirect(url_for('main.get_accts'))
-
-
-@main.route('/insert_cat', methods=['POST'])
-def insert_acct():
-    try:
-        db = get_db()
-
-        with db.cursor() as cur:
-            cur.execute(SQL_DICT['add_cat'], (request.form.get('cat_name'), request.form.get('cat_desc')))
-            
-            db.commit()
-    except Exception as e:
-        print("Error: {}".format(str(e)))
-    finally:
-        print('Success')
-
     return redirect(url_for('main.get_accts'))
 
 
@@ -361,7 +363,7 @@ def edit_acct(acct_id):
     except Exception as e:
         print("Error: {}".format(str(e)))
     finally:
-        print('Success')
+        pass
 
     return render_template('editacct.html', acct=row)
 

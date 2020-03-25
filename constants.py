@@ -7,7 +7,7 @@ SQL_DICT =  {
             "del_cat_rec": "delete from tblCat where catId=%s",
             "del_iss_rec": "delete from tblIssue where issueId=%s",
             "sel_cat_rec": "select * from tblCat where catId=%s",
-            "sel_iss_rec": ("select i.issueSubj as issueSubj, i.issueDesc as issueDesc, i.catId as catId, " + 
+            "sel_iss_rec": ("select i.issueId as issueId, i.issueSubj as issueSubj, i.issueDesc as issueDesc, i.catId as catId, " + 
                             "(case " +
                                 "when i.urgent = 0 then 'No' " +
                                 "when i.urgent = 1 then 'Yes' " + 
@@ -80,10 +80,6 @@ SQL_DICT =  {
                             "issueDesc=%s, " +
                             "catId=%s, " +
                             "urgent=%s, " +
-                            "issueStatus=%s, " +
-                            "markedResolvedBy=%s, " +
-                            "dateResolved=%s, " +
-                            "resolutionDesc=%s, " +
                             "dateModified=NOW() " +
                         "where issueId=%s"),
             "upd_iss_status": ("update tblIssue set issueStatus=%s where issueId=%s"),
@@ -93,14 +89,14 @@ SQL_DICT =  {
                             "values " +
                         "(%s, %s, %s, %s, %s, NOW(), NOW())"),
             "upd_cat": ("update tblCat set " +
-                            "catName=%s, " +
                             "catDesc=%s, " +
+                            "catActive=%s, " +
                             "dateModified=NOW() " +
                         "where catId=%s"),
             "get_cats": ("select catId, catName, '1' as filter_status from tblCat order by catName"),
-            "add_cat": ("insert into tblCat (catName, catDesc, dateAdded, dateModified) " +
+            "add_cat": ("insert into tblCat (catName, catDesc, catActive, dateAdded, dateModified) " +
                             "values " +
-                        "(%s, %s, NOW(), NOW())")
+                        "(%s, %s, %s, NOW(), NOW())")
             }
 DEL = 1
 SEL = 2

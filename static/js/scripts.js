@@ -85,6 +85,10 @@ $(function() {
         }
     });
 
+    $(document).on("change keypress paste", ".edit-form", function() {
+        {$("#submit-btn").removeClass("sit-disabled");}
+    });
+
     // Filter categories toggle control. Note that the all-cat-filters can only
     // be toggled on, it cannot be toggled off. This code ensures
     // that everything is in the right state.
