@@ -129,7 +129,7 @@ def resolve_issue():
                         (
                             acctId,
                             request.form.get('iss-res-desc'),
-                            ISSUE_STATUS['resolved'],
+                            ISSUE_STATUS['resolved']['id'],
                             request.form.get('curr-iss-id')
                         )
                     )
