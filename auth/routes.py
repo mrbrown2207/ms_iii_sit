@@ -65,6 +65,10 @@ def reauth():
     return render_template("reauth.html")
 
 
+@auth.route("/profile", methods=["GET", "POST"])
+def profile():
+    pass
+
 @auth.route("/logout")
 @login_required
 def logout():

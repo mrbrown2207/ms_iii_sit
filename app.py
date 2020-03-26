@@ -1,5 +1,6 @@
 from ms_iii_sit import create_app
-from . constants import ISSUE_STATUS
+from flask_login import current_user
+from . constants import ISSUE_STATUS, USER_LEVEL
 
 app = create_app()
 
@@ -30,13 +31,17 @@ def utility_contexts():
     def testing():
         return app.config.get('TESTING')
 
+    def is_superuser():
+        return current_user.is_superuser()
+
     return dict(issue_viewed=issue_viewed,
                 issue_not_viewed=issue_not_viewed,
                 issue_resolved=issue_resolved,
                 notviewed=notviewed,
                 viewed=viewed,
                 resolved=resolved,
-                testing=testing)
+                testing=testing,
+                is_superuser=is_superuser)
 
 if __name__ == '__main__':
     app.run(debug=True)

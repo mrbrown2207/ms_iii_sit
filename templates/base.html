@@ -27,7 +27,7 @@
                         <li class="nav-item px-2 px-xl-3">
                             <a class="nav-link" href="{{url_for('main.get_issues')}}">Issues</a>
                         </li>
-                        {% if current_user.is_authenticated and current_user.is_superuser %}
+                        {% if current_user.is_authenticated and is_superuser() %}
                         <li class="nav-item px-2 px-xl-3">
                             <a class="nav-link" href="{{url_for('main.get_cats')}}">Categories</a>
                         </li>
@@ -36,6 +36,9 @@
                             <a class="nav-link" href="{{url_for('main.contact')}}">Contact Us</a>
                         </li>
                         {% if current_user.is_authenticated %}
+                        <li class="nav-item px-2 px-xl-3">
+                            <a class="nav-link" href="{{url_for('auth.profile')}}">Profile</a>
+                        </li>
                         <li class="nav-item px-2 px-xl-3">
                             <a class="nav-link" href="{{url_for('auth.logout')}}">Logout</a>
                         </li>
