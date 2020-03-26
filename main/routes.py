@@ -3,6 +3,7 @@ import pymysql
 import pymysql.cursors
 from flask import (Blueprint, Flask, current_app, redirect, render_template,
                    request, url_for, flash)
+from flask_login import login_required
 from ms_iii_sit.constants import DDMMYYYY_FMT, SQL_DICT, SQL_DT_FMT, ISSUE_STATUS
 from .utils import *
 
@@ -60,6 +61,7 @@ def get_issues():
 
 
 @main.route('/add_issue')
+@login_required
 def add_issue():
     try:
         with get_db().cursor() as cur:
@@ -68,7 +70,6 @@ def add_issue():
         print("Error: {}".format(str(e)))
     finally:
         pass
-
 
     return render_template('addissue.html', cats=cur.fetchall())
 

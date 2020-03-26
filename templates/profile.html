@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load bootstrap_tags %}
+
+{% block content %}
+<section class="login-form">
+    <main role="main" class="container">
+        <h3 class="text-center mt-3 mb-3">Your Profile</h3>
+        <div class="row justify-content-center">
+            <form class="form-container col-md-6" id="profile-form" action="{% url 'userprofile' %}" method="POST">
+                {% csrf_token %}
+                {{ user_form | as_bootstrap }}
+                {{ profile_form | as_bootstrap }}
+                <div class="row mt-2">
+                    <div class="offset-md-1 col-5">
+                        <p class="text-center">
+                            <a href="{% url 'index' %}" role="button" id="cancel-btn" name="cancel-btn" class="btn btn-ua destructive w-100">Cancel</a>
+                        </p>
+                    </div>
+                    <div class="col-5">
+                        <p class="text-center">
+                            <button id="submit-btn" type="submit" name="submit" class="btn btn-primary btn-ua w-100 ua-disabled">Save Profile</button>
+                        </p>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </main>
+</section>
+{% endblock %}

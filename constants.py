@@ -74,7 +74,8 @@ SQL_DICT =  {
             "sel_all_cats_1": ("select concat('cat-', catId) as cat from tblCat order by catName"),
             "sel_active_cats": "select * from tblCat where catActive = 1",
             "sel_active_cats_1": ("select concat('cat-', catId) as cat from tblCat where catActive = 1 order by catName"),
-            "sel_acct_rec": "select * from tblAccounts where email=%s",
+            "sel_acct_rec": ("select firstName, surname, acctId, email, isActive, maudindo, abtrusus from tblAccounts where email = %s"),
+            "sel_acct_rec_by_id": ("select firstName, surname, acctId, email, isActive, maudindo from tblAccounts where acctId = %s"),
             "upd_iss": ("update tblIssue set " +
                             "issueSubj=%s, " +
                             "issueDesc=%s, " +
@@ -122,5 +123,10 @@ ISSUE_STATUS =  {
                             "filter_status":"1"
                         }
 }
+
+USER_LEVEL = {
+                'superuser': 255, 
+                'plebe': 1
+            }
 
 """""<<<---->>>"""""

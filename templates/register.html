@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load bootstrap_tags %}
+
+{% block content %}
+<section class="login-form">
+    <main role="main" class="container">
+        <h3 class="text-center mt-3 mb-3">Create New Account</h3>
+        <div class="row justify-content-center">
+            <form class="form-container col-md-6" id="register-form" action="{% url 'register' %}" method="POST">
+                {% csrf_token %}
+                {{ reg_form | as_bootstrap }}
+                <div class="form-group">
+                    <label for="no-bot-q" class="text-field-label">{{ request.session.botq }} is... *</label>
+                    <input type="password" class="form-control numeric-only" id="no-bot-a" name="nobota" minlength="1" maxlength="1" placeholder="">
+                </div>
+
+                <div class="row">
+                    <div class="offset-md-1 col-5">
+                        <p class="text-center">
+                            <a href="{% url 'index' %}" role="button" id="cancel-btn" name="cancel-btn" class="btn btn-ua destructive w-100 mt-2">Cancel</a>
+                        </p>
+                    </div>
+                    <div class="col-5">
+                        <p class="text-center">
+                            <button type="submit" name="submit" class="btn btn-primary btn-ua w-100 mt-2">Create Account</button>
+                        </p>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </main>
+</section>
+{% endblock %}

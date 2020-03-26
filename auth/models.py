@@ -1,12 +1,14 @@
 from flask_login import UserMixin
+from ..constants import USER_LEVEL
 
 
 class User(UserMixin):
-    def __init__(self, user_dict):
-        self.name = user_dict.get("firstName") + " " + user_dict.get("surname")
-        self.id = user_dict.get("acctId")
-        self.email = user_dict.get("email")
-        self.active = user_dict.get("acctDisabled")
+    def __init__(self, user):
+        self.name = user["firstName"] + " " + user["surname"]
+        self.id = user["acctId"]
+        self.email = user["email"]
+        self.active = user["isActive"]
+        self.maudindo = user["maudindo"]
 
     def is_active(self):
         return self.active
@@ -15,8 +17,10 @@ class User(UserMixin):
         return False
 
     def get_id(self):
-        return self.email
+        return self.id
 
     def is_authenticated(self):
         return True
     
+    def is_superuser(self):
+        return self.maudindo == USER_LEVEL['superuser']
