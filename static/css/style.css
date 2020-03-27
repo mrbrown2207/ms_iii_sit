@@ -14,13 +14,13 @@
 # Footer
 # Media Queries for different screen sizes
 # Tooltip
+# Modals
 --------------------------------------------------------------*/
 
 /*--------------------------------------------------------------
 # CSS Variables
 --------------------------------------------------------------*/
 :root {
-	--banner-height: 450px;
     --main-colour: #203B4E;
     --secondary-colour: #009AD1;
     --cta-btn-colour: #007BFF; /* btn-primary */
@@ -230,7 +230,6 @@ a.sit-disabled, button.sit-disabled { /* This is because you cannot disable a li
 
 .destructive {
     background: #C4343B;
-    /*border: 2px solid #C4343B;*/
     color: #FFFFFF;
 }
 
@@ -273,7 +272,6 @@ a.sit-disabled, button.sit-disabled { /* This is because you cannot disable a li
     font-family: 'Archivo', sans-serif;
     font-weight: 500;
     background: #f2fbff;
-    /*border: 2px solid #CEE2EC;*/
     border-radius: 100px;
     text-transform: uppercase;
     padding: auto 10px;
@@ -473,56 +471,11 @@ input[type=text] {
 }
 
 /*--------------------------------------------------------------
-# Featured
---------------------------------------------------------------*/
-.featured-banner {
-  width: 100%;
-  height: var(--banner-height);
-  background: rgb(241, 241, 241);
-  overflow: hidden;
-}
-
-.featured-blurbs {
-  height: auto;
-  background: #F6F8FA;
-  border-bottom: 1px solid #e5edf6;
-}
-
-.featured-blurbs .container {
-  padding: 50px 0;
-}
-
-.featured-blurbs p {
-  font-weight: 500;
-  padding: 0 10px;
-}
-
-.featured-blurbs .blurb {
-  text-align: center;
-}
-
-.featured-post h3 {
-    margin-bottom: 5px;
-}
-
-.featured-post p {
-    margin-bottom: 5px;
-}
-
-/*--------------------------------------------------------------
 # Others
 --------------------------------------------------------------*/
 .heading {
     margin-bottom: -15px;
 }
-
-/*
-hr {
-    height: 1px;
-    background-color: var(--main-colour);
-    border: none;
-}
-*/
 
 /* https://css-tricks.com/examples/hrs/ */
 hr.fancy {
