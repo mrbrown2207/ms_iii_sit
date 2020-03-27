@@ -33,18 +33,25 @@
                         </li>
                         {% endif %}
                         <li class="nav-item px-2 px-xl-3">
-                            <a class="nav-link" href="{{url_for('main.contact')}}">Contact Us</a>
+                            <a class="nav-link" href="{{url_for('main.contact')}}"><i class="fa fa-envelope"></i> Contact Us</a>
                         </li>
                         {% if current_user.is_authenticated %}
                         <li class="nav-item px-2 px-xl-3">
-                            <a class="nav-link" href="{{url_for('auth.profile')}}">Profile</a>
+                            <a class="nav-link" href="{{url_for('auth.profile')}}">
+                                {% if is_superuser() %}
+                                <i class="fa fa-user-plus"></i>
+                                {% else %}
+                                <i class="fa fa-user"></i>
+                                {% endif %}
+                                Profile
+                            </a>
                         </li>
                         <li class="nav-item px-2 px-xl-3">
-                            <a class="nav-link" href="{{url_for('auth.logout')}}">Logout</a>
+                            <a class="nav-link" href="{{url_for('auth.logout')}}"><i class="fa fa-sign-out"></i> Logout</a>
                         </li>
                         {% else %}
                         <li class="nav-item px-2 px-xl-3">
-                            <a class="nav-link" href="{{url_for('auth.login')}}">Login</a>
+                            <a class="nav-link" href="{{url_for('auth.login')}}"><i class="fa fa-sign-in"></i> Login</a>
                         </li>
                         {% endif %}
                     </ul>

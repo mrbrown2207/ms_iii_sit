@@ -124,6 +124,27 @@ ISSUE_STATUS =  {
                         }
 }
 
+# An alternative to captcha. Dictionary of questions. One will be chosen at random
+# when a user registers.
+NO_BOTS = {
+    '1 and 1 and 1':'3',
+    '1 and 2 and 1':'4',
+    '1 and 1 and 2':'4',
+    '2 and 2 and 2':'6',
+    '2 and 2 and 1':'5',
+    '2 and 1 and 1':'4',
+    '3 and 3 and 3':'9',
+    '3 and 2 and 1':'6',
+    '3 and 3 and 2':'8',
+    '1 and 1 and 3':'5',
+    '2 and 3 and 2':'7',
+    '5 and 2 and 1':'8',
+    '1 and 0 and 0':'1',
+    '0 and 0 and 0':'0',
+    '5 and 4 and 0':'9',
+    '4 and 1 and 1':'6',
+}
+
 USER_LEVEL = {
                 'superuser': 255, 
                 'plebe': 1

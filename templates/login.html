@@ -6,7 +6,7 @@
         <main role="main" class="container">
             <h3 class="text-center mt-3 mb-3">Login</h3>
             <div class="row justify-content-center">
-                <form class="form-container col-10 col-md-5" action="{{url_for('auth.login')}}" method="POST">
+                <form class="form-container col-10 col-md-5" action="{{ url_for('auth.login') }}" method="POST">
                     <div class="form-group">
                         <label for="email">Email Address *</label>
                         <input id="email" type="email" name="email" class="form-control sit-required form-control" aria-describedby="email address" placeholder="Enter email address" maxlength="40" minlength="3" />
@@ -16,12 +16,12 @@
                         <input id="password" type="password" name="password" aria-describedby="password" placeholder="Password" minlength="8" maxlength="11" class="form-control" />
                     </div>
                     <p class="text-center">
-                        <button type="submit" name="submit" class="btn btn-sit btn-sit-cta w-50 mt-2">Login</button>
+                        <button type="submit" name="submit" class="btn btn-sit btn-sit-submit w-50 mt-2">Login</button>
                     </p>
-                    <p class="text-center mt-3">Don't have an account?
+                    <div class="text-center mt-3">Don't have an account?
                         <br>
-                        <a href="#">Create a New Account</a>
-                    </p>
+                        <a href="{{ url_for('auth.register') }}">Create a New Account</a>
+                    </div>
                     <hr>
                     <div class="mt-3 text-center">
                         <a href="#">Forgot Password</a>

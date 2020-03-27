@@ -29,7 +29,7 @@ def utility_contexts():
         return ISSUE_STATUS['resolved']['id']
 
     def testing():
-        return app.config.get('TESTING')
+        return app.config['TESTING']
 
     def is_superuser():
         return current_user.is_superuser()
@@ -44,4 +44,4 @@ def utility_contexts():
                 is_superuser=is_superuser)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=app.config['DEV'])

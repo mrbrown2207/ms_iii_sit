@@ -29,6 +29,7 @@
     --del-btn-colour: #C4343B;
     --box-shadow-offset: 0 2px 5px 0;
     --form-radius: 10px;
+    --btn-radius: 28px;
 }
 
 /*--------------------------------------------------------------
@@ -191,7 +192,7 @@ a.sit-disabled, button.sit-disabled { /* This is because you cannot disable a li
 	color: #FFFFFF;
 	font-family: 'Archivo', sans-serif;
 	font-weight: 500;
-	border-radius: 28px;
+	border-radius: var(--btn-radius);
 	min-width: 135px;
 	text-transform: uppercase;
 	padding: 10px 25px;
@@ -235,7 +236,6 @@ a.sit-disabled, button.sit-disabled { /* This is because you cannot disable a li
 
 .destructive:hover {
     background: #D7353D;
-    border: 2px solid #D7353D;
     color: #FFFFFF;
     box-shadow: var(--box-shadow-offset) #C6262D;
 }
@@ -246,7 +246,7 @@ a.sit-disabled, button.sit-disabled { /* This is because you cannot disable a li
     font-weight: 400;
     border-color: #FFFFFF;
     background: #FFFFFF;
-    border-radius: 28px;
+    border-radius: var(--btn-radius);
     margin-left: -20px;
     min-width: 100px;
     max-width: 100px;
@@ -268,16 +268,20 @@ a.sit-disabled, button.sit-disabled { /* This is because you cannot disable a li
 }
 
 .btn-sit-modal {
-    color: #4D7488;
+    color: #FFFFFF;
     font-family: 'Archivo', sans-serif;
     font-weight: 500;
-    background: #f2fbff;
-    border-radius: 100px;
+    background: var(--cta-btn-colour);
+    border-radius: var(--btn-radius);
     text-transform: uppercase;
     padding: auto 10px;
     font-size: 12px;
     margin: 0;
     height: 35px;
+}
+
+.btn-sit-modal {
+    color: #FFFFFF !important;
 }
 
 .btn-sit-switch-control {
@@ -470,6 +474,12 @@ input[type=text] {
     margin-bottom: 0 !important;
 }
 
+.what-is-this::after {
+    font-family: "FontAwesome";
+    margin-left: 10px;
+    content: "\f05a" !important;
+}
+
 /*--------------------------------------------------------------
 # Others
 --------------------------------------------------------------*/
@@ -499,6 +509,18 @@ hr.fancy {
 .hide {
     display: none;
 }
+
+/* Used in registration form */
+/* Centres fa check next to an input text box. The input text box has a label above */
+.v-centred-icon {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    /*left: 20%;*/
+    -ms-transform: translate(-20%, -40%);
+    transform: translate(-20%, -40%);
+}
+/*****************************/
 
 /*--------------------------------------------------------------
 # Footer
@@ -632,12 +654,19 @@ https://stackoverflow.com/questions/44955201/bootstrap-4-change-tooltip-arrow-co
     border-left-color: var(--secondary-colour);
 }
 
-
 /*--------------------------------------------------------------
 # Modals
 --------------------------------------------------------------*/
-
 .modal-body h4 {
     text-align: center;
     text-decoration: underline;
+}
+
+.info-modal-text::after {
+    font-family: "FontAwesome";
+    font-weight: 500;
+    font-size: larger;
+    color: var(--secondary-colour);
+    margin-left: 5px;
+    content: "\f118" !important;
 }

@@ -2,6 +2,8 @@
 
 var g_mySwitch;
 var g_allOn = true;
+var g_pwdOk = false;
+var g_reqFieldsOk = false;
 
 $(function() {
     // Define our required handler function. It checks for all required fields on a form.
@@ -12,12 +14,25 @@ $(function() {
         for (var i = 0; i < fields.length; i++) { // For loop faster than $.each
             if ($(fields[i]).val() === "") {
                 disable = true;
+                g_reqFieldsOk = false;
                 break;  // No need to go through all the fields.....it just takes one
             }
         }
 
-        if (disable) {$("#submit-btn").addClass("sit-disabled");}
-        else {$("#submit-btn").removeClass("sit-disabled");}
+        if (disable) {
+            $("#submit-btn").addClass("sit-disabled");
+        } else {
+            g_reqFieldsOk = true; // Holy hell I hate this! ˘L˘
+            // If we are on the registration form, we also need to ensure that the
+            // password has passed validation/requirements.
+            if ($("form").hasClass("register-form")) {
+                if (g_pwdOk === true) {
+                    $("#submit-btn").removeClass("sit-disabled");
+                }
+            } else {
+                $("#submit-btn").removeClass("sit-disabled");
+            }        
+        }
     };
 
     // Character count
@@ -27,11 +42,49 @@ $(function() {
         $(".char-count").text((maxlen - $(this).val().length).toString());
     };
 
+    // Password validation handler. Note: this is minimal validation. I could have
+    // used a more sophisticated, already-rolled option, but wanted to do this
+    // myself. It gives visual notification that the user has keyed in at least
+    // 8 characters and gives visual notification when password and confirm
+    // password fields are the same. It does no sort of strength testing/validation
+    // whatsoever.
+    var pwdHandler = function() {
+        if ($("#pwd").val().length >= 8) {
+            $("#pwd-ok-icon").removeClass("hide");
+            if ($("#pwd").val() === $("#pwd-confirm").val()) {
+                $("#pwd-confirm-ok-icon").removeClass("hide");
+                g_pwdOk = true;
+                // Now check the case where all the other required fields have
+                // data and the last thing the user did was enter password information.
+                // I really don't like this! ˘L˘ I know there is a better way to
+                // do this, but getting to the end and need to get this submitted.
+                if (g_reqFieldsOk) {
+                    $("#submit-btn").removeClass("sit-disabled");
+                }
+            } else {
+                $("#pwd-confirm-ok-icon").addClass("hide");
+                g_pwdOk = false;
+                if (g_reqFieldsOk) {
+                    $("#submit-btn").addClass("sit-disabled");
+                }
+            }
+        }
+        else {
+            $("#pwd-ok-icon").addClass("hide");
+            $("#pwd-confirm-ok-icon").addClass("hide");
+            $("#submit-btn").addClass("sit-disabled");
+            g_pwdOk = false;
+        }
+    };
+
     // Call our handler for required field.
     $(document).on("keyup paste", ".sit-required", reqHandler);
 
     // Call our handler for char countdown fields.
     $(document).on("keyup paste", ".char-countdown", charCountHandler);
+
+    // Call our handler for password verification.
+    $(document).on("keyup paste", ".pwd", pwdHandler);
 
     // Any changes to the profile form enable the submit button.
     $(document).on("keyup paste", "#profile-form", function() {

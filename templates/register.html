@@ -1,28 +1,84 @@
 {% extends "base.html" %}
-{% load bootstrap_tags %}
 
 {% block content %}
 <section class="login-form">
     <main role="main" class="container">
         <h3 class="text-center mt-3 mb-3">Create New Account</h3>
         <div class="row justify-content-center">
-            <form class="form-container col-md-6" id="register-form" action="{% url 'register' %}" method="POST">
-                {% csrf_token %}
-                {{ reg_form | as_bootstrap }}
-                <div class="form-group">
-                    <label for="no-bot-q" class="text-field-label">{{ request.session.botq }} is... *</label>
-                    <input type="password" class="form-control numeric-only" id="no-bot-a" name="nobota" minlength="1" maxlength="1" placeholder="">
-                </div>
 
+            <form class="form-container col-md-6 register-form" id="register-form" action="{{ url_for('auth.register') }}" method="POST">
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="first-name">First Name *</label>
+                            <input type="text" id="first-name" name="first-name" class="form-control sit-required alpha-only text-capitalize form-control" aria-describedby="first name" placeholder="First name" minlength="1" maxlength="40" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="surname">Surname *</label>
+                            <input type="text" id="surname" name="surname" class="form-control sit-required alpha-only text-capitalize form-control" aria-describedby="surname" placeholder="Surname" minlength="1" maxlength="40" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" class="form-control sit-required form-control" aria-describedby="email address" placeholder="Enter email address" minlength="3" maxlength="40" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="pwd">Password *</label>
+                            <input type="password" id="pwd" name="pwd" class="form-control pwd sit-required form-control" aria-describedby="password" placeholder="Password (8 - 11 characters)" minlength="8" maxlength="11" />
+                        </div>
+                    </div>
+                    <div class="col-6 pl-1">
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <span id="pwd-ok-icon" class="hide v-centred-icon"><i class="fa fa-check fa-2x text-success" aria-hidden="true"></i></span>
+                        </div>                      
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="confirm-pwd">Confirm Password *</label>
+                            <input type="password" id="pwd-confirm" class="form-control pwd sit-required form-control" aria-describedby="repeat password" placeholder="Repeat password" minlength="8" maxlength="11" />
+                        </div>                
+                    </div>
+                    <div class="col-6 pl-1">
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <span id="pwd-confirm-ok-icon" class="hide v-centred-icon"><i class="fa fa-check fa-2x text-success" aria-hidden="true"></i></span>
+                        </div>                      
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="no-bot-a">{{ session.botq }} is... *</label>
+                            <a href="/" class="cta-icon what-is-this" data-toggle="modal" data-target="#info-modal"data-toggle-1="tooltip" data-placement="top" title="Click to find out what this is"></a>
+                            <input type="password" class="form-control numeric-only sit-required" id="no-bot-a" name="nobota" minlength="1" maxlength="1" placeholder="">
+                        </div>
+
+                    </div>
+                </div>
                 <div class="row">
                     <div class="offset-md-1 col-5">
                         <p class="text-center">
-                            <a href="{% url 'index' %}" role="button" id="cancel-btn" name="cancel-btn" class="btn btn-ua destructive w-100 mt-2">Cancel</a>
+                            <a href="{{ url_for('main.index') }}" role="button" id="cancel-btn" name="cancel-btn" class="btn btn-sit destructive w-100 mt-2">Cancel</a>
                         </p>
                     </div>
                     <div class="col-5">
                         <p class="text-center">
-                            <button type="submit" name="submit" class="btn btn-primary btn-ua w-100 mt-2">Create Account</button>
+                            <button type="submit" id="submit-btn" name="submit" class="btn btn-sit btn-sit-submit w-100 mt-2 sit-disabled">Register</button>
                         </p>
                     </div>
                 </div>
@@ -31,4 +87,23 @@
         </div>
     </main>
 </section>
+
+<div class="modal" tabindex="-1" role="dialog" id="info-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">No Bots Allowed</h5>
+            </div>
+            <div class="modal-body">
+                <p class="info-modal-text">
+                    This question is to prevent robots from automatically creating accounts...as well as test your adding skills.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-sit-modal my-2 my-sm-0" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

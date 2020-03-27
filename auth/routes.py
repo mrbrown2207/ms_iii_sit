@@ -1,11 +1,12 @@
 import pymysql
 import pymysql.cursors
-from flask import Flask, Blueprint, render_template, redirect, request, url_for, flash
+from flask import (Flask, Blueprint, render_template, current_app,
+                    redirect, request, url_for, flash, session)
 from flask_login import (LoginManager, login_user, confirm_login,
                             logout_user, login_required, current_user)
 from werkzeug.security import generate_password_hash, check_password_hash
 from . models import User
-from . utils import load_user
+from . utils import load_user, gen_bot_test, clr_bot_session_qa
 from ..main.utils import get_db
 from ..constants import SQL_DICT
 
@@ -64,6 +65,27 @@ def reauth():
         return redirect(request.args.get("next") or url_for("main.index"))
     return render_template("reauth.html")
 
+
+@auth.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == "POST":
+        form_data = request.form.to_dict()
+        if form_data['nobota'] != session['bota']:
+            session['failed_bota_count'] += 1
+            if session['failed_bota_count'] < current_app.config.get('BOT_FAILURES_ALLOWED'):
+                # Generate a new question and flash the error.
+                gen_bot_test()
+                flash("Robot challenge answer incorrect. Are you part of Skynet? (%d of %d)" % (session['failed_bota_count'], current_app.config.get('BOT_FAILURES_ALLOWED')), "danger")
+            else:
+                clr_bot_session_qa()
+                flash("Robot challenge failed. You are part of Skynet!", "danger")
+                return redirect(url_for("main.index"))
+    else:
+        # Generate our bot question and answer.
+        session['failed_bota_count'] = 0
+        gen_bot_test()
+
+    return render_template("register.html")
 
 @auth.route("/profile", methods=["GET", "POST"])
 def profile():
