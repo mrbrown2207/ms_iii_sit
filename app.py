@@ -34,6 +34,9 @@ def utility_contexts():
     def is_superuser():
         return current_user.is_superuser()
 
+    def is_loginmsg(msg_str):
+        return "Please log in" in msg_str
+
     return dict(issue_viewed=issue_viewed,
                 issue_not_viewed=issue_not_viewed,
                 issue_resolved=issue_resolved,
@@ -41,7 +44,8 @@ def utility_contexts():
                 viewed=viewed,
                 resolved=resolved,
                 testing=testing,
-                is_superuser=is_superuser)
+                is_superuser=is_superuser,
+                is_loginmsg=is_loginmsg)
 
 if __name__ == '__main__':
     app.run(debug=app.config['DEV'])
