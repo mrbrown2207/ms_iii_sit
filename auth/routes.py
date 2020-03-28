@@ -8,7 +8,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from . models import User
 from . utils import load_user, gen_bot_test, clr_bot_session_qa
 from ..main.utils import get_db
-from ..constants import SQL_DICT
+from ..constants import SQL_DICT, USER_LEVEL
 
 
 auth = Blueprint('auth', __name__)
@@ -80,6 +80,46 @@ def register():
                 clr_bot_session_qa()
                 flash("Robot challenge failed. You are part of Skynet!", "danger")
                 return redirect(url_for("main.index"))
+        else:
+            try:
+                db = get_db()
+
+                with db.cursor() as cur:
+                    cur.execute(SQL_DICT['add_account'], 
+                                    (form_data['email'],
+                                    form_data['surname'],
+                                    form_data['first-name'],
+                                    generate_password_hash(form_data['pwd']))
+                                )
+                db.commit()
+
+                # Let's log the user in now
+                user = User({
+                                "firstName": form_data['first-name'],
+                                "surname": form_data['surname'],
+                                "email": form_data['email'],
+                                "acctId": cur.lastrowid,
+                                "isActive": 1,
+                                "maudindo": USER_LEVEL['plebe']
+                            })
+                login_user(user)
+                flash("Welcome to the MBPM community {}!".format(form_data['first-name']), "success")
+                return redirect(url_for("main.index"))
+            except (db.Error) as e:
+                # Duplicate entry
+                if e.args[0] == 1062:
+                    flash(u"That account already exists.", "danger")
+                else:
+                    flash(u"Database error. Unable to create account.", "danger")
+                    print("Error: {}".format(str(e)))
+
+                return render_template("register.html")
+            except Exception as e:
+                flash(u"Account created but there was an error during authentication.", "warning")
+                print("Error: {}".format(str(e)))
+            finally:
+                pass
+
     else:
         # Generate our bot question and answer.
         session['failed_bota_count'] = 0

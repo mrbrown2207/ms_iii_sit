@@ -97,8 +97,12 @@ SQL_DICT =  {
             "get_cats": ("select catId, catName, '1' as filter_status from tblCat order by catName"),
             "add_cat": ("insert into tblCat (catName, catDesc, catActive, dateAdded, dateModified) " +
                             "values " +
-                        "(%s, %s, %s, NOW(), NOW())")
+                        "(%s, %s, %s, NOW(), NOW())"),
+            "add_account": ("insert into tblAccounts (email, surname, firstName, abtrusus, lastTimeIn, dateAdded, dateModified) " +
+                            "values " +
+                        "(%s, %s, %s, %s, NOW(), NOW(), NOW())")
             }
+
 DEL = 1
 SEL = 2
 SEL_ALL = 3
