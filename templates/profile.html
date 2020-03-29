@@ -1,24 +1,126 @@
 {% extends "base.html" %}
-{% load bootstrap_tags %}
 
 {% block content %}
 <section class="login-form">
     <main role="main" class="container">
         <h3 class="text-center mt-3 mb-3">Your Profile</h3>
         <div class="row justify-content-center">
-            <form class="form-container col-md-6" id="profile-form" action="{% url 'userprofile' %}" method="POST">
-                {% csrf_token %}
-                {{ user_form | as_bootstrap }}
-                {{ profile_form | as_bootstrap }}
-                <div class="row mt-2">
+
+            <form class="form-container col-md-6 profile-form" id="profile-form" action="{{ url_for('auth.profile') }}" method="POST">
+
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="first-name">First Name *</label>
+                            <input type="text" id="first-name" name="first-name" class="form-control sit-required alpha-only text-capitalize" aria-describedby="first name" placeholder="First name" minlength="1" maxlength="40" value="{{ user['firstName'] }}" />
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="surname">Surname *</label>
+                            <input type="text" id="surname" name="surname" class="form-control sit-required alpha-only text-capitalize" aria-describedby="surname" placeholder="Surname" minlength="1" maxlength="40" value="{{ user['surname'] }}" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" class="form-control sit-required" aria-describedby="email address" value="{{ user['email'] }}" readonly />
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="pwd">Password</label>
+                            <input type="password" id="pwd" name="pwd" class="form-control pwd sit-required" aria-describedby="password" value="*&^%$)(*&" readonly/>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="fancy">
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="addr-line1">Address Line 1</label>
+                            <input type="text" id="addr-line1" name="addr-line1" class="form-control" aria-describedby="address line1" placeholder="Enter address line 1" maxlength="40" value="{{ user['addrLine1'] }}" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="addr-line2">Address Line 2</label>
+                            <input type="text" id="addr-line2" name="addr-line2" class="form-control" aria-describedby="address line2" placeholder="Enter address line 2" maxlength="40" value="{{ user['addrLine2'] }}" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" id="city" name="city" class="form-control text-capitalize alpha-only" aria-describedby="city" placeholder="Enter city" maxlength="40" value="{{ user['addrCity'] }}" />
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="county">County</label>
+                            <input type="text" id="county" name="county" class="form-control" aria-describedby="county" placeholder="Enter county" maxlength="40" value="{{ user['addrCounty'] }}" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="postcode">Postcode</label>
+                            <input type="text" id="postcode" name="postcode" class="form-control text-uppercase postcode" aria-describedby="postcode" placeholder="Enter postcode" maxlength="10" value="{{ user['postcode'] }}" />
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="country-iso">Country</label>
+                            <select id="country-iso" name="country-iso" class="cat-sel">
+                                {% for country in countries %}
+                                    {% if country[1] == user['addrCountryISO'] %}
+                                    <option value="{{country[1]}}" selected>{{ country[0] }}</option>
+                                    {% else %}
+                                    <option value="{{country[1]}}">{{ country[0] }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="mobile">Mobile</label>
+                            <input type="text" id="mobile" name="mobile" class="form-control phone-chars-only" aria-describedby="mobile phone" placeholder="Enter mobile number" maxlength="19" value="{{ user['mobilePhone'] }}" />
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="other-phone">Other Phone</label>
+                            <input type="text" id="other-phone" name="other-phone" class="form-control phone-chars-only" aria-describedby="other-phone" placeholder="Enter other phone number" maxlength="19" value="{{ user['phone'] }}" />
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="fancy">
+
+                <div class="row">
                     <div class="offset-md-1 col-5">
                         <p class="text-center">
-                            <a href="{% url 'index' %}" role="button" id="cancel-btn" name="cancel-btn" class="btn btn-ua destructive w-100">Cancel</a>
+                            <a href="{{ url_for('main.index') }}" role="button" id="cancel-btn" name="cancel-btn" class="btn btn-sit destructive w-100 mt-2">Cancel</a>
                         </p>
                     </div>
                     <div class="col-5">
                         <p class="text-center">
-                            <button id="submit-btn" type="submit" name="submit" class="btn btn-primary btn-ua w-100 ua-disabled">Save Profile</button>
+                            <button type="submit" id="submit-btn" name="submit" class="btn btn-sit btn-sit-submit w-100 mt-2 sit-disabled">Save</button>
                         </p>
                     </div>
                 </div>
@@ -27,4 +129,5 @@
         </div>
     </main>
 </section>
+
 {% endblock %}

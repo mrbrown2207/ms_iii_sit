@@ -27,6 +27,7 @@
                     <div class="col-md-2 pl-4"><h5>Status</h5></div>
                 </div>
             </div>
+            
             <div class="col-12">
                 <hr>
             </div>
@@ -34,11 +35,11 @@
             {% for issue in issues %}
             <div class="col-12">
                 <div class="row">
-                    <div class="col-md-2"><p><a class="toggle-caret" href="#details-{{issue['issueId']}}" data-toggle="collapse" data-toggle-1="tooltip" data-placement="top" data-title-alt="Click to hide details" data-id="{{issue['issueId']}}" title="Click to view details"><i id="caret-widget-{{issue['issueId']}}" class="cta-icon view-details fa fa-caret-right"></i></a>{{issue['catName']}}</p></div>
+                    <div class="col-md-2"><p><a class="toggle-caret show-hide-detail" href="#details-{{issue['issueId']}}" data-toggle="collapse" data-toggle-1="tooltip" data-placement="top" data-title-alt="Click to hide detail." data-id="{{issue['issueId']}}" title="Click to view detail."><i id="caret-widget-{{issue['issueId']}}" class="cta-icon view-details fa fa-caret-right"></i></a>{{issue['catName']}}</p></div>
                     {% if issue['issueStatusVal'] != resolved() %}
-                    <div class="col-md-2"><a class="btn btn-link-sit" href="{{url_for('main.edit_issue', issue_id=issue['issueId'])}}" data-toggle-1="tooltip" data-placement="top" title="Click to edit issue">{{issue['issueId']}}</a></div>
+                    <div class="col-md-2"><a class="btn btn-link-sit" href="{{url_for('main.edit_issue', issue_id=issue['issueId'])}}" data-toggle-1="tooltip" data-placement="top" title="Click to edit issue.">{{issue['issueId']}}</a></div>
                     {% else %}
-                    <div class="col-md-2"><a class="btn btn-link-sit" href="#" data-toggle-1="tooltip" data-placement="top" title="Issue resolved. Cannot edit.">{{issue['issueId']}}</a></div>
+                    <div class="col-md-2"><a class="btn btn-link-sit show-hide-detail" href="#details-{{issue['issueId']}}" data-toggle="collapse" data-toggle-1="tooltip" data-placement="top" data-title-alt="Click to hide detail." title="Issue resolved. Cannot edit. Click to view detail.">{{issue['issueId']}}</a></div>
                     {% endif %}
                     <div class="col-md-3"><p>{{issue['issueSubj']}}</p></div>
                     <div class="col-md-2"><p>{{issue['dateAdded']}}</p></div>
@@ -47,7 +48,7 @@
                             {{issue['issueStatus']}}
                             {% if issue['issueStatusVal'] != resolved() %}
                                 <a 
-                                    class="cta-edit" href="{{url_for('main.edit_issue', issue_id=issue['issueId'])}}" data-toggle-1="tooltip" data-placement="top" title="Click to edit issue">
+                                    class="cta-edit" href="{{url_for('main.edit_issue', issue_id=issue['issueId'])}}" data-toggle-1="tooltip" data-placement="top" title="Click to edit issue.">
                                     {% if issue['urgent'] == 'Yes' %}
                                     <i class="cta-icon emphasis-colour last-col fa fa-pencil"></i>
                                     {% else %}
@@ -56,7 +57,7 @@
                                 </a>
                             {% else %}
                             <a 
-                                class="cta-edit" href="#" data-toggle-1="tooltip" data-placement="top" title="Issue resolved. Cannot edit.">
+                                class="cta-edit show-hide-detail" href="#details-{{issue['issueId']}}" data-toggle="collapse" data-toggle-1="tooltip" data-placement="top" data-title-alt="Click to hide detail." title="Issue resolved. Cannot edit. Click to view detail.">
                                 {% if issue['urgent'] == 'Yes' %}
                                 <i class="cta-icon emphasis-colour last-col fa fa-eye"></i>
                                 {% else %}

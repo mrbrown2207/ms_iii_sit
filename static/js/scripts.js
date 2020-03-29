@@ -91,9 +91,24 @@ $(function() {
         $("#submit-btn").removeClass("sit-disabled");
     });
 
+    // Phone validation.....sort of. The only thing this does is prevent
+    // the user from entering characters that in no way are part of
+    // a phone number. The only acceptable characters are: plus sign,
+    // 0-9, left paren, right paren, dash and dot.
+    $(document).on("keypress", ".phone-chars-only", function(evt) {
+        return /[0-9().-+ ]/.test(evt.key)
+    });
+
+    // Post code validation.....sort of. The only thing this does is prevent
+    // the user from entering characters that in no way are part of
+    // a postcode. The only acceptable characters are: A-Z, 0-9 and a space.
+    $(document).on("keypress", ".postcode", function(evt) {
+        return /[0-9A-Za-z ]/.test(evt.key)
+    });
+
     // Change the caret widget and popup text dynamically
     // .data() method does not work consistently here -- need to use .attr() 
-    $('.toggle-caret').click(function() {
+    $('.show-hide-detail').click(function() {
         var title = $(this).attr("data-original-title");
         var altTitle = $(this).attr("data-title-alt");
 
@@ -101,8 +116,10 @@ $(function() {
                 .attr("data-original-title", altTitle)
                 .attr("data-title-alt", title);
 
-        $(`#caret-widget-${$(this).attr("data-id")}`).toggleClass("cta-icon view-details fa fa-caret-right");
-        $(`#caret-widget-${$(this).attr("data-id")}`).toggleClass("cta-icon hide-details fa fa-caret-down");
+        if ($(this).hasClass('toggle-caret')) {
+            $(`#caret-widget-${$(this).attr("data-id")}`).toggleClass("cta-icon view-details fa fa-caret-right");
+            $(`#caret-widget-${$(this).attr("data-id")}`).toggleClass("cta-icon hide-details fa fa-caret-down");
+        }
 
         $(this).tooltip("show")
     });

@@ -7,6 +7,7 @@ class ConfigDevEnv:
     TESTACCTID = 1
     PWD_FAILURES_ALLOWED = 2
     BOT_FAILURES_ALLOWED = 2
+    DEFAULT_ISO = 'GB'
     HOST = os.getenv('DB_HOST')
     DB = "sitDb"
     DB_USER = os.getenv('DB_USER')
@@ -14,14 +15,13 @@ class ConfigDevEnv:
     CHARSET = 'utf8'  
     SECRET_KEY = 'mysecretthatisnotsecret'
 
-    def __init__(self):
-        print("Init is called")
 
 class Config:
     DEV = False
     TESTING = False
     PWD_FAILURES_ALLOWED = 3
     BOT_FAILURES_ALLOWED = 5
+    DEFAULT_ISO = 'IE'
     HOST = os.getenv('DB_HOST')
     DB = "sitDb"
     DB_USER = os.getenv('DB_USER')

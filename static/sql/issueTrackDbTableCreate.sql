@@ -24,7 +24,7 @@ create table if not exists tblAccounts
                         addrLine3       		varchar(40),
 						addrCity 				varchar(40),
 						addrCounty 				varchar(40),
-                        postCode     			varchar(12),
+                        postcode     			varchar(12),
 						addrCountryISO			char(2) not null default 'GB',
 						phone					varchar(20),
 						mobilePhone				varchar(20), 

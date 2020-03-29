@@ -32,9 +32,6 @@
                             <a class="nav-link" href="{{url_for('main.get_cats')}}">Categories</a>
                         </li>
                         {% endif %}
-                        <li class="nav-item px-2 px-xl-3">
-                            <a class="nav-link" href="{{url_for('main.contact')}}"><i class="fa fa-envelope"></i> Contact Us</a>
-                        </li>
                         {% if current_user.is_authenticated %}
                         <li class="nav-item px-2 px-xl-3">
                             <a class="nav-link" href="{{url_for('auth.profile')}}">

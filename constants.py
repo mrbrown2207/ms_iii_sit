@@ -1,6 +1,69 @@
-"""Some constants"""
 SQL_DT_FMT = '%Y-%m-%d %H:%M:%S'
 DDMMYYYY_FMT = '%d/%m/%Y %H:%M:%S'
+
+ISSUE_STATUS =  {
+                    'notviewed':
+                        {
+                            "id":0,
+                            "display":"Not Viewed",
+                            "filter_status":"1",
+                        },
+                    'viewed':
+                        {
+                            "id":1,
+                            "display":"Viewed",
+                            "filter_status":"1",
+                        },
+                    'resolved':
+                        {
+                            "id":2,
+                            "display":"Resolved",
+                            "filter_status":"1",
+                        },
+}
+
+# An alternative to captcha. Dictionary of questions. One will be chosen at random
+# when a user registers or changes their password.
+NO_BOTS = {
+    '1 and 1 and 1':'3',
+    '1 and 2 and 1':'4',
+    '1 and 1 and 2':'4',
+    '2 and 2 and 2':'6',
+    '2 and 2 and 1':'5',
+    '2 and 1 and 1':'4',
+    '3 and 3 and 3':'9',
+    '3 and 2 and 1':'6',
+    '3 and 3 and 2':'8',
+    '1 and 1 and 3':'5',
+    '2 and 3 and 2':'7',
+    '5 and 2 and 1':'8',
+    '1 and 0 and 0':'1',
+    '0 and 0 and 0':'0',
+    '5 and 4 and 0':'9',
+    '4 and 1 and 1':'6',
+}
+
+USER_LEVEL = {
+                'plebe': 1,
+                'superuser': 255, 
+            }
+
+
+# There was a few ways to do this. For example, I could have put in a table and selected it in
+# country name order. I could have hard coded in the template in country name order. I could have
+# created a list or a tuple which python provides ways of permanently sorting. I also could have
+# created the dictionary already in country name order. However, I am purposely creating it NOT 
+# in country name order to demonstrate my ability to dynamically sort a dictionary that results
+# in a sorted representation thereof, which will be in a list of tuples.
+COUNTRIES = {
+                'GB':"United Kingdom",
+                'IE':"Ireland",
+                'US':"United States",
+                'ES':"Spain",
+                'DE':"Germany",
+                'IT':"Italy",
+                'FR':"France",
+            }
 
 SQL_DICT =  {
             "sel_recs": "select * from %s",
@@ -98,60 +161,11 @@ SQL_DICT =  {
             "add_cat": ("insert into tblCat (catName, catDesc, catActive, dateAdded, dateModified) " +
                             "values " +
                         "(%s, %s, %s, NOW(), NOW())"),
-            "add_account": ("insert into tblAccounts (email, surname, firstName, abtrusus, lastTimeIn, dateAdded, dateModified) " +
+            "add_account": ("insert into tblAccounts (email, surname, firstName, abtrusus, addrCountryISO, lastTimeIn, dateAdded, dateModified) " +
                             "values " +
-                        "(%s, %s, %s, %s, NOW(), NOW(), NOW())")
+                        "(%s, %s, %s, %s, %s, NOW(), NOW(), NOW())"),
+            "sel_profile": ("select * from tblAccounts where acctId=%s"),
+            "upd_profile": ("update tblAccounts set firstName=%s, surname=%s, addrLine1=%s, addrLine2=%s, addrCity=%s, " + 
+                            "addrCounty=%s, addrCountryISO=%s, postcode=%s, mobilePhone=%s, phone=%s, dateModified=NOW() where acctId=%s"),
             }
 
-DEL = 1
-SEL = 2
-SEL_ALL = 3
-
-ISSUE_STATUS =  {
-                    'notviewed':
-                        {
-                            "id":0,
-                            "display":"Not Viewed",
-                            "filter_status":"1"
-                        },
-                    'viewed':
-                        {
-                            "id":1,
-                            "display":"Viewed",
-                            "filter_status":"1"
-                        },
-                    'resolved':
-                        {
-                            "id":2,
-                            "display":"Resolved",
-                            "filter_status":"1"
-                        }
-}
-
-# An alternative to captcha. Dictionary of questions. One will be chosen at random
-# when a user registers.
-NO_BOTS = {
-    '1 and 1 and 1':'3',
-    '1 and 2 and 1':'4',
-    '1 and 1 and 2':'4',
-    '2 and 2 and 2':'6',
-    '2 and 2 and 1':'5',
-    '2 and 1 and 1':'4',
-    '3 and 3 and 3':'9',
-    '3 and 2 and 1':'6',
-    '3 and 3 and 2':'8',
-    '1 and 1 and 3':'5',
-    '2 and 3 and 2':'7',
-    '5 and 2 and 1':'8',
-    '1 and 0 and 0':'1',
-    '0 and 0 and 0':'0',
-    '5 and 4 and 0':'9',
-    '4 and 1 and 1':'6',
-}
-
-USER_LEVEL = {
-                'superuser': 255, 
-                'plebe': 1
-            }
-
-"""""<<<---->>>"""""
