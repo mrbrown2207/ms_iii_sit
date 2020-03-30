@@ -4,6 +4,7 @@ var g_mySwitch;
 var g_allOn = true;
 var g_pwdOk = false;
 var g_reqFieldsOk = false;
+var g_submit = ".btn-sit-submit";
 
 $(function() {
     // Define our required handler function. It checks for all required fields on a form.
@@ -20,17 +21,17 @@ $(function() {
         }
 
         if (disable) {
-            $("#submit-btn").addClass("sit-disabled");
+            $(g_submit).addClass("sit-disabled");
         } else {
             g_reqFieldsOk = true; // Holy hell I hate this! ˘L˘
             // If we are on the registration form, we also need to ensure that the
             // password has passed validation/requirements.
             if ($("form").hasClass("register-form")) {
                 if (g_pwdOk === true) {
-                    $("#submit-btn").removeClass("sit-disabled");
+                    $(g_submit).removeClass("sit-disabled");
                 }
             } else {
-                $("#submit-btn").removeClass("sit-disabled");
+                $(g_submit).removeClass("sit-disabled");
             }        
         }
     };
@@ -56,23 +57,23 @@ $(function() {
                 g_pwdOk = true;
                 // Now check the case where all the other required fields have
                 // data and the last thing the user did was enter password information.
-                // I really don't like this! ˘L˘ I know there is a better way to
+                // I really don't like this! ˘L˘ I know there is a better way tos
                 // do this, but getting to the end and need to get this submitted.
                 if (g_reqFieldsOk) {
-                    $("#submit-btn").removeClass("sit-disabled");
+                    $(g_submit).removeClass("sit-disabled");
                 }
             } else {
                 $("#pwd-confirm-ok-icon").addClass("hide");
                 g_pwdOk = false;
                 if (g_reqFieldsOk) {
-                    $("#submit-btn").addClass("sit-disabled");
+                    $(g_submit).addClass("sit-disabled");
                 }
             }
         }
         else {
             $("#pwd-ok-icon").addClass("hide");
             $("#pwd-confirm-ok-icon").addClass("hide");
-            $("#submit-btn").addClass("sit-disabled");
+            $(g_submit).addClass("sit-disabled");
             g_pwdOk = false;
         }
     };
@@ -86,9 +87,8 @@ $(function() {
     // Call our handler for password verification.
     $(document).on("keyup paste", ".pwd", pwdHandler);
 
-    // Any changes to the profile form enable the submit button.
-    $(document).on("keyup paste", "#profile-form", function() {
-        $("#submit-btn").removeClass("sit-disabled");
+    $(document).on("change keypress keyup paste", ".edit-form", function() {
+        {$(g_submit).removeClass("sit-disabled");}
     });
 
     // Phone validation.....sort of. The only thing this does is prevent
@@ -104,6 +104,37 @@ $(function() {
     // a postcode. The only acceptable characters are: A-Z, 0-9 and a space.
     $(document).on("keypress", ".postcode", function(evt) {
         return /[0-9A-Za-z ]/.test(evt.key)
+    });
+
+    // Detect that we are changing the password and bypass required field requirement.
+    $("#change-pwd").click(function() {
+        g_reqFieldsOk = true;
+    });
+
+    // We are not submitting change password form.
+    $("#pwd-submit-btn").click(function(evt) {
+        evt.preventDefault();
+        alert("You must click 'Save' button on profile form to commit password change.")
+        $("#pwd-1").val($("#pwd").val());
+
+        // Ha! This is my way of fooling the browser. Given that I am not loading the password
+        // into the profile form (I don't believe in needlessly exposing the password, despite being hidden).
+        // So, by default the password field is really nothing and of type=text. This way, it 
+        // prevents the browser from asking the user if they want to save the password change, when the user
+        // is changing other profile information and not the password field. It isn't until they
+        // actually bring up the change password modal and save that this becomes a password type field.
+        // I suppose another way around this would to not show a field at all and just have only a button
+        // to change the password. Hmmm. Maybe slightly over-engineered. ˘L˘
+        $("#pwd-1").attr("type", "password");
+
+        $("#change-pwd-modal").modal("hide");
+        
+        // Be on the safe side and clear when not needed.
+        $("#pwd").val("");
+        $("#pwd-confirm").val("");
+
+        // Tell the back end that we changed the password
+        $("#pwd-changed").val("1");        
     });
 
     // Change the caret widget and popup text dynamically
@@ -153,10 +184,6 @@ $(function() {
         content: function() {
             return $('#filter-popover-menu-features').html();
         }
-    });
-
-    $(document).on("change keypress paste", ".edit-form", function() {
-        {$("#submit-btn").removeClass("sit-disabled");}
     });
 
     // Filter categories toggle control. Note that the all-cat-filters can only

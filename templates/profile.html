@@ -6,7 +6,7 @@
         <h3 class="text-center mt-3 mb-3">Your Profile</h3>
         <div class="row justify-content-center">
 
-            <form class="form-container col-md-6 profile-form" id="profile-form" action="{{ url_for('auth.profile') }}" method="POST">
+            <form class="form-container col-md-6 edit-form" id="profile-form" action="{{ url_for('auth.profile') }}" method="POST">
 
                 <div class="row">
                     <div class="col-6">
@@ -32,7 +32,9 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="pwd">Password</label>
-                            <input type="password" id="pwd" name="pwd" class="form-control pwd sit-required" aria-describedby="password" value="*&^%$)(*&" readonly/>
+                            <a id="change-pwd" class="pl-1" href="/" data-toggle="modal" data-target="#change-pwd-modal" data-toggle-1="tooltip" data-placement="top" title="Click to change password."><i class="cta-icon fa fa-exchange"></i></a>
+                            <input type="text" id="pwd-1" name="pwd-1" class="form-control" aria-describedby="password" value="***********" readonly/>
+                            <input id="pwd-changed" name="pwd-changed" class="hide" value="0" />
                         </div>
                     </div>
                 </div>
@@ -82,7 +84,7 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="country-iso">Country</label>
-                            <select id="country-iso" name="country-iso" class="cat-sel">
+                            <select id="country-iso" name="country-iso" class="form-control">
                                 {% for country in countries %}
                                     {% if country[1] == user['addrCountryISO'] %}
                                     <option value="{{country[1]}}" selected>{{ country[0] }}</option>
@@ -129,5 +131,69 @@
         </div>
     </main>
 </section>
+
+<div class="modal" tabindex="-1" role="dialog" id="change-pwd-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Change Password</h3>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <form class="form-container">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <div class="form-group">
+                                            <label for="pwd">New Password *</label>
+                                            <input type="password" id="pwd" name="pwd" class="form-control pwd pwd-sit-required" aria-describedby="password" placeholder="New password (8 - 11 characters)" minlength="8" maxlength="11" value=""/>
+                                        </div>
+                                    </div>
+                                    <div class="col-2 pl-1">
+                                        <div class="form-group">
+                                            <label>&nbsp;</label>
+                                            <span id="pwd-ok-icon" class="hide v-centred-icon"><i class="fa fa-check fa-2x text-success" aria-hidden="true"></i></span>
+                                        </div>                      
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-8">
+                                        <div class="form-group">
+                                            <label for="confirm-pwd">Confirm Password *</label>
+                                            <input type="password" id="pwd-confirm" class="form-control pwd pwd-sit-required" aria-describedby="repeat password" placeholder="Repeat password" minlength="8" maxlength="11" value="" />
+                                        </div>                
+                                    </div>
+                                    <div class="col-2 pl-1">
+                                        <div class="form-group">
+                                            <label>&nbsp;</label>
+                                            <span id="pwd-confirm-ok-icon" class="hide v-centred-icon"><i class="fa fa-check fa-2x text-success" aria-hidden="true"></i></span>
+                                        </div>                      
+                                    </div>
+                                </div>
+
+                                <hr class="fancy">
+
+                                <div class="row mt-3 pt-3">
+                                    <div class="offset-md-1 col-md-5 col-xs-6">
+                                        <p class="text-center">
+                                            <button id="pwd-cancel-btn" name="cancel-btn" class="btn btn-sit destructive w-100" data-dismiss="modal">Cancel</button>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-5 col-xs-6">
+                                        <p class="text-center">
+                                            <button id="pwd-submit-btn" name="pwd-submit-btn" class="btn btn-sit btn-sit-submit w-100 sit-disabled">Change</button>
+                                        </p>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 {% endblock %}

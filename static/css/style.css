@@ -58,7 +58,7 @@ body, p, small, input, select, textarea, ul>li {
     I think some of the form control stuff later on was scuppering this.
     Everytime I set focus the text would lighten. So, I am forcing the issue.
 */
-textarea:focus {
+textarea:focus, input:focus, select:focus {
     color: #000000 !important;
 }
 
@@ -122,7 +122,7 @@ p > span.sit-text {
 select {
     background-color: #FFFFFF;
     border-color: var(--secondary-colour);
-    border-radius: var(--form-radius);
+    border-radius: var(--form-radius) !important; /* Useless */
     font-size: 11pt;
 }
 

@@ -167,5 +167,7 @@ SQL_DICT =  {
             "sel_profile": ("select * from tblAccounts where acctId=%s"),
             "upd_profile": ("update tblAccounts set firstName=%s, surname=%s, addrLine1=%s, addrLine2=%s, addrCity=%s, " + 
                             "addrCounty=%s, addrCountryISO=%s, postcode=%s, mobilePhone=%s, phone=%s, dateModified=NOW() where acctId=%s"),
+            "upd_profile_abtrusus": ("update tblAccounts set firstName=%s, surname=%s, addrLine1=%s, addrLine2=%s, addrCity=%s, " + 
+                            "addrCounty=%s, addrCountryISO=%s, postcode=%s, mobilePhone=%s, phone=%s, abtrusus=%s, dateModified=NOW() where acctId=%s"),
             }
 

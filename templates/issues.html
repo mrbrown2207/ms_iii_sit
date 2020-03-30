@@ -12,10 +12,10 @@
         <div class="row panel mt-1 mb-3">
             <div class="col-12 text-right align-self-center">
                 {% if omitted_cats == False and omitted_status == False %}
-                <a href="/" data-toggle="modal" data-target="#filter-modal" data-toggle-1="tooltip" data-placement="right" title="Click to filter issues"><i class="cta-icon fa fa-filter fa-2x"></i></a>
+                <a href="/" data-toggle="modal" data-target="#filter-modal" data-toggle-1="tooltip" data-placement="right" title="Click to filter issues."><i class="cta-icon fa fa-filter fa-2x"></i></a>
                 {% else %}
                 <span class="cta-icon-on">Filter Applied</span>
-                <a href="/" data-toggle="modal" data-target="#filter-modal" data-toggle-1="tooltip" data-placement="right" title="Click to filter issues"><i class="cta-icon cta-icon-on fa fa-filter fa-2x"></i></a>
+                <a href="/" data-toggle="modal" data-target="#filter-modal" data-toggle-1="tooltip" data-placement="right" title="Click to filter issues."><i class="cta-icon cta-icon-on fa fa-filter fa-2x"></i></a>
                 {% endif %}
             </div>
             <div class="col-12">
@@ -27,7 +27,7 @@
                     <div class="col-md-2 pl-4"><h5>Status</h5></div>
                 </div>
             </div>
-            
+
             <div class="col-12">
                 <hr>
             </div>
@@ -234,7 +234,7 @@
                                         </div>
                                         <div class="col-5">
                                             <p class="text-center">
-                                                <button id="submit-btn" type="submit-btn" name="submit-btn" class="btn btn-sit btn-sit-submit w-100 sit-disabled">Resolved</button>
+                                                <button id="submit-btn" type="submit" name="submit-btn" class="btn btn-sit btn-sit-submit w-100 sit-disabled">Resolved</button>
                                             </p>
                                         </div>
                                     </div>
@@ -331,6 +331,9 @@
                                             {% endfor %}
                                         </div>
                                     </div>
+
+                                    <hr class="fancy">
+
                                     <div class="row mt-3 pt-3">
                                         <div class="offset-md-1 col-5">
                                             <p class="text-center">
@@ -339,7 +342,7 @@
                                         </div>
                                         <div class="col-5">
                                             <p class="text-center">
-                                                <button id="submit-btn" type="submit-btn" name="submit-btn" class="btn btn-sit btn-sit-submit w-100">Filter</button>
+                                                <button id="submit-btn" type="submit" name="submit-btn" class="btn btn-sit btn-sit-submit w-100">Filter</button>
                                             </p>
                                         </div>
                                     </div>

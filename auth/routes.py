@@ -140,21 +140,43 @@ def profile():
         form_data = request.form.to_dict()
 
         try:
-            with db.cursor() as cur:
-                cur.execute(SQL_DICT['upd_profile'],
-                            (
-                                form_data['first-name'],
-                                form_data['surname'],
-                                form_data['addr-line1'],
-                                form_data['addr-line2'],
-                                form_data['city'],
-                                form_data['county'],
-                                form_data['country-iso'],
-                                form_data['postcode'],
-                                form_data['mobile'],
-                                form_data['other-phone'],
-                                current_user.id
-                            ))
+            # I always try to minimise the exposure of passwords. To that end,
+            # I don't retrieve the password when rendering the template (GET)
+            # thereby not requiring it in the update statement. However, if the
+            # user does change their password, then we use a different sql statement.
+            if form_data['pwd-changed'] == "0":
+                with db.cursor() as cur:
+                    cur.execute(SQL_DICT['upd_profile'],
+                                (
+                                    form_data['first-name'],
+                                    form_data['surname'],
+                                    form_data['addr-line1'],
+                                    form_data['addr-line2'],
+                                    form_data['city'],
+                                    form_data['county'],
+                                    form_data['country-iso'],
+                                    form_data['postcode'],
+                                    form_data['mobile'],
+                                    form_data['other-phone'],
+                                    current_user.id
+                                ))
+            else:
+                with db.cursor() as cur:
+                    cur.execute(SQL_DICT['upd_profile_abtrusus'],
+                                (
+                                    form_data['first-name'],
+                                    form_data['surname'],
+                                    form_data['addr-line1'],
+                                    form_data['addr-line2'],
+                                    form_data['city'],
+                                    form_data['county'],
+                                    form_data['country-iso'],
+                                    form_data['postcode'],
+                                    form_data['mobile'],
+                                    form_data['other-phone'],
+                                    generate_password_hash(form_data['pwd-1']),
+                                    current_user.id
+                                ))
             db.commit()
             flash(u"Profile updated.", "success")
             return redirect(url_for("main.index"))
