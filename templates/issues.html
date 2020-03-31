@@ -21,11 +21,11 @@
             <div class="col-12">
                 <!-- Hidden on mobile -->
                 <div class="row heading d-none d-md-flex">
-                    <div class="col-md-2"><h5>Category</h5></div>
-                    <div class="col-md-2"><h5>Issue Id</h5></div>
-                    <div class="col-md-3"><h5>Issue</h5></div>
-                    <div class="col-md-2"><h5>Date Added</h5></div>
-                    <div class="col-md-2 pl-4"><h5>Status</h5></div>
+                    <div class="col-2"><h5>Category</h5></div>
+                    <div class="col-2"><h5>Issue Id</h5></div>
+                    <div class="col-3"><h5>Issue</h5></div>
+                    <div class="col-2"><h5>Date Added</h5></div>
+                    <div class="col-2 pl-4"><h5>Status</h5></div>
                 </div>
                 <!---------------------->
             </div>
@@ -38,15 +38,15 @@
             <div class="col-12">
                 <!-- Hidden on mobile -->                
                 <div class="row d-none d-md-flex">
-                    <div class="col-md-2"><p><a class="toggle-caret show-hide-detail" href="#details-{{ issue['issueId'] }}" data-toggle="collapse" data-toggle-1="tooltip" data-placement="top" data-title-alt="Click to hide detail." data-id="{{ issue['issueId'] }}" title="Click to view detail."><i id="caret-widget-{{issue['issueId']}}" class="cta-icon view-details fa fa-caret-right"></i></a>{{ issue['catName'] }}</p></div>
+                    <div class="col-2"><p><a class="toggle-caret show-hide-detail" href="#details-{{ issue['issueId'] }}" data-toggle="collapse" data-toggle-1="tooltip" data-placement="top" data-title-alt="Click to hide detail." data-id="{{ issue['issueId'] }}" title="Click to view detail."><i id="caret-widget-{{issue['issueId']}}" class="cta-icon view-details fa fa-caret-right"></i></a>{{ issue['catName'] }}</p></div>
                     {% if (issue['issueStatusVal'] != resolved()) and (is_superuser() or current_user.get_id() == issue['acctId']) %}
-                    <div class="col-md-2"><a class="btn btn-link-sit" href="{{ url_for('main.edit_issue', issue_id=issue['issueId']) }}" data-toggle-1="tooltip" data-placement="top" title="Click to edit issue.">{{ issue['issueId'] }}</a></div>
+                    <div class="col-2"><a class="btn btn-link-sit" href="{{ url_for('main.edit_issue', issue_id=issue['issueId']) }}" data-toggle-1="tooltip" data-placement="top" title="Click to edit issue.">{{ issue['issueId'] }}</a></div>
                     {% else %}
-                    <div class="col-md-2"><a class="btn btn-link-sit show-hide-detail" href="#details-{{ issue['issueId'] }}" data-toggle="collapse" data-toggle-1="tooltip" data-placement="top" data-title-alt="Click to hide detail." title="{{ 'Issue resolved. Cannot edit. ' if issue['issueStatusVal'] == resolved() }}Click to view detail.">{{ issue['issueId'] }}</a></div>
+                    <div class="col-2"><a class="btn btn-link-sit show-hide-detail" href="#details-{{ issue['issueId'] }}" data-toggle="collapse" data-toggle-1="tooltip" data-placement="top" data-title-alt="Click to hide detail." title="{{ 'Issue resolved. Cannot edit. ' if issue['issueStatusVal'] == resolved() }}Click to view detail.">{{ issue['issueId'] }}</a></div>
                     {% endif %}
-                    <div class="col-md-3"><p>{{ issue['issueSubj'] }}</p></div>
-                    <div class="col-md-2"><p>{{ issue['dateAdded'] }}</p></div>
-                    <div class="col-md-2 pl-4">
+                    <div class="col-3"><p>{{ issue['issueSubj'] }}</p></div>
+                    <div class="col-2"><p>{{ issue['dateAdded'] }}</p></div>
+                    <div class="col-2 pl-4">
                         <p>
                             {{ issue['issueStatus'] }}
                             {% if (issue['issueStatusVal'] != resolved()) and (is_superuser() or current_user.get_id() == issue['acctId']) %}
@@ -124,50 +124,50 @@
                         <div class="row panel detail-panel d-none d-md-flex">
                             <div class="col-12">
                                 <div class="row">
-                                    <div class="col-xs-6 col-md-2">
+                                    <div class="col-2">
                                         <p class="detail-label">Id:</p>
                                     </div>
-                                    <div class="col-xs-6 col-md-8">
+                                    <div class="col-8">
                                         <p>{{ issue['issueId'] }}</p>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-xs-6 col-md-2">
+                                    <div class="col-2">
                                         <p class="detail-label">Added By:</p>
                                     </div>
-                                    <div class="col-xs-6 col-md-8">
+                                    <div class="col-8">
                                         <p>{{ issue['addedByName'] }}</p>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-xs-6 col-md-2">
+                                    <div class="col-2">
                                         <p class="detail-label">Date Added:</p>
                                     </div>
-                                    <div class="col-xs-6 col-md-8">
+                                    <div class="col-8">
                                         <p>{{ issue['dateAdded'] }}</p>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-xs-6 col-md-2">
+                                    <div class="col-2">
                                         <p class="detail-label">Issue:</p>
                                     </div>
-                                    <div class="col-xs-6 col-md-8">
+                                    <div class="col-8">
                                         <p>{{ issue['issueSubj'] }}</p>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-xs-6 col-md-2">
+                                    <div class="col-2">
                                         <p class="detail-label">Description:</p>
                                     </div>
-                                    <div class="col-xs-6 col-md-8">
+                                    <div class="col-8">
                                         <p>{{ issue['issueDesc'] }}</p>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-xs-6 col-md-2">
+                                    <div class="col-2">
                                         <p class="detail-label">Urgent:</p>
                                     </div>
-                                    <div class="col-xs-6 col-md-8">
+                                    <div class="col-8">
                                         {% if issue['urgent'] == 'Yes' %}
                                         <p class=" emphasis-colour">{{ issue['urgent'] }}</p>
                                         {% else %}
@@ -176,14 +176,14 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-xs-6 col-md-2">
+                                    <div class="col-2">
                                         <p class="detail-label">Status:</p>
                                     </div>
-                                    <div class="col-xs-2 col-md-2">
+                                    <div class="col-2">
                                         <p>{{ issue['issueStatus'] }}</p>
                                     </div>
                                     {% if is_superuser() %}
-                                    <div class="col-xs-2 col-md-2">
+                                    <div class="col-2">
                                         {% if issue['issueStatusVal'] < viewed() %}
                                         <a href="{{ url_for('main.upd_issue_status', issue_id=issue['issueId'], issue_status=viewed()) }}" data-toggle-1="tooltip" data-placement="top" title="Click to change status to 'Viewed'"><i class="cta-icon fa fa-eye"></i></a>
                                         {% endif %}
@@ -200,19 +200,27 @@
                                 </div>
                                 {% if issue['issueStatusVal'] == resolved() %}
                                 <div class="row">
-                                    <div class="col-xs-6 col-md-2">
+                                    <div class="col-2">
                                         <p class="detail-label">Date Resolved:</p>
                                     </div>
-                                    <div class="col-xs-6 col-md-8">
+                                    <div class="col-8">
                                         <p>{{ issue['dateResolved'] }}</p>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-xs-6 col-md-2">
+                                    <div class="col-2">
                                         <p class="detail-label">Resolved By:</p>
                                     </div>
-                                    <div class="col-xs-6 col-md-8">
+                                    <div class="col-8">
                                         <p>{{ issue['resolvedByName'] }}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-2">
+                                        <p class="detail-label">Resolution:</p>
+                                    </div>
+                                    <div class="col-8">
+                                        <p>{{ issue['resolutionDesc'] }}</p>
                                     </div>
                                 </div>
                                 {% endif %}
@@ -287,6 +295,16 @@
                                         <p><span class="detail-label">Resolved By: </span>{{ issue['resolvedByName'] }}</p>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p><span class="detail-label">Resolution: </span></p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p>{{ issue['resolutionDesc'] }}</p>
+                                    </div>
+                                </div>
                                 {% endif %}
                             </div>
                         </div>
@@ -349,12 +367,12 @@
                                         </div>
                                     </div>
                                     <div class="row mt-3">
-                                        <div class="offset-md-1 col-5">
+                                        <div class="col-xs-12 offset-md-1 col-md-5">
                                             <p class="text-center">
                                                 <a href="{{ url_for('main.get_issues') }}" role="button" id="cancel-btn" name="cancel-btn" class="btn btn-sit destructive w-100">Cancel</a>
                                             </p>
                                         </div>
-                                        <div class="col-5">
+                                        <div class="col-xs-12 col-md-5">
                                             <p class="text-center">
                                                 <button id="submit-btn" type="submit" name="submit-btn" class="btn btn-sit btn-sit-submit w-100 sit-disabled">Resolved</button>
                                             </p>

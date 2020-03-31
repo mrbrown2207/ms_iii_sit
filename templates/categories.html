@@ -17,10 +17,10 @@
             <div class="col-12 col-md-10 offset-md-1 panel">
                 <!-- Hidden on mobile -->
                 <div class="row heading d-none d-md-flex">
-                    <div class="col-md-3"><h5>Category Id</h5></div>
-                    <div class="col-md-3"><h5>Category</h5></div>
-                    <div class="col-md-3"><h5>Description</h5></div>
-                    <div class="col-md-3 pl-4"><h5>Status</h5></div>
+                    <div class="col-3"><h5>Category Id</h5></div>
+                    <div class="col-3"><h5>Category</h5></div>
+                    <div class="col-3"><h5>Description</h5></div>
+                    <div class="col-3 pl-4"><h5>Status</h5></div>
                 </div>
                 <!---------------------->
 
@@ -29,10 +29,10 @@
                 {% for cat in cats %}
                 <!-- Hidden on mobile -->                
                 <div class="row d-none d-md-flex">
-                    <div class="col-md-3"><a class="btn btn-link-sit btn-link-sit-nm" href="{{ url_for('main.edit_cat', cat_id=cat['catId']) }}">{{ cat['catId'] }}</a></div>
-                    <div class="col-md-3"><p>{{ cat['catName'] }}</p></div>
-                    <div class="col-md-3"><p>{{ cat['catDesc'] }}</p></div>
-                    <div class="col-md-3 pl-4"><p>{{ cat['catStatus'] }}<a class="cta-edit" href="{{ url_for('main.edit_cat', cat_id=cat['catId']) }}" data-toggle-1="tooltip" data-placement="top" title="Click to edit category"><i class="cta-icon last-col fa fa-pencil"></i></a></p></div>
+                    <div class="col-3"><a class="btn btn-link-sit btn-link-sit-nm" href="{{ url_for('main.edit_cat', cat_id=cat['catId']) }}">{{ cat['catId'] }}</a></div>
+                    <div class="col-3"><p>{{ cat['catName'] }}</p></div>
+                    <div class="col-3"><p>{{ cat['catDesc'] }}</p></div>
+                    <div class="col-3 pl-4"><p>{{ cat['catStatus'] }}<a class="cta-edit" href="{{ url_for('main.edit_cat', cat_id=cat['catId']) }}" data-toggle-1="tooltip" data-placement="top" title="Click to edit category"><i class="cta-icon last-col fa fa-pencil"></i></a></p></div>
                 </div>
                 <!---------------------->
 
