@@ -38,18 +38,18 @@
             <div class="col-12">
                 <!-- Hidden on mobile -->                
                 <div class="row d-none d-md-flex">
-                    <div class="col-md-2"><p><a class="toggle-caret show-hide-detail" href="#details-{{ issue['issueId'] }}" data-toggle="collapse" data-toggle-1="tooltip" data-placement="top" data-title-alt="Click to hide detail." data-id="{{issue['issueId']}}" title="Click to view detail."><i id="caret-widget-{{issue['issueId']}}" class="cta-icon view-details fa fa-caret-right"></i></a>{{ issue['catName'] }}</p></div>
-                    {% if issue['issueStatusVal'] != resolved() %}
+                    <div class="col-md-2"><p><a class="toggle-caret show-hide-detail" href="#details-{{ issue['issueId'] }}" data-toggle="collapse" data-toggle-1="tooltip" data-placement="top" data-title-alt="Click to hide detail." data-id="{{ issue['issueId'] }}" title="Click to view detail."><i id="caret-widget-{{issue['issueId']}}" class="cta-icon view-details fa fa-caret-right"></i></a>{{ issue['catName'] }}</p></div>
+                    {% if (issue['issueStatusVal'] != resolved()) and (is_superuser() or current_user.get_id() == issue['acctId']) %}
                     <div class="col-md-2"><a class="btn btn-link-sit" href="{{ url_for('main.edit_issue', issue_id=issue['issueId']) }}" data-toggle-1="tooltip" data-placement="top" title="Click to edit issue.">{{ issue['issueId'] }}</a></div>
                     {% else %}
-                    <div class="col-md-2"><a class="btn btn-link-sit show-hide-detail" href="#details-{{ issue['issueId'] }}" data-toggle="collapse" data-toggle-1="tooltip" data-placement="top" data-title-alt="Click to hide detail." title="Issue resolved. Cannot edit. Click to view detail.">{{ issue['issueId'] }}</a></div>
+                    <div class="col-md-2"><a class="btn btn-link-sit show-hide-detail" href="#details-{{ issue['issueId'] }}" data-toggle="collapse" data-toggle-1="tooltip" data-placement="top" data-title-alt="Click to hide detail." title="{{ 'Issue resolved. Cannot edit. ' if issue['issueStatusVal'] == resolved() }}Click to view detail.">{{ issue['issueId'] }}</a></div>
                     {% endif %}
                     <div class="col-md-3"><p>{{ issue['issueSubj'] }}</p></div>
                     <div class="col-md-2"><p>{{ issue['dateAdded'] }}</p></div>
                     <div class="col-md-2 pl-4">
                         <p>
                             {{ issue['issueStatus'] }}
-                            {% if issue['issueStatusVal'] != resolved() %}
+                            {% if (issue['issueStatusVal'] != resolved()) and (is_superuser() or current_user.get_id() == issue['acctId']) %}
                                 <a 
                                     class="cta-edit" href="{{ url_for('main.edit_issue', issue_id=issue['issueId']) }}" data-toggle-1="tooltip" data-placement="top" title="Click to edit issue.">
                                     {% if issue['urgent'] == 'Yes' %}
@@ -60,7 +60,7 @@
                                 </a>
                             {% else %}
                             <a 
-                                class="cta-edit show-hide-detail" href="#details-{{ issue['issueId'] }}" data-toggle="collapse" data-toggle-1="tooltip" data-placement="top" data-title-alt="Click to hide detail." title="Issue resolved. Cannot edit. Click to view detail.">
+                                class="cta-edit show-hide-detail" href="#details-{{ issue['issueId'] }}" data-toggle="collapse" data-toggle-1="tooltip" data-placement="top" data-title-alt="Click to hide detail." title="{{ 'Issue resolved. Cannot edit. ' if issue['issueStatusVal'] == resolved() }}Click to view detail.">
                                 {% if issue['urgent'] == 'Yes' %}
                                 <i class="cta-icon emphasis-colour last-col fa fa-eye"></i>
                                 {% else %}
@@ -82,7 +82,7 @@
                         <p><span class="detail-label">Date Added: </span>{{ issue['dateAdded'] }}</p>
                         <p><span class="detail-label">Status: </span>{{ issue['issueStatus'] }}</p>
                         <p class="text-center">
-                            {% if issue['issueStatusVal'] != resolved() %}
+                            {% if (issue['issueStatusVal'] != resolved()) and (is_superuser() or current_user.get_id() == issue['acctId']) %}
                                 {% if issue['urgent'] == 'Yes' %}
                                 <a 
                                     class="btn btn-sit btn-sit-cta-edit-urgent" role="button" href="{{ url_for('main.edit_issue', issue_id=issue['issueId']) }}">
@@ -182,6 +182,7 @@
                                     <div class="col-xs-2 col-md-2">
                                         <p>{{ issue['issueStatus'] }}</p>
                                     </div>
+                                    {% if is_superuser() %}
                                     <div class="col-xs-2 col-md-2">
                                         {% if issue['issueStatusVal'] < viewed() %}
                                         <a href="{{ url_for('main.upd_issue_status', issue_id=issue['issueId'], issue_status=viewed()) }}" data-toggle-1="tooltip" data-placement="top" title="Click to change status to 'Viewed'"><i class="cta-icon fa fa-eye"></i></a>
@@ -195,6 +196,7 @@
                                         <a href="{{ url_for('main.upd_issue_status', issue_id=issue['issueId'], issue_status=notviewed()) }}" data-toggle-1="tooltip" data-placement="top" title="Click to change status to 'Not Viewed'"><i class="cta-icon fa fa-eye-slash"></i></a>
                                         {% endif %}
                                     </div>
+                                    {% endif %}
                                 </div>
                                 {% if issue['issueStatusVal'] == resolved() %}
                                 <div class="row">
@@ -262,6 +264,7 @@
                                     <div class="col-6">
                                         <p><span class="detail-label">Status:</span>{{ issue['issueStatus'] }}</p>
                                     </div>
+                                    {% if is_superuser() %}
                                     <div class="col-6">
                                         {% if issue['issueStatusVal'] < viewed() %}
                                         <a href="{{ url_for('main.upd_issue_status', issue_id=issue['issueId'], issue_status=viewed()) }}" data-toggle-1="tooltip" data-placement="top" title="Click to change status to 'Viewed'"><i class="cta-icon fa fa-eye"></i></a>
@@ -271,6 +274,7 @@
                                         <a class="resolve-iss" href="/" data-toggle="modal" data-target="#resolve-modal" data-toggle-1="tooltip" data-placement="top" data-iss-id="{{ issue['issueId'] }}" data-iss-subj="{{ issue['issueSubj'] }}" title="Click to change status to 'Resolved'"><i class="cta-icon fa fa-check"></i></a>
                                         {% endif %}
                                     </div>
+                                    {% endif %}
                                 </div>
                                 {% if issue['issueStatusVal'] == resolved() %}
                                 <div class="row">

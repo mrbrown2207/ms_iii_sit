@@ -3,8 +3,8 @@ import pymysql
 import pymysql.cursors
 from flask import (Blueprint, Flask, current_app, redirect, render_template,
                    request, url_for, flash)
-from flask_login import login_required
-from ms_iii_sit.constants import DDMMYYYY_FMT, SQL_DICT, SQL_DT_FMT, ISSUE_STATUS
+from flask_login import login_required, current_user
+from ..constants import DDMMYYYY_FMT, SQL_DICT, SQL_DT_FMT, ISSUE_STATUS
 from .utils import *
 
 main = Blueprint('main', __name__)

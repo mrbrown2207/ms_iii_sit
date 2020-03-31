@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Archivo:400,500,700,700i|Open+Sans:300,300i,400,400i,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Archivo:400,500,700|Open+Sans:300,300i,400,700&display=swap');
 
 /*--------------------------------------------------------------
 >>> TABLE OF CONTENTS:
@@ -110,27 +110,15 @@ p {
 	margin-bottom: 15px;
 }
 
-.font-control {
-  	font-size: 9pt;
-}
-
-p > span.sit-text {
-    font-weight: 400;
-}
-
 select {
     background-color: #FFFFFF;
     border-color: var(--secondary-colour);
-    border-radius: var(--form-radius) !important; /* Useless */
+    border-radius: var(--form-radius) !important; /* Useless it seems */
     font-size: 11pt;
 }
 
-.sit-text {
-	color: var(--main-colour)
-}
-
-.article-label {
-    margin-bottom: 5px !important;
+p.howitworks-toggle {
+    font-size: 14pt !important;
 }
 
 /* For sticky footer and being able to push it */
@@ -222,7 +210,7 @@ a.sit-disabled, button.sit-disabled { /* This is because you cannot disable a li
     margin-right: 5px;
 }
 
-.btn-sit-cta-edit-urgent {
+.btn-sit-cta-edit-urgent, .btn-sit-cta-view-urgent {
     border-color: red;
     background: red;
 }

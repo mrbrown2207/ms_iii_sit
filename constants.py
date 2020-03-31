@@ -81,7 +81,7 @@ SQL_DICT =  {
                                 "when i.issueStatus = 2 then 'Resolved' " +
                                 "else 'Unknown' " +
                             "end) as issueStatus, " + 
-                            "i.issueStatus as issueStatusVal, i.dateViewed as dateViewed, " +
+                            "i.issueStatus as issueStatusVal, i.dateViewed as dateViewed, i.acctId as acctId, " +
                             "i.markedResolvedBy as markedResolvedBy, i.dateResolved as dateResolved, i.resolutionDesc as resolutionDesc, " +
                             "i.dateAdded as dateAdded, " +
                             "concat(t.firstName, ' ', t.surname) as 'addedBy', " + 
@@ -118,7 +118,7 @@ SQL_DICT =  {
                                 "when i.issueStatus = 1 then 'Viewed' " +
                                 "when i.issueStatus = 2 then 'Resolved' " +
                                 "else 'Unknown' " +
-                            "end) as issueStatus, i.issueStatus as issueStatusVal, i.dateViewed as dateViewed, " +
+                            "end) as issueStatus, i.issueStatus as issueStatusVal, i.dateViewed as dateViewed, i.acctId as acctId, " +
                             "i.markedResolvedBy as markedResolvedBy, i.dateResolved as dateResolved, i.resolutionDesc as resolutionDesc, " +
                             "i.dateAdded as dateAdded, c.catName as catName, " +
                             "concat(t.firstName, ' ', t.surname) as 'addedByName', " + 
