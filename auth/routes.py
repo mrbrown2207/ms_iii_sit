@@ -1,5 +1,4 @@
 import pymysql
-import pymysql.cursors
 from flask import (Flask, Blueprint, render_template, current_app,
                     redirect, request, url_for, flash, session)
 from flask_login import (LoginManager, login_user, confirm_login,
@@ -55,6 +54,8 @@ def login():
 
     return render_template("login.html")
 
+"""
+Unused now, but leaving it in for later enhancements
 
 @auth.route("/reauth", methods=["GET", "POST"])
 @login_required
@@ -64,7 +65,7 @@ def reauth():
         flash(u"Reauthenticated.")
         return redirect(request.args.get("next") or url_for("main.index"))
     return render_template("reauth.html")
-
+"""
 
 @auth.route("/register", methods=["GET", "POST"])
 def register():
@@ -216,3 +217,64 @@ def logout():
     flash("Good bye %s!" % (current_user.name.split(" ")[0]), "success")
     logout_user()
     return redirect(url_for("main.index"))
+
+
+# <<<<<<<<<<<<<<<<<<<<-------------------- User/Profile Routes -------------------->>>>>>>>>>>>>>>>>>>>
+"""
+This is unused code. However, I am leaving it in as the application can easily be enhanced
+to allow an administrator to do more managing of accounts. It is not needed for the application
+as it is right now. Well, it would be good to have it, but just running out of time. I do plan
+to go back to this, fork it and make it more robust.
+
+I actually envision an administration blueprint where all admin functionality would reside. This would 
+go there as opposed to here. If an administrator logs in -- the maudindo field of the tblAccounts record
+= to 255 -- then there would be an administrator menu item with drop down admin items: Manager Users, Categories, etc.
+
+@main.route('/add_acct')
+def add_acct():
+    return render_template('addacct.html')
+
+@main.route('/')
+@main.route('/get_accts')
+def get_accts():
+    return render_template('accts.html', cats=get_all_recs('tblAccounts'))
+
+
+@main.route('/update_acct/<acct_id>', methods=['POST'])
+def update_acct(acct_id):
+    try:
+        db = get_db()
+
+        with db.cursor() as cur:
+            cur.execute(SQL_DICT['upd_acct'], (request.form.get('acct_name'), request.form.get('cat_desc'), acct_id))
+    except Exception as e:
+        print("Error: {}".format(str(e)))
+    finally:
+        pass
+    
+    return redirect(url_for('main.get_accts'))
+
+
+@main.route('/edit_acct/<acct_id>')
+def edit_acct(acct_id):
+    try:
+        db = get_db()
+
+        with db.cursor() as cur:
+            cur.execute(SQL_DICT['sel_int_rec'], (acct_id))
+            row = cur.fetchone()
+            print(row)
+    except Exception as e:
+        print("Error: {}".format(str(e)))
+    finally:
+        pass
+
+    return render_template('editacct.html', acct=row)
+
+
+@main.route('/delete_acct/<acct_id>')
+def delete_int(acct_id):
+    del_rec('tblAccounts', acct_id)
+    return redirect(url_for('main.get_accts'))
+"""
+# <<<<<<<<<<<<<<<<<<<<---------------- End of User/Profile Routes ---------------->>>>>>>>>>>>>>>>>>>>

@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="{{url_for('static', filename='font-awesome/css/font-awesome.min.css')}}" />
-    <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap4-toggle.min.css')}}" />
-    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='font-awesome/css/font-awesome.min.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap4-toggle.min.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css" />
 </head>
 
 <body>
@@ -15,8 +15,8 @@
     <header class ="page-header px-0 py-0">
         <div class="container">
             <nav class="navbar navbar-expand-lg shift navbar-light navbar-ua px-0 py-0">
-                <a class="navbar-brand py-3 pl-3 py-md-4 pl-md-4" href="{{url_for('main.index')}}">
-                    <img src="{{url_for('static', filename='images/sit-logo-new.png')}}" />
+                <a class="navbar-brand py-3 pl-3 py-md-4 pl-md-4" href="{{ url_for('main.index') }}">
+                    <img src="{{ url_for('static', filename='images/sit-logo-new.png') }}" />
                 </a>
                 <button class="navbar-toggler custom-toggler navbar-toggler-right mr-3 mr-md-4" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -24,19 +24,19 @@
                 <div class="collapsed-menu collapse navbar-collapse px-3 py-3 px-md-4 py-md-4 flex-row-reverse collapse" id="navbarNav">
                     <ul class="navbar-nav text-center">
                         <li class="nav-item px-2 px-xl-3">
-                            <a class="nav-link" href="{{url_for('main.howitworks')}}">How it Works</a>
+                            <a class="nav-link" href="{{ url_for('content.howitworks') }}">How it Works</a>
                         </li>
                         <li class="nav-item px-2 px-xl-3">
-                            <a class="nav-link" href="{{url_for('main.get_issues')}}">Issues</a>
+                            <a class="nav-link" href="{{ url_for('main.get_issues') }}">Issues</a>
                         </li>
                         {% if current_user.is_authenticated and is_superuser() %}
                         <li class="nav-item px-2 px-xl-3">
-                            <a class="nav-link" href="{{url_for('main.get_cats')}}">Categories</a>
+                            <a class="nav-link" href="{{ url_for('main.get_cats') }}">Categories</a>
                         </li>
                         {% endif %}
                         {% if current_user.is_authenticated %}
                         <li class="nav-item px-2 px-xl-3">
-                            <a class="nav-link" href="{{url_for('auth.profile')}}">
+                            <a class="nav-link" href="{{ url_for('auth.profile') }}">
                                 {% if is_superuser() %}
                                 <i class="fa fa-user-plus"></i>
                                 {% else %}
@@ -46,11 +46,11 @@
                             </a>
                         </li>
                         <li class="nav-item px-2 px-xl-3">
-                            <a class="nav-link" href="{{url_for('auth.logout')}}"><i class="fa fa-sign-out"></i> Logout</a>
+                            <a class="nav-link" href="{{ url_for('auth.logout') }}"><i class="fa fa-sign-out"></i> Logout</a>
                         </li>
                         {% else %}
                         <li class="nav-item px-2 px-xl-3">
-                            <a class="nav-link" href="{{url_for('auth.login')}}"><i class="fa fa-sign-in"></i> Login</a>
+                            <a class="nav-link" href="{{ url_for('auth.login') }}"><i class="fa fa-sign-in"></i> Login</a>
                         </li>
                         {% endif %}
                     </ul>
@@ -68,7 +68,7 @@
                         {% if is_loginmsg(message) %}
                         <div class="alert alert-warning alert-dismissible" role="alert">
                         {% else %}
-                        <div class="alert alert-{{category}} alert-dismissible" role="alert">
+                        <div class="alert alert-{{ category }} alert-dismissible" role="alert">
                         {% endif %}
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         {{message}}
@@ -91,11 +91,11 @@
                     <h5 class="text-center mb-1">Let's Stay Close</h5>
                     <div class="col-12 text-center">
                         <div class="d-flex flex-row justify-content-center">
-                            <div class="px-1"><a href="https://www.facebook.com" target="_blank"><img src="{{url_for('static', filename='images/icon_FB.png')}}" width="30" alt="Facebook"></a></div>
-                            <div class="px-1"><a href="https://www.instagram.com" target="_blank"><img src="{{url_for('static', filename='images/icon_Instagram.png')}}" width="30" alt="Instagram"></a></div>
-                            <div class="px-1"><a href="https://www.twitter.com" target="_blank"><img src="{{url_for('static', filename='images/icon_Twitter.png')}}" width="30" alt="Twitter"></a></div>
-                            <div class="px-1"><a href="https://www.linkedin.com" target="_blank"><img src="{{url_for('static', filename='images/icon_LinkedIn.png')}}" width="30" alt="LinkedIn"></a></div>
-                            <div class="px-1"><a href="https://www.pinterest.com" target="_blank"><img src="{{url_for('static', filename='images/icon_Pinterest.png')}}" width="30" alt="Pinterest"></a></div>
+                            <div class="px-1"><a href="https://www.facebook.com" target="_blank"><img src="{{ url_for('static', filename='images/icon_FB.png') }}" width="30" alt="Facebook"></a></div>
+                            <div class="px-1"><a href="https://www.instagram.com" target="_blank"><img src="{{ url_for('static', filename='images/icon_Instagram.png') }}" width="30" alt="Instagram"></a></div>
+                            <div class="px-1"><a href="https://www.twitter.com" target="_blank"><img src="{{ url_for('static', filename='images/icon_Twitter.png') }}" width="30" alt="Twitter"></a></div>
+                            <div class="px-1"><a href="https://www.linkedin.com" target="_blank"><img src="{{ url_for('static', filename='images/icon_LinkedIn.png') }}" width="30" alt="LinkedIn"></a></div>
+                            <div class="px-1"><a href="https://www.pinterest.com" target="_blank"><img src="{{ url_for('static', filename='images/icon_Pinterest.png') }}" width="30" alt="Pinterest"></a></div>
                         </div>        
                     </div>
                 </div>
@@ -119,10 +119,10 @@
     </footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="{{url_for('static', filename='js/popper.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <script src="{{url_for('static', filename='js/bootstrap4-toggle.min.js')}}"></script>
-    <script src="{{url_for('static', filename='js/scripts.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap4-toggle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 </body>
 
 </html>

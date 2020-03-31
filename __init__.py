@@ -17,7 +17,9 @@ def create_app(config_class=ConfigDevEnv):
 
     from . main.routes import main 
     from . auth.routes import auth
+    from . content.routes import content
     app.register_blueprint(main)
     app.register_blueprint(auth)
+    app.register_blueprint(content)
 
     return app
