@@ -155,6 +155,23 @@ $(function() {
         $(this).tooltip("show")
     });
 
+    // Expand or collapse the correct issue or feature detail section
+    $(".detail-toggle").click(function() {
+        var idOfCollapse = $(this).attr("href");
+        if ($(idOfCollapse).is(":hidden")) {
+            var altText = $(this).attr("data-alt-text");
+            $(this).attr("data-alt-text", $(this).text());
+            $(this).text(altText);
+            $(this).addClass("open");
+        } else if ($(idOfCollapse).is(":visible")) {
+            var altText = $(this).attr("data-alt-text");
+            $(this).attr("data-alt-text", $(this).text());
+            $(this).text(altText);
+            $(this).removeClass("open");
+        }
+    });
+
+
     // Set current id and subject for display in modal when resolving issue
     $(".resolve-iss").click(function() {
         $("#curr-iss-id").val($(this).data("iss-id"))
@@ -206,7 +223,7 @@ $(function() {
         if ($(this).val() === "1") {
             // Let's check and ensure this isn't the last filter that is enabled.
             let x = 0;
-            $(".cat-filter-toggle").each(function(idx) {
+            $("button.cat-filter-toggle").each(function(idx) {
                 x += parseInt($(this).val());
             });
             if (x === 1) {
@@ -262,7 +279,7 @@ $(function() {
         if ($(this).val() === "1") {
             // Let's check and ensure this isn't the last filter that is enabled.
             let x = 0;
-            $(".iss-status-filter-toggle").each(function(idx) {
+            $("button.iss-status-filter-toggle").each(function(idx) {
                 x += parseInt($(this).val());
             });
             if (x === 1) {

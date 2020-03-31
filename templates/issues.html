@@ -19,13 +19,15 @@
                 {% endif %}
             </div>
             <div class="col-12">
-                <div class="row heading">
+                <!-- Hidden on mobile -->
+                <div class="row heading d-none d-md-flex">
                     <div class="col-md-2"><h5>Category</h5></div>
                     <div class="col-md-2"><h5>Issue Id</h5></div>
                     <div class="col-md-3"><h5>Issue</h5></div>
                     <div class="col-md-2"><h5>Date Added</h5></div>
                     <div class="col-md-2 pl-4"><h5>Status</h5></div>
                 </div>
+                <!---------------------->
             </div>
 
             <div class="col-12">
@@ -34,21 +36,22 @@
 
             {% for issue in issues %}
             <div class="col-12">
-                <div class="row">
-                    <div class="col-md-2"><p><a class="toggle-caret show-hide-detail" href="#details-{{issue['issueId']}}" data-toggle="collapse" data-toggle-1="tooltip" data-placement="top" data-title-alt="Click to hide detail." data-id="{{issue['issueId']}}" title="Click to view detail."><i id="caret-widget-{{issue['issueId']}}" class="cta-icon view-details fa fa-caret-right"></i></a>{{issue['catName']}}</p></div>
+                <!-- Hidden on mobile -->                
+                <div class="row d-none d-md-flex">
+                    <div class="col-md-2"><p><a class="toggle-caret show-hide-detail" href="#details-{{ issue['issueId'] }}" data-toggle="collapse" data-toggle-1="tooltip" data-placement="top" data-title-alt="Click to hide detail." data-id="{{issue['issueId']}}" title="Click to view detail."><i id="caret-widget-{{issue['issueId']}}" class="cta-icon view-details fa fa-caret-right"></i></a>{{ issue['catName'] }}</p></div>
                     {% if issue['issueStatusVal'] != resolved() %}
-                    <div class="col-md-2"><a class="btn btn-link-sit" href="{{url_for('main.edit_issue', issue_id=issue['issueId'])}}" data-toggle-1="tooltip" data-placement="top" title="Click to edit issue.">{{issue['issueId']}}</a></div>
+                    <div class="col-md-2"><a class="btn btn-link-sit" href="{{ url_for('main.edit_issue', issue_id=issue['issueId']) }}" data-toggle-1="tooltip" data-placement="top" title="Click to edit issue.">{{ issue['issueId'] }}</a></div>
                     {% else %}
-                    <div class="col-md-2"><a class="btn btn-link-sit show-hide-detail" href="#details-{{issue['issueId']}}" data-toggle="collapse" data-toggle-1="tooltip" data-placement="top" data-title-alt="Click to hide detail." title="Issue resolved. Cannot edit. Click to view detail.">{{issue['issueId']}}</a></div>
+                    <div class="col-md-2"><a class="btn btn-link-sit show-hide-detail" href="#details-{{ issue['issueId'] }}" data-toggle="collapse" data-toggle-1="tooltip" data-placement="top" data-title-alt="Click to hide detail." title="Issue resolved. Cannot edit. Click to view detail.">{{ issue['issueId'] }}</a></div>
                     {% endif %}
-                    <div class="col-md-3"><p>{{issue['issueSubj']}}</p></div>
-                    <div class="col-md-2"><p>{{issue['dateAdded']}}</p></div>
+                    <div class="col-md-3"><p>{{ issue['issueSubj'] }}</p></div>
+                    <div class="col-md-2"><p>{{ issue['dateAdded'] }}</p></div>
                     <div class="col-md-2 pl-4">
                         <p>
-                            {{issue['issueStatus']}}
+                            {{ issue['issueStatus'] }}
                             {% if issue['issueStatusVal'] != resolved() %}
                                 <a 
-                                    class="cta-edit" href="{{url_for('main.edit_issue', issue_id=issue['issueId'])}}" data-toggle-1="tooltip" data-placement="top" title="Click to edit issue.">
+                                    class="cta-edit" href="{{ url_for('main.edit_issue', issue_id=issue['issueId']) }}" data-toggle-1="tooltip" data-placement="top" title="Click to edit issue.">
                                     {% if issue['urgent'] == 'Yes' %}
                                     <i class="cta-icon emphasis-colour last-col fa fa-pencil"></i>
                                     {% else %}
@@ -57,7 +60,7 @@
                                 </a>
                             {% else %}
                             <a 
-                                class="cta-edit show-hide-detail" href="#details-{{issue['issueId']}}" data-toggle="collapse" data-toggle-1="tooltip" data-placement="top" data-title-alt="Click to hide detail." title="Issue resolved. Cannot edit. Click to view detail.">
+                                class="cta-edit show-hide-detail" href="#details-{{ issue['issueId'] }}" data-toggle="collapse" data-toggle-1="tooltip" data-placement="top" data-title-alt="Click to hide detail." title="Issue resolved. Cannot edit. Click to view detail.">
                                 {% if issue['urgent'] == 'Yes' %}
                                 <i class="cta-icon emphasis-colour last-col fa fa-eye"></i>
                                 {% else %}
@@ -68,107 +71,222 @@
                         </p>
                     </div>
                 </div>
+                <!---------------------->
+
+                <!-- Hidden on desktop -->
+                <div class="row d-md-none">
+                    <div class="col-12">
+                        <p><span class="detail-label">Category: </span>{{ issue['catName'] }}</p>
+                        <p><span class="detail-label">Issue Id: </span>{{ issue['issueId'] }}</p>
+                        <p><span class="detail-label">Issue: </span>{{ issue['issueSubj'] }}</p>
+                        <p><span class="detail-label">Date Added: </span>{{ issue['dateAdded'] }}</p>
+                        <p><span class="detail-label">Status: </span>{{ issue['issueStatus'] }}</p>
+                        <p class="text-center">
+                            {% if issue['issueStatusVal'] != resolved() %}
+                                {% if issue['urgent'] == 'Yes' %}
+                                <a 
+                                    class="btn btn-sit btn-sit-cta-edit-urgent" role="button" href="{{ url_for('main.edit_issue', issue_id=issue['issueId']) }}">
+                                    Edit Issue
+                                </a>
+                                {% else %}
+                                <a 
+                                    class="btn btn-sit btn-sit-cta-edit" role="button" href="{{ url_for('main.edit_issue', issue_id=issue['issueId']) }}">
+                                    Edit Issue
+                                </a>
+                                {% endif %}
+                            {% else %}
+                                {% if issue['urgent'] == 'Yes' %}
+                                <a 
+                                    class="btn btn-sit btn-sit-cta-view-urgent" role="button" href="#details-{{ issue['issueId'] }}" data-toggle="collapse">
+                                    View Issue
+                                </a>
+                                {% else %}
+                                <a 
+                                    class="btn btn-sit btn-sit-cta-view" role="button" href="#details-{{ issue['issueId'] }}" data-toggle="collapse">
+                                    View Issue
+                                </a>
+                                {% endif %}
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div class="col-12 text-center">
+                        <a class="detail-toggle my-3" data-toggle="collapse" href="#details-{{ issue['issueId'] }}" aria-expanded="false" aria-controls="collapse-more" data-alt-text="Hide Detail">Show Detail</a>
+                    </div>
+                </div>
+                <!----------------------->
 
                 <!-- Issue details -->
                 <div class="container">
-
+                
                     <!-- Having the panel inside the div.collapse results in a smoother collapse. -->
-                    <div id="details-{{issue['issueId']}}" class="collapse">
-                        <div class="row panel details-panel">
+                    <div id="details-{{ issue['issueId'] }}" class="collapse">
+                        <!-- Hidden on mobile -->
+                        <div class="row panel detail-panel d-none d-md-flex">
                             <div class="col-12">
                                 <div class="row">
                                     <div class="col-xs-6 col-md-2">
-                                        <p class="details-label">Id:</p>
+                                        <p class="detail-label">Id:</p>
                                     </div>
                                     <div class="col-xs-6 col-md-8">
-                                        <p class="detail-data">{{issue['issueId']}}</p>
+                                        <p>{{ issue['issueId'] }}</p>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-6 col-md-2">
-                                        <p class="details-label">Added By:</p>
+                                        <p class="detail-label">Added By:</p>
                                     </div>
                                     <div class="col-xs-6 col-md-8">
-                                        <p class="detail-data">{{issue['addedByName']}}</p>
+                                        <p>{{ issue['addedByName'] }}</p>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-6 col-md-2">
-                                        <p class="details-label">Date Added:</p>
+                                        <p class="detail-label">Date Added:</p>
                                     </div>
                                     <div class="col-xs-6 col-md-8">
-                                        <p class="detail-data">{{issue['dateAdded']}}</p>
+                                        <p>{{ issue['dateAdded'] }}</p>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-6 col-md-2">
-                                        <p class="details-label">Issue:</p>
+                                        <p class="detail-label">Issue:</p>
                                     </div>
                                     <div class="col-xs-6 col-md-8">
-                                        <p class="detail-data">{{issue['issueSubj']}}</p>
+                                        <p>{{ issue['issueSubj'] }}</p>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-6 col-md-2">
-                                        <p class="details-label">Description:</p>
+                                        <p class="detail-label">Description:</p>
                                     </div>
                                     <div class="col-xs-6 col-md-8">
-                                        <p class="detail-data">{{issue['issueDesc']}}</p>
+                                        <p>{{ issue['issueDesc'] }}</p>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-6 col-md-2">
-                                        <p class="details-label">Urgent:</p>
+                                        <p class="detail-label">Urgent:</p>
                                     </div>
                                     <div class="col-xs-6 col-md-8">
                                         {% if issue['urgent'] == 'Yes' %}
-                                        <p class="detail-data emphasis-colour">{{issue['urgent']}}</p>
+                                        <p class=" emphasis-colour">{{ issue['urgent'] }}</p>
                                         {% else %}
-                                        <p class="detail-data">{{issue['urgent']}}</p>
+                                        <p>{{ issue['urgent'] }}</p>
                                         {% endif %}
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-6 col-md-2">
-                                        <p class="details-label">Status:</p>
+                                        <p class="detail-label">Status:</p>
                                     </div>
                                     <div class="col-xs-2 col-md-2">
-                                        <p class="detail-data">{{issue['issueStatus']}}</p>
+                                        <p>{{ issue['issueStatus'] }}</p>
                                     </div>
                                     <div class="col-xs-2 col-md-2">
                                         {% if issue['issueStatusVal'] < viewed() %}
-                                        <a href="{{url_for('main.upd_issue_status', issue_id=issue['issueId'], issue_status=viewed())}}" data-toggle-1="tooltip" data-placement="top" title="Click to change status to 'Viewed'"><i class="cta-icon fa fa-eye"></i></a>
+                                        <a href="{{ url_for('main.upd_issue_status', issue_id=issue['issueId'], issue_status=viewed()) }}" data-toggle-1="tooltip" data-placement="top" title="Click to change status to 'Viewed'"><i class="cta-icon fa fa-eye"></i></a>
                                         {% endif %}
                                         {% if issue['issueStatusVal'] < resolved() %}
                                             <span class="mx-3"></span>
-                                        <a class="resolve-iss" href="/" data-toggle="modal" data-target="#resolve-modal" data-toggle-1="tooltip" data-placement="top" data-iss-id="{{issue['issueId']}}" data-iss-subj="{{issue['issueSubj']}}" title="Click to change status to 'Resolved'"><i class="cta-icon fa fa-check"></i></a>
+                                        <a class="resolve-iss" href="/" data-toggle="modal" data-target="#resolve-modal" data-toggle-1="tooltip" data-placement="top" data-iss-id="{{ issue['issueId'] }}" data-iss-subj="{{ issue['issueSubj'] }}" title="Click to change status to 'Resolved'"><i class="cta-icon fa fa-check"></i></a>
                                         {% endif %}
                                         {% if issue['issueStatusVal'] != notviewed() and testing() %}
                                             <span class="mx-3"></span>
-                                        <a href="{{url_for('main.upd_issue_status', issue_id=issue['issueId'], issue_status=notviewed())}}" data-toggle-1="tooltip" data-placement="top" title="Click to change status to 'Not Viewed'"><i class="cta-icon fa fa-eye-slash"></i></a>
+                                        <a href="{{ url_for('main.upd_issue_status', issue_id=issue['issueId'], issue_status=notviewed()) }}" data-toggle-1="tooltip" data-placement="top" title="Click to change status to 'Not Viewed'"><i class="cta-icon fa fa-eye-slash"></i></a>
                                         {% endif %}
                                     </div>
                                 </div>
                                 {% if issue['issueStatusVal'] == resolved() %}
                                 <div class="row">
                                     <div class="col-xs-6 col-md-2">
-                                        <p class="details-label">Date Resolved:</p>
+                                        <p class="detail-label">Date Resolved:</p>
                                     </div>
                                     <div class="col-xs-6 col-md-8">
-                                        <p class="detail-data">{{issue['dateResolved']}}</p>
+                                        <p>{{ issue['dateResolved'] }}</p>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-6 col-md-2">
-                                        <p class="details-label">Resolved By:</p>
+                                        <p class="detail-label">Resolved By:</p>
                                     </div>
                                     <div class="col-xs-6 col-md-8">
-                                        <p class="detail-data">{{issue['resolvedByName']}}</p>
+                                        <p>{{ issue['resolvedByName'] }}</p>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>                            
+                        </div>
+                        <!---------------------->
+                        <!-- Hidden on desktop -->
+                        <div class="row panel detail-panel d-md-none">
+                            <div class="col-12 detail-col">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p><span class="detail-label">Id:</span>{{ issue['issueId'] }}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p><span class="detail-label">Added By:</span>{{ issue['addedByName'] }}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p><span class="detail-label">Date Added:</span>{{ issue['dateAdded'] }}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p><span class="detail-label">Issue:</span>{{ issue['issueSubj'] }}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p class="detail-label">Description:</p>
+                                        <p>{{ issue['issueDesc'] }}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p>
+                                            <span class="detail-label">Urgent:</span>
+                                            {% if issue['urgent'] == 'Yes' %}
+                                            <span class="emphasis-colour">{{ issue['urgent'] }}</span>
+                                            {% else %}
+                                            <span>{{ issue['urgent'] }}</span>
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p><span class="detail-label">Status:</span>{{ issue['issueStatus'] }}</p>
+                                    </div>
+                                    <div class="col-6">
+                                        {% if issue['issueStatusVal'] < viewed() %}
+                                        <a href="{{ url_for('main.upd_issue_status', issue_id=issue['issueId'], issue_status=viewed()) }}" data-toggle-1="tooltip" data-placement="top" title="Click to change status to 'Viewed'"><i class="cta-icon fa fa-eye"></i></a>
+                                        {% endif %}
+                                        {% if issue['issueStatusVal'] < resolved() %}
+                                            <span class="mx-3"></span>
+                                        <a class="resolve-iss" href="/" data-toggle="modal" data-target="#resolve-modal" data-toggle-1="tooltip" data-placement="top" data-iss-id="{{ issue['issueId'] }}" data-iss-subj="{{ issue['issueSubj'] }}" title="Click to change status to 'Resolved'"><i class="cta-icon fa fa-check"></i></a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% if issue['issueStatusVal'] == resolved() %}
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p><span class="detail-label">Date Resolved: </span>{{ issue['dateResolved'] }}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p><span class="detail-label">Resolved By: </span>{{ issue['resolvedByName'] }}</p>
                                     </div>
                                 </div>
                                 {% endif %}
                             </div>
                         </div>
+                        <!----------------------->
                     </div>
                 </div>
             </div>
@@ -181,9 +299,9 @@
         </div>
     </div>
 
-    <div class="row pt-3 text-right">
+    <div class="row pt-1 text-right">
         <div class="col-xs-12 offset-md-9 col-md-3">
-            <a href="{{url_for('main.add_issue')}}" class="btn btn-sit btn-sit-cta-add">Add Issue</a>
+            <a href="{{ url_for('main.add_issue') }}" class="btn btn-sit btn-sit-cta-add">Add Issue</a>
         </div>
     </div>
 </section>
@@ -199,7 +317,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12 col-md-10 center-block">
-                            <form class="form-container" action="{{url_for('main.resolve_issue')}}" method="POST">
+                            <form class="form-container" action="{{ url_for('main.resolve_issue') }}" method="POST">
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-12">
@@ -215,7 +333,7 @@
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label for="iss-res-desc">Resolution Detail *</label>
-                                                <div class="">
+                                                <div>
                                                     <textarea name="iss-res-desc" cols="100" rows="10" class="form-control sit-required char-countdown form-control" aria-describedby="issue resolution description" placeholder="Enter detailed resolution description" minlength="1" maxlength="1000" required></textarea>
                                                 </div>
                                             </div>
@@ -229,7 +347,7 @@
                                     <div class="row mt-3">
                                         <div class="offset-md-1 col-5">
                                             <p class="text-center">
-                                                <a href="{{url_for('main.get_issues')}}" role="button" id="cancel-btn" name="cancel-btn" class="btn btn-sit destructive w-100">Cancel</a>
+                                                <a href="{{ url_for('main.get_issues') }}" role="button" id="cancel-btn" name="cancel-btn" class="btn btn-sit destructive w-100">Cancel</a>
                                             </p>
                                         </div>
                                         <div class="col-5">
@@ -259,23 +377,30 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <form class="form-container" action="{{url_for('main.get_issues')}}" method="POST">
+                            <form class="form-container" action="{{ url_for('main.get_issues') }}" method="POST">
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-6">
                                             <h4>Category Filters</h4>
                                         </div>
                                         <div class="col-6">
-                                            <h4>Issue Status Filters</h4>
+                                            <h4>Status Filters</h4>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="row mb-1">
-                                                <div class="col-6 text-right">
+                                                <!-- Hidden on mobile -->
+                                                <div class="col-6 d-none d-md-block text-right">
                                                     <label>All Categories</label>
                                                 </div>
-                                                <div class="col-6">
+                                                <!---------------------->
+                                                <!-- Hidden on desktop -->
+                                                <div class="col-6 d-md-none">
+                                                    <label>All</label>
+                                                </div>
+                                                <!----------------------->
+                                                <div class="col-6 filter-toggle">
                                                     {% if omitted_cats %}
                                                     <button id="all-cats-toggle" class="btn btn-sit-modal btn-sit-switch-control filter-not-selected"></button>
                                                     {% else %}
@@ -285,16 +410,16 @@
                                             </div>    
                                             {% for cat in config.CATS %}
                                             <div class="row mb-1">
-                                                <div class="col-6 text-right">
+                                                <div class="col-6 detail-label">
                                                     <label>{{cat['catName']}}s</label>
                                                 </div>
-                                                <div class="col-6">
+                                                <div class="col-6 filter-toggle">
                                                     {%if cat['filter_status'] == "0" %}
-                                                    <button name="{{cat['catName']}}-{{cat['catId']}}" class="cat-filter-toggle btn btn-sit-modal btn-sit-switch-control filter-not-selected" value="0"></button>
+                                                    <button name="{{ cat['catName'] }}-{{ cat['catId'] }}" class="cat-filter-toggle btn btn-sit-modal btn-sit-switch-control filter-not-selected" value="0"></button>
                                                     <input class="hide cat-filter-toggle" name="cat-{{cat['catId']}}" value="0" />
                                                     {% else %}
-                                                    <button name="{{cat['catName']}}-{{cat['catId']}}" class="cat-filter-toggle btn btn-sit-modal btn-sit-switch-control filter-selected" value="1"></button>
-                                                    <input class="hide cat-filter-toggle" name="cat-{{cat['catId']}}" value="1" />
+                                                    <button name="{{ cat['catName'] }}-{{ cat['catId'] }}" class="cat-filter-toggle btn btn-sit-modal btn-sit-switch-control filter-selected" value="1"></button>
+                                                    <input class="hide cat-filter-toggle" name="cat-{{ cat['catId'] }}" value="1" />
                                                     {% endif %}
                                                 </div>
                                             </div>
@@ -302,10 +427,17 @@
                                         </div>
                                         <div class="col-6">
                                             <div class="row mb-1">
-                                                <div class="col-6 text-right">
+                                                <!-- Hidden on mobile -->
+                                                <div class="col-6 d-none d-md-block text-right">
                                                     <label>All Statuses</label>
                                                 </div>
-                                                <div class="col-6">
+                                                <!---------------------->
+                                                <!-- Hidden on desktop -->
+                                                <div class="col-6 d-md-none">
+                                                    <label>All</label>
+                                                </div>
+                                                <!----------------------->
+                                                <div class="col-6 filter-toggle">
                                                     {% if omitted_status %}
                                                     <button id="all-iss-status-toggle" class="btn btn-sit-modal btn-sit-switch-control filter-not-selected"></button>
                                                     {% else %}
@@ -315,16 +447,16 @@
                                             </div>
                                             {% for k, v in config.ISS_STATUS.items() %}    
                                             <div class="row mb-1">
-                                                <div class="col-6 text-right">
-                                                    <label>{{v['display']}}</label>
+                                                <div class="col-6 detail-label">
+                                                    <label>{{ v['display'] }}</label>
                                                 </div>
-                                                <div class="col-6">
+                                                <div class="col-6 filter-toggle">
                                                     {% if v['filter_status'] == "0" %}
-                                                    <button name="{{key}}-{{v['id']}}" class="iss-status-filter-toggle btn btn-sit-modal btn-sit-switch-control filter-not-selected" value="0"></button>
-                                                    <input class="hide iss-status-filter-toggle" name="status-{{v['id']}}" value="0" />
+                                                    <button name="{{ key }}-{{ v['id'] }}" class="iss-status-filter-toggle btn btn-sit-modal btn-sit-switch-control filter-not-selected" value="0"></button>
+                                                    <input class="hide iss-status-filter-toggle" name="status-{{ v['id'] }}" value="0" />
                                                     {% else %}
-                                                    <button name="{{key}}-{{v['id']}}" class="iss-status-filter-toggle btn btn-sit-modal btn-sit-switch-control filter-selected" value="1"></button>
-                                                    <input class="hide iss-status-filter-toggle" name="status-{{v['id']}}" value="1" />
+                                                    <button name="{{ key }}-{{ v['id'] }}" class="iss-status-filter-toggle btn btn-sit-modal btn-sit-switch-control filter-selected" value="1"></button>
+                                                    <input class="hide iss-status-filter-toggle" name="status-{{ v['id'] }}" value="1" />
                                                     {% endif %}
                                                 </div>
                                             </div>
@@ -334,15 +466,15 @@
 
                                     <hr class="fancy">
 
-                                    <div class="row mt-3 pt-3">
-                                        <div class="offset-md-1 col-5">
+                                    <div class="row mt-2 pt-2">
+                                        <div class="col-xs-12 offset-md-1 col-md-5">
                                             <p class="text-center">
-                                                <a href="{{url_for('main.get_issues')}}" role="button" id="cancel-btn" name="cancel-btn" class="btn btn-sit destructive w-100">Cancel</a>
+                                                <a href="{{ url_for('main.get_issues') }}" role="button" id="cancel-btn" name="cancel-btn" class="btn btn-sit destructive w-75">Cancel</a>
                                             </p>
                                         </div>
-                                        <div class="col-5">
+                                        <div class="col-xs-12 col-md-5">
                                             <p class="text-center">
-                                                <button id="submit-btn" type="submit" name="submit-btn" class="btn btn-sit btn-sit-submit w-100">Filter</button>
+                                                <button id="submit-btn" type="submit" name="submit-btn" class="btn btn-sit btn-sit-submit w-75">Filter</button>
                                             </p>
                                         </div>
                                     </div>

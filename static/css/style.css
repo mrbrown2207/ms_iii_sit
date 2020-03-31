@@ -25,8 +25,7 @@
     --secondary-colour: #009AD1;
     --cta-btn-colour: #007BFF; /* btn-primary */
     --add-btn-colour: #009AD1;
-    --cancel-btn-colour: #C4343B;
-    --del-btn-colour: #C4343B;
+    --destructive-colour: #C4343B;
     --box-shadow-offset: 0 2px 5px 0;
     --form-radius: 10px;
     --btn-radius: 28px;
@@ -212,16 +211,32 @@ a.sit-disabled, button.sit-disabled { /* This is because you cannot disable a li
     box-shadow: var(--box-shadow-offset) #B6CFDB;
 }
 
-.btn-sit-cta-add, .btn-sit-submit {
+.btn-sit-cta-add, .btn-sit-cta-edit, .btn-sit-cta-view, .btn-sit-submit {
     border-color: var(--add-btn-colour);
     background: var(--add-btn-colour);
 }
 
-.btn-sit-cta-add::before {
+.btn-sit-cta-add::before, .btn-sit-cta-edit::before, .btn-sit-cta-edit-urgent::before, .btn-sit-cta-view::before, .btn-sit-cta-view-urgent::before {
     font-family: "FontAwesome";
     font-weight: 500;
     margin-right: 5px;
-    content: "\f067" !important;
+}
+
+.btn-sit-cta-edit-urgent {
+    border-color: red;
+    background: red;
+}
+
+.btn-sit-cta-add::before {
+    content: "\f067" !important; /* fa-plus */
+}
+
+.btn-sit-cta-edit::before, .btn-sit-cta-edit-urgent::before {
+    content: "\f040" !important; /* fa-pencil */
+}
+
+.btn-sit-cta-view::before, .btn-sit-cta-view-urgent::before {
+    content: "\f06e" !important; /* fa-eye */
 }
 
 .btn-sit-cta-add:hover, .btn-sit-submit:hover {
@@ -230,7 +245,7 @@ a.sit-disabled, button.sit-disabled { /* This is because you cannot disable a li
 }
 
 .destructive {
-    background: #C4343B;
+    background: var(--destructive-colour);
     color: #FFFFFF;
 }
 
@@ -301,11 +316,21 @@ a.sit-disabled, button.sit-disabled { /* This is because you cannot disable a li
 }
 
 .filter-selected {
-    background: #28a745 !important; /* bootstrap success */
+    background: #28a745; /* bootstrap success */
 }
 
 .filter-not-selected {
-    background: #C4343B !important;
+    background: var(--destructive-colour);
+}
+
+.detail-toggle {
+    font-size: 8pt;
+    font-weight: 600;
+    padding: 2px 5px;
+    margin: 0 5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: #E74850 !important;
 }
 
 /* Toggle switch */
@@ -354,10 +379,9 @@ a.sit-disabled, button.sit-disabled { /* This is because you cannot disable a li
     text-decoration: none !important;
 }
 
-.details-label {
+.detail-label {
     color: var(--main-colour);
     font-weight: 700;
-    text-align: right;
 }
 
 /*--------------------------------------------------------------
@@ -401,29 +425,12 @@ input[type=text] {
     font-weight: 400;
 }
 
-.form-control-lg {
-    border-radius: var(--form-radius);
-    border-width: 1px;
-    border-color: var(--secondary-colour);
-    width: 100%;
-    border-style: solid;
-    color: #000000;
-    font-weight: 400;
-}
-
 .form-control::placeholder, textarea.form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
 	color: #BBCAD2;
 	font-size: 10pt;
 	font-weight: 400;
 	font-style: italic;
     opacity: 1; /* Firefox */
-}
-
-.form-control-lg::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-	color: #BBCAD2;
-	font-weight: 400;
-	font-style: italic;
-	opacity: 1; /* Firefox */
 }
 
 .form-control:-ms-input-placeholder { /* Internet Explorer 10-11, Edge */
@@ -477,7 +484,7 @@ input[type=text] {
 .what-is-this::after {
     font-family: "FontAwesome";
     margin-left: 10px;
-    content: "\f05a" !important;
+    content: "\f05a" !important; /* fa-info-circle */
 }
 
 .what-is-this:hover {
@@ -594,9 +601,36 @@ hr.fancy {
     h1 {
         font-size: 25px;
     }
+
+    #filter-modal label {
+        font-size: 9pt;
+    }
+
+    .detail-label {
+        text-align: left;
+        padding-right: 5px;
+        margin-bottom: 5px;
+    }
+
+    .detail-col {
+        padding-left: 0 !important;
+    }
+
+    /* Make the buttons and text a bit smaller on small devices */
+    .btn-sit {
+        padding: 5px 10px;
+        font-size: 10pt;
+    }
+
+    #filter-modal .filter-toggle {
+        padding-left: 25px;
+    }
 }
 
 @media screen and (min-width: 768px) {
+    .detail-label {
+        text-align: right;
+    }
 }
 
 @media screen and (min-width: 992px) {
@@ -672,5 +706,5 @@ https://stackoverflow.com/questions/44955201/bootstrap-4-change-tooltip-arrow-co
     font-size: larger;
     color: var(--secondary-colour);
     margin-left: 5px;
-    content: "\f118" !important;
+    content: "\f118" !important; /* fa-smile-o */
 }
