@@ -31,12 +31,20 @@
                 <h4>
                     This is your place to enter issues regarding your property. At MB Property Management we try to ensure that all properties are
                     maintained to the highest standard. However, things do go wrong at times. In addition, you may have some brilliant ideas on how
-                    to improve the property. You may have questions. You may even want to comment on the service you received. Please click on the 
-                    ISSUES menu item or click the button below to go to the Issues page.
+                    to improve the property. You may have questions. You may even want to comment on the service you received. 
+                    {{ 
+                        "Please click on the ISSUES menu item or click the button below to go to the Issues page." 
+                        if current_user.is_authenticated 
+                        else "Please click the Login button below to continue." 
+                    }}
                 </h4>
             </div>
             <div class="col-xs-12 offset-md-4 col-md-4 text-center mt-4">
+                {% if current_user.is_authenticated %}
                 <a href="{{url_for('main.get_issues')}}" class="btn btn-sit btn-sit-cta">Issues Page</a>
+                {% else %}
+                <a href="{{url_for('auth.login')}}" class="btn btn-sit btn-sit-cta">Login</a>
+                {% endif %}
             </div>
             {% endif %}
         </div>

@@ -48,15 +48,18 @@
                         <input type="checkbox" name="is-active" data-toggle="toggle" data-on="<i class='fa fa-cogs'></i> Active" data-off="Not Active" data-style="ios slow" data-onstyle="success" />      
                     </div>
                 </div>
+
+                <hr class="fancy">
+
                 <div class="row mt-3">
-                    <div class="offset-md-1 col-5">
+                    <div class="col-xs-12 offset-md-1 col-md-5">
                         <p class="text-center">
-                            <a href="{{url_for('main.get_cats')}}" role="button" id="cancel-btn" name="cancel-btn" class="btn btn-sit destructive w-100">Cancel</a>
+                            <a href="{{url_for('main.get_cats')}}" role="button" id="cancel-btn" name="cancel-btn" class="btn btn-sit destructive w-75">Cancel</a>
                         </p>
                     </div>
-                    <div class="col-5">
+                    <div class="col-xs-12 col-md-5">
                         <p class="text-center">
-                            <button id="submit-btn" type="submit" name="submit-btn" class="btn btn-sit btn-sit-submit w-100 sit-disabled">Submit Category</button>
+                            <button id="submit-btn" type="submit" name="submit-btn" class="btn btn-sit btn-sit-submit w-75 sit-disabled">Submit Category</button>
                         </p>
                     </div>
                 </div>
