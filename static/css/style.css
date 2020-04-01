@@ -9,7 +9,6 @@
 # Links, Buttons
 # Dashboard
 # Forms
-# Featured
 # Others
 # Footer
 # Media Queries for different screen sizes
@@ -117,8 +116,11 @@ select {
     font-size: 11pt;
 }
 
-p.howitworks-toggle {
-    font-size: 14pt !important;
+a.howitworks-toggle {
+    color: var(--main-colour);
+    font-size: 14pt;
+    font-weight: 500;
+    text-decoration: none;
 }
 
 /* For sticky footer and being able to push it */
@@ -142,7 +144,7 @@ p.howitworks-toggle {
     padding: 15px 0;
 }
 
-.nav-link {
+.nav-link, a.howitworks-toggle {
     -webkit-transition: all .5s ease;
     -moz-transition: all .5s ease;
     -o-transition: all .5s ease;
@@ -153,7 +155,7 @@ p.howitworks-toggle {
   	border: none;
 }
 
-.navbar-sit .navbar-nav, .nav-link:hover {
+.navbar-sit .navbar-nav, .nav-link:hover, a.howitworks-toggle:hover {
 	color: var(--secondary-colour) !important;
 }
 
@@ -520,6 +522,10 @@ hr.fancy {
     transform: translate(-20%, -40%);
 }
 /*****************************/
+
+.hiw-steps {
+    color: var(--main-colour);
+}
 
 /*--------------------------------------------------------------
 # Footer
