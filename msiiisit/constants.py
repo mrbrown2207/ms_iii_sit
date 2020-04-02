@@ -157,7 +157,7 @@ SQL_DICT =  {
                             "catActive=%s, " +
                             "dateModified=NOW() " +
                         "where catId=%s"),
-            "get_cats": ("select catId, catName, '1' as filter_status from tblCat order by catName"),
+            "get_cats": ("select catId, catName, '1' as filter_status from tblCat where catActive = 1 order by catName"),
             "add_cat": ("insert into tblCat (catName, catDesc, catActive, dateAdded, dateModified) " +
                             "values " +
                         "(%s, %s, %s, NOW(), NOW())"),

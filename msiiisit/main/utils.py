@@ -3,7 +3,6 @@ import pymysql.cursors
 from flask import current_app, g
 from .. constants import SQL_DICT, ISSUE_STATUS
 
-qry_testing = 0
 
 def get_db():
     if 'db' not in g:
@@ -23,20 +22,12 @@ def get_all_recs(tbl):
         db = get_db()
 
         if tbl == 'tblCat':
-            if qry_testing:
-                sql = SQL_DICT['sel_recs']
-            else:
-                sql = SQL_DICT['sel_all_cats']
+            sql = SQL_DICT['sel_all_cats']
         else:
             sql = SQL_DICT['sel_all_isss']
             
         with db.cursor() as cur:
-            if qry_testing:
-                print("I am query testing")
-                print("SQL: {}".format(sql))
-                cur.execute(sql, tbl)
-            else:
-                cur.execute(sql)
+            cur.execute(sql)
 
             return cur.fetchall()
     except Exception as e:
@@ -62,6 +53,7 @@ def del_rec(tbl, rec_id):
         print('Error: {}'.format(str(e)))
     finally:
         print('Success')
+
 
 def init_filter_state():
     try:
