@@ -20,9 +20,13 @@ def index():
     class that gets loaded when creating the app (see __init__.py). However, it didn't 
     work; I am assuming it is because of the way the class is being instantiated.
     """
+    print("I am here before doing anything!!!")
     if current_app.config.get("FILTER_STATE_DICT") == None:
-        load_cats()            
+        print("before load cats!!!")
+        load_cats()
+        print("after load cats and before init_filter_state()!!!")         
         init_filter_state()
+        
 
     """
     Issue statuses are not quite as dynamic as categories. However, let's
