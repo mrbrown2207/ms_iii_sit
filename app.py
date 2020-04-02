@@ -1,3 +1,4 @@
+import os
 from msiiisit import create_app
 from flask_login import current_user
 from msiiisit.constants import ISSUE_STATUS, USER_LEVEL
@@ -48,4 +49,4 @@ def utility_contexts():
                 is_loginmsg=is_loginmsg)
 
 if __name__ == '__main__':
-    app.run(debug=app.config['DEV'])
+    app.run(debug=app.config['DEV'], host=os.getenv('FLASK_APP_HOST'), port=os.getenv('FLASK_APP_PORT'))
