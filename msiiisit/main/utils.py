@@ -4,9 +4,6 @@ from flask import current_app, g
 from .. constants import SQL_DICT, ISSUE_STATUS
 
 qry_testing = 0
-issue_testing = 1
-acctId = 2
-
 
 def get_db():
     if 'db' not in g:

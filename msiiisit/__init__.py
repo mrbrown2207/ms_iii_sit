@@ -1,7 +1,8 @@
 
+import os
 from flask import Flask
 from flask_login import LoginManager
-from . config import ConfigDevEnv
+from . config import Config
 
 
 login_manager = LoginManager()
@@ -9,9 +10,9 @@ login_manager.login_view = "auth.login"
 login_manager.login_message = u"Please log in to access this page."
 login_manager.refresh_view = "auth.reauth"
 
-def create_app(config_class=ConfigDevEnv):
+def create_app(config_class=Config):
     app = Flask(__name__)
-    app.config.from_object(ConfigDevEnv)
+    app.config.from_object(Config)
 
     login_manager.init_app(app)
 

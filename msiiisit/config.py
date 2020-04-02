@@ -21,7 +21,7 @@ class Config:
     TESTING = False
     PWD_FAILURES_ALLOWED = 3
     BOT_FAILURES_ALLOWED = 5
-    DEFAULT_ISO = 'IE'
+    DEFAULT_ISO = 'GB'
     HOST = os.getenv('DB_HOST')
     DB = os.getenv('DB')
     DB_USER = os.getenv('DB_USER')
