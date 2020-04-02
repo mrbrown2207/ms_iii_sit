@@ -3,7 +3,9 @@ from msiiisit import create_app
 from flask_login import current_user
 from msiiisit.constants import ISSUE_STATUS, USER_LEVEL
 
+print("before create_app call")
 app = create_app()
+print("after create_app call")
 
 # Set up some utility contexts
 #ctx = utility_contexts()
@@ -49,4 +51,5 @@ def utility_contexts():
                 is_loginmsg=is_loginmsg)
 
 if __name__ == '__main__':
+    print("before app.run")
     app.run(debug=app.config['DEV'], host=os.getenv('FLASK_APP_HOST'), port=os.getenv('FLASK_APP_PORT'))

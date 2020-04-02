@@ -10,6 +10,7 @@ login_manager.login_view = "auth.login"
 login_manager.login_message = u"Please log in to access this page."
 login_manager.refresh_view = "auth.reauth"
 
+
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(Config)
