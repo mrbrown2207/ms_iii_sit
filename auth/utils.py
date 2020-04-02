@@ -1,9 +1,9 @@
 import pymysql, random
 import pymysql.cursors
 from flask import Flask, session
-from ms_iii_sit import login_manager
-from ..constants import SQL_DICT, NO_BOTS
-from ..main.utils import get_db
+from .. import login_manager
+from .. constants import SQL_DICT, NO_BOTS
+from .. main.utils import get_db
 from . models import User
 
 

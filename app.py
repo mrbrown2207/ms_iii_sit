@@ -1,4 +1,4 @@
-from ms_iii_sit import create_app
+from . import create_app
 from flask_login import current_user
 from . constants import ISSUE_STATUS, USER_LEVEL
 

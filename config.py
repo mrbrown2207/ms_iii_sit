@@ -9,11 +9,11 @@ class ConfigDevEnv:
     BOT_FAILURES_ALLOWED = 2
     DEFAULT_ISO = 'GB'
     HOST = os.getenv('DB_HOST')
-    DB = "sitDb"
+    DB = os.getenv('DB')
     DB_USER = os.getenv('DB_USER')
     DB_ABTRUSUS = os.getenv('DB_ABTRUSUS')
     CHARSET = 'utf8'  
-    SECRET_KEY = 'mysecretthatisnotsecret'
+    SECRET_KEY = os.getenv('SIT_SECRET_KEY')
 
 
 class Config:
@@ -23,8 +23,8 @@ class Config:
     BOT_FAILURES_ALLOWED = 5
     DEFAULT_ISO = 'IE'
     HOST = os.getenv('DB_HOST')
-    DB = "sitDb"
+    DB = os.getenv('DB')
     DB_USER = os.getenv('DB_USER')
     DB_ABTRUSUS = os.getenv('DB_ABTRUSUS')
     CHARSET = 'utf8'  
-    SECRET_KEY = 'mysecretthatisnotsecret'
+    SECRET_KEY = os.getenv('SIT_SECRET_KEY')

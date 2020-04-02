@@ -1,7 +1,7 @@
 import pymysql
 import pymysql.cursors
 from flask import current_app, g
-from ms_iii_sit.constants import SQL_DICT, ISSUE_STATUS
+from .. constants import SQL_DICT, ISSUE_STATUS
 
 qry_testing = 0
 issue_testing = 1
