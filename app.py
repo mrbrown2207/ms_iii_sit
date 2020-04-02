@@ -1,6 +1,6 @@
-from . import create_app
+from msiiisit import create_app
 from flask_login import current_user
-from . constants import ISSUE_STATUS, USER_LEVEL
+from msiiisit.constants import ISSUE_STATUS, USER_LEVEL
 
 app = create_app()
 
