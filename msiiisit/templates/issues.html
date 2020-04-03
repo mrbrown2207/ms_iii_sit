@@ -18,7 +18,7 @@
                                 <div class="col-10">
                                     <input id="search-string" name="search-string" class="form-control" type="text" maxlength="60" value="{{ search_str }}" placeholder="Search...">
                                 </div>
-                                <div class="col-1 search-col"><button class="icon-submit-btn" type="submit" name="search" data-toggle-1="tooltip" data-placement="top" title="Click to search."><i class="cta-icon fa fa-search fa-2x"></i></button></div>
+                                <div class="col-1 search-col"><button class="icon-submit-btn" type="submit" name="search" data-toggle-1="tooltip" data-placement="top" title="Click to search within issue subject and description."><i class="cta-icon fa fa-search fa-2x"></i></button></div>
                                 {% if search_str|length %}
                                 <div class="col-1 search-col"><button id="clear-search" class="icon-submit-btn" type="submit" name="clear-search" data-toggle-1="tooltip" data-placement="top" title="Click to clear search filter."><i class="cta-icon fa fa-search-minus fa-2x"></i></button></div>
                                 {% endif %}
