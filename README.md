@@ -164,7 +164,7 @@ You should be good to go.
 
 
 ### Heroku
-- My final deployment of this project is on Heroku and is here: (https://ms-iii-ua.herokuapp.com/). If you want to deploy to Heroku, you will need to do the following:
+- My final deployment of this project is on Heroku and is here: (https://ms-iii-sit.herokuapp.com/). If you want to deploy to Heroku, you will need to do the following:
 1. Obviously you need a Heroku account. Once you have that, create an app with a unique name as you cannot use the same one that I did.
 2. Once you do that, you will have to install heroku locally using this command: ```pip3 install heroku```
 3. You will have to log into heroku from the command line: ```heroku login```. This will launch the browser and prompt you to log in via the browser. Once that is done, the browser window shuts and you are now logged in to heroku.
