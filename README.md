@@ -140,7 +140,7 @@ There is immense potential improvement of this site. Some that come to mind are:
 ## Deployment
 
 ### Local
-1. Navigate to https://github.com/mrbrown2207/ms_iv_ua and click the green "Clone or download" button and choose "Open in Desktop" or "Download ZIP". If doing the latter, obviously, unpack.
+1. Navigate to https://github.com/mrbrown2207/ms_iii_sit and click the green "Clone or download" button and choose "Open in Desktop" or "Download ZIP". If doing the latter, obviously, unpack.
 2. From the terminal, change to the directory in which you will be work and want the cloned directory to be made.
 3. Type in ```git clone https://github.com/mrbrown2207/ms_iii_sit```
 4. You will need to install MySQL 5.7 locally. This document does not go into how to do that. You will need to create a user that has privileges to create databases and tables. That username and password will be used later if you use the MySQL CLI.
