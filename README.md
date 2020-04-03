@@ -82,6 +82,8 @@ that the answer is correct.
 
 Please see the "How it Works" page for much greater detail.
 
+You will notice that I have set this application up so you can load different configurations. I would like to make it a bit more dynamic. But hey, what I did isn't bad I don't think. The idea was to let me have a test config that gets loaded in my test/dev environment and then a production env configuration class. See ```config.py``` for the definition of the classes and ```__init__.py``` for the loading of the class upon the creation of the app.
+
 
 ## Technologies
 
@@ -106,6 +108,7 @@ As always, for technical reference and help, I used the following sites.
 - https://stackoverflow.com/
 - https://https://docs.djangoproject.com/en/3.0/
 - https://slack.com/
+- A few videos on YouTube. One that was particularly amazing was one on the usage of Blueprints as well as setting up different configuraions in Flask. I cannot imagine writing a flask application without them to be honest. The url is: https://www.youtube.com/watch?v=Wfx4YBzg16s
 
 ## Testing
 
@@ -114,7 +117,7 @@ As always, for technical reference and help, I used the following sites.
 - [HTML Validation](https://validator.w3.org/ "W3C Markup Validation Service")
 - [CSS Validation](http://jigsaw.w3.org/css-validator/ "CSS Validation Service") - A note about this. I receive a lot of warnings for my use of "var(--blah)"
 - Chrome Developer Tools
-- Flask/Python automated unit testing - I could do more here, it is very minimal.
+- Flask/Python automated unit testing - I fall on my sword here. I could do more here, it is very minimal.
 - Spreadsheet submitted with project was used as a checklist of all that was tested.
 
 
@@ -139,7 +142,7 @@ There is immense potential improvement of this site. Some that come to mind are:
 ### Local
 1. Navigate to https://github.com/mrbrown2207/ms_iv_ua and click the green "Clone or download" button and choose "Open in Desktop" or "Download ZIP". If doing the latter, obviously, unpack.
 2. From the terminal, change to the directory in which you will be work and want the cloned directory to be made.
-3. Type in ```git clone https://github.com/mrbrown2207/ms_iv_ua```
+3. Type in ```git clone https://github.com/mrbrown2207/ms_iii_sit```
 4. You will need to install MySQL 5.7 locally. This document does not go into how to do that. You will need to create a user that has privileges to create databases and tables. That username and password will be used later if you use the MySQL CLI.
 5. Once you have MySQL up and running, navigate to the ```msiiisit/static/sql/``` folder of the project. You can copy the script text to the clibboard that is in ```sitDbBootstrap_local.sql``` and paste into your favourite MySQL administration console to execute it. I use a couple of different consoles: https://www.phpmyadmin.net and https://www.mysql.com/products/workbench/. This will create a database called ```sitDb``` and four tables: ```tblAccounts, tblIssue, tblCat, and tblComments```. It will seed ```tblAccounts``` with a couple of users -- one being an admin. See the comments in the ```.sql``` file for the passwords. It will also generate the default issue categories as well as some test issues. The ```tblComments``` table is not used now and is there for future development.
 6. If you don't want to bother with an administration console and rather do it from the MySQL CLI, then navigate to ```msiiisit/static/sql/``` and copy and paste the following command at the system prompt:
@@ -160,9 +163,34 @@ There is immense potential improvement of this site. Some that come to mind are:
 You should be good to go.
 
 
-
 ### Heroku
-- Used Heroku to deploy the final version (https://ms-iii-ua.herokuapp.com/).
+- My final deployment of this project is on Heroku and is here: (https://ms-iii-ua.herokuapp.com/). If you want to deploy to Heroku, you will need to do the following:
+1. Obviously you need a Heroku account. Once you have that, create an app with a unique name as you cannot use the same one that I did.
+2. Once you do that, you will have to install heroku locally using this command: ```pip3 install heroku```
+3. You will have to log into heroku from the command line: ```heroku login```. This will launch the browser and prompt you to log in via the browser. Once that is done, the browser window shuts and you are now logged in to heroku.
+4. Once you are logged in, do the following:
+```$ cd your-project``` (where you set up after cloning)
+```$ git init```
+```$ heroku git:remote -a your-app-name```
+5. Once you have the basic app set up with heroku, you will need to do the following. As this is using MySQL and my Heroku doesn't run MySQL, you need a Heroku addon called ClearDB. Go to the Resources page of your heroku app, go to the Add-ons text field and start typing ClearDB. It will find ClearDB MySQL automatically. Select it and a modal dialog comes up asking you to provision. NOTE: you will have to enter a credit card here. However, you get 1000 free hours of the dyno so there is no risk of charges unless this is a production implementation.
+6. Once you do this, ClearDB automatically provisions a database for you on a server some place. It also creates a MySQL user with a password. To get this information, go to the Settings page of your Heroku app and click on "Reveal Config Vars". You will see a config var called ```CLEARDB_DATABASE_URL```. It will look something like this: ```mysql://b939b5ef80249e:@eu-cdbr-west-02.cleardb.net/heroku_fe37d3484441663?reconnect=true```. 
+    - The MySQL user is: ```b939b5ef80249e```
+    - The MySQL user password is: ```fb3f61f8```
+    - The host is: ```eu-cdbr-west-02.cleardb.net```
+    - The MySQL db is: ```heroku_fe37d3484441663```
+7. You now have to create the environment variables within Heroku that I listed above in the "Local Deployment" section in your app. This is done by clicking in the KEY field, adding a KEY, and then the VALUE field pasting or typing in the value, then clicking the Add button. So, your Heroku environment variables will look like this (YOUR VALUES WILL BE DIFFERENT -- THIS IS AN EXAMPLE)
+    - ```DB``` - which should be set to ```heroku_fe37d3484441663```
+    - ```DB_HOST``` - ```eu-cdbr-west-02.cleardb.net```
+    - ```DB_USER``` - this would be ```b939b5ef80249e```.
+    - ```DB_ABTRUSUS``` - set this to ```fb3f61f8```
+    - ```SIT_SECRET_KEY``` - highly recommended you make this more secure by doing the following from within python:
+    ```>>> import secrets```
+    ```>>> secrets.token_hex(16)```
+    That will generate a token that you can use for your secret. Copy and paste where you are setting ```SIT_SECRET_KEY```
+    - ```FLASK_APP_HOST``` - this is different than a local implementation. Set this to ```0.0.0.0```
+    - ```FLASK_APP_PORT``` - set this to ```5000```
+8. Push your repo up and you should be good to go!
+
 
 ## Credits
 
@@ -176,4 +204,10 @@ You should be good to go.
 - The Code Insititue! The tutors are always amazing, but were particularly helpful with this project. What 
 made them really effective was there just would be some "chatting" between us and they would lead me to find 
 the answer on my own. They acted like sounding boards.
+
+- Another note: as this is my last project in this course, I want to say how much I have enjoyed the course! I am actually going to miss the tutors as they were absolutely amazing. I called him out before, but I will do it again: Tim Nelson in particular was brilliant. Thank you Tim!
+
+I am also going to miss this journey through all these technologies. It has been an amazing experience. I feel like I have grown leaps and bounds as a developer...and I thought I was good before! :wink:
+
+You stay classy Code Insititute! :thumbsup:
 
