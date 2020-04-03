@@ -209,5 +209,5 @@ the answer on my own. They acted like sounding boards.
 
 I am also going to miss this journey through all these technologies. It has been an amazing experience. I feel like I have grown leaps and bounds as a developer...and I thought I was good before! :wink:
 
-You stay classy Code Insititute! :thumbsup:
+You stay classy Code Insititute! :thumbsup: :clap:
 
