@@ -178,7 +178,8 @@ You should be good to go.
     - The MySQL user password is: ```fb3f61f8```
     - The host is: ```eu-cdbr-west-02.cleardb.net```
     - The MySQL db is: ```heroku_fe37d3484441663```
-7. You now have to create the environment variables within Heroku that I listed above in the "Local Deployment" section in your app. This is done by clicking in the KEY field, adding a KEY, and then the VALUE field pasting or typing in the value, then clicking the Add button. So, your Heroku environment variables will look like this (YOUR VALUES WILL BE DIFFERENT -- THIS IS AN EXAMPLE)
+7. I struggled to get the mysql CLI command to work in trying to import the sql script mentioned above. I highly recommend installing one of the MySQL admin consoles I mentioned above and copying the ```sitDbBootstrap.sql``` script and pasting and executing it from the console. Note, this is a different file than the local version. When you paste it in to the console, replace this text ```[put your heroku database name here]``` as the text instructs, with your heroku database name. As above, once this script runs, it will create the tables and records I mentioned above.
+8. You now have to create the environment variables within Heroku that I listed above in the "Local Deployment" section in your app. This is done by clicking in the KEY field, adding a KEY, and then the VALUE field pasting or typing in the value, then clicking the Add button. So, your Heroku environment variables will look like this (YOUR VALUES WILL BE DIFFERENT -- THIS IS AN EXAMPLE)
     - ```DB``` - which should be set to ```heroku_fe37d3484441663```
     - ```DB_HOST``` - ```eu-cdbr-west-02.cleardb.net```
     - ```DB_USER``` - this would be ```b939b5ef80249e```.
@@ -189,7 +190,7 @@ You should be good to go.
     That will generate a token that you can use for your secret. Copy and paste where you are setting ```SIT_SECRET_KEY```
     - ```FLASK_APP_HOST``` - this is different than a local implementation. Set this to ```0.0.0.0```
     - ```FLASK_APP_PORT``` - set this to ```5000```
-8. Push your repo up and you should be good to go!
+9. Push your repo up and you should be good to go!
 
 
 ## Credits

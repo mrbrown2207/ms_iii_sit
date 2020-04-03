@@ -7,7 +7,7 @@
 
 /* Service Issue Tracking Database */
 /*create database if not exists heroku_fe37c8434441663;*/
-use heroku_fe37c8434441663;
+use /*[put your heroku database name here]*/
 
 /*
 	Table for capturing users of the application: clients, management and administrators.
