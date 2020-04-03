@@ -120,7 +120,7 @@ def build_filter_sql(filter_state_dict):
     for k in cats_filter_dict:
         cat = "i.catId=%s" % (k.split("-")[1])
         if x > 0 :
-            sql_qry += " or i.catId=%s" % (k.split("-")[1])
+            sql_qry += " or %s" % (cat)
         else:
             sql_qry += cat
 
@@ -132,7 +132,7 @@ def build_filter_sql(filter_state_dict):
     for k in status_filter_dict:
         status = "i.issueStatus=%s" % (k.split("-")[1])
         if x > 0 :
-            sql_qry += " or i.issueStatus=%s" % (k.split("-")[1])
+            sql_qry += " or %s" % (status)
         else:
             sql_qry += status
 
@@ -141,3 +141,23 @@ def build_filter_sql(filter_state_dict):
     sql_qry += ")"
 
     return ({"qry_str":sql_qry, "omitted_cats":(len(omitted_cats_dict) > 0), "omitted_status":(len(omitted_status_dict) > 0)})
+
+def build_search_sql(search_terms):
+    """Build a sql snippet based on search terms"""
+    sql_qry = "("
+    
+    x = 0
+    for term in search_terms:
+        term = term.strip()
+        term_qry = "i.issueSubj like '%" + term + "%'" + " or i.issueDesc like '%" + term + "%'"
+        if x > 0 :
+            sql_qry += " or %s" % (term_qry)
+        else:
+            sql_qry += term_qry
+
+        x += 1
+
+    sql_qry += ")"
+
+    return sql_qry
+

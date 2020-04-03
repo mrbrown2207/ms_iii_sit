@@ -65,6 +65,16 @@ COUNTRIES = {
                 'FR':"France",
             }
 
+
+# I put all of the queries into a dictionary to keep the main code a bit cleaner. Note: I first
+# thought about the functionality, created the tables and then the queries to match what I wanted
+# the application to accomplish before I ever wrote a line of python code. To that end, I have
+# some unused queries as I was going to allow the deletion of issues and categories, however, I 
+# decided to remove that functionality for now.
+# Please also take note that the way the sel_filtered_isss is written, it works for these cases:
+#   - Selecting all issues
+#   - Filtering issues
+#   - Searching issues
 SQL_DICT =  {
             "sel_recs": "select * from %s",
             "del_cat_rec": "delete from tblCat where catId=%s",

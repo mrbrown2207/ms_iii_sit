@@ -374,6 +374,24 @@ a.sit-disabled, button.sit-disabled { /* This is because you cannot disable a li
     font-weight: 700;
 }
 
+.search-icon {
+    font-family: "FontAwesome";
+    font-weight: 400;
+    font-size: 16px;
+    content: "\f002" !important; /* fa-search */
+}
+
+.search-col {
+    padding-left: 0;
+    margin-left: -8px;
+}
+
+.icon-submit-btn {
+    background: none;
+    padding: 0;
+    border: none;
+}
+
 /*--------------------------------------------------------------
 # Forms
 --------------------------------------------------------------*/
@@ -702,3 +720,4 @@ https://stackoverflow.com/questions/44955201/bootstrap-4-change-tooltip-arrow-co
     margin-left: 5px;
     content: "\f118" !important; /* fa-smile-o */
 }
+  

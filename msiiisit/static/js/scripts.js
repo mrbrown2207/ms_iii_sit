@@ -106,6 +106,13 @@ $(function() {
         return /[0-9A-Za-z ]/.test(evt.key)
     });
 
+    // Clear the search field. Clear this before going to the backend so the
+    // backend code works seemlessly whether this is a search or a clear search
+    // request.
+    $("#clear-search").click(function() {
+        $("#search-string").val("")
+    });
+
     // Detect that we are changing the password and bypass required field requirement.
     $("#change-pwd").click(function() {
         g_reqFieldsOk = true;

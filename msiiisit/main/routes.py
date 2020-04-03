@@ -57,7 +57,7 @@ def get_issues():
     finally:
         pass
 
-    return render_template('issues.html', issues=cur.fetchall(), omitted_status=filter_info['omitted_status'], omitted_cats=filter_info['omitted_cats'])
+    return render_template('issues.html', issues=cur.fetchall(), omitted_status=filter_info['omitted_status'], omitted_cats=filter_info['omitted_cats'], search_str="")
 
 
 @main.route('/add_issue')
@@ -219,6 +219,32 @@ def edit_issue(issue_id):
         pass
         
     return render_template('editissue.html', issue=row, cats=cats, chars_remaining=(1000-len(row['issueDesc'])))
+
+@main.route('/search_issues', methods=['POST'])
+def search_issues():
+    # This could easily have been incorporated I into get_issues but was the last
+    # feature that I put in and I really need to get this sumbmitted. Also,
+    # a nice to have would be to respect the current filter and only search within
+    # the filtered records. Will do that in next version.
+    # 
+    # Please note: this code is used as is with no if conditionals or checking what
+    # button was clicked. This is because JS clears search criteria field if the 
+    # clear-search button was clicked. I like it! ˚L˘
+    search_str = request.form.get('search-string')
+    qry_str = build_search_sql(search_str.split(','))
+    
+    # Build our query based on the filters selected.
+    qry = SQL_DICT['sel_filtered_isss'] % (qry_str)
+
+    try:
+        with get_db().cursor() as cur:
+            cur.execute(qry)
+    except Exception as e:
+        print("Error: {}".format(str(e)))
+    finally:
+        pass
+
+    return render_template('issues.html', issues=cur.fetchall(), omitted_status=False, omitted_cats=False, search_str=search_str)
 
 
 @main.route('/delete_issue/<issue_id>')

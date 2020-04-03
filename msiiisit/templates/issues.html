@@ -10,13 +10,30 @@
     <div class="container">
         <h2 class="form-heading">Issues</h2>
         <div class="row panel mt-1 mb-3">
-            <div class="col-12 text-right align-self-center">
-                {% if omitted_cats == False and omitted_status == False %}
-                <a href="/" data-toggle="modal" data-target="#filter-modal" data-toggle-1="tooltip" data-placement="right" title="Click to filter issues."><i class="cta-icon fa fa-filter fa-2x"></i></a>
-                {% else %}
-                <span class="cta-icon-on">Filter Applied</span>
-                <a href="/" data-toggle="modal" data-target="#filter-modal" data-toggle-1="tooltip" data-placement="right" title="Click to filter issues."><i class="cta-icon cta-icon-on fa fa-filter fa-2x"></i></a>
-                {% endif %}
+            <div class="col-12 pb-3">
+                <div class="row">
+                    <div class="col-6 text-left">
+                        <form action="{{ url_for('main.search_issues') }}" method="POST">
+                            <div class="row">
+                                <div class="col-10">
+                                    <input id="search-string" name="search-string" class="form-control" type="text" maxlength="60" value="{{ search_str }}" placeholder="Search...">
+                                </div>
+                                <div class="col-1 search-col"><button class="icon-submit-btn" type="submit" name="search" data-toggle-1="tooltip" data-placement="top" title="Click to search."><i class="cta-icon fa fa-search fa-2x"></i></button></div>
+                                {% if search_str|length %}
+                                <div class="col-1 search-col"><button id="clear-search" class="icon-submit-btn" type="submit" name="clear-search" data-toggle-1="tooltip" data-placement="top" title="Click to clear search filter."><i class="cta-icon fa fa-search-minus fa-2x"></i></button></div>
+                                {% endif %}
+                            </div>
+                        </form>  
+                    </div>
+                    <div class="col-6 text-right align-self-center">
+                        {% if omitted_cats == False and omitted_status == False %}
+                        <a href="/" data-toggle="modal" data-target="#filter-modal" data-toggle-1="tooltip" data-placement="right" title="Click to filter issues."><i class="cta-icon fa fa-filter fa-2x"></i></a>
+                        {% else %}
+                        <span class="cta-icon-on">Filter Applied</span>
+                        <a href="/" data-toggle="modal" data-target="#filter-modal" data-toggle-1="tooltip" data-placement="right" title="Click to filter issues."><i class="cta-icon cta-icon-on fa fa-filter fa-2x"></i></a>
+                        {% endif %}
+                    </div>
+                </div>        
             </div>
             <div class="col-12">
                 <!-- Hidden on mobile -->
